@@ -1,0 +1,6 @@
+[submodule "libcommand"]
+	path = libcommand
+	url = https://github.com/Blugin/libcommand.git
+[submodule "libtranslator"]
+	path = libtranslator
+	url = https://github.com/Blugin/libtranslator.git
