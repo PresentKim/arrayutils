@@ -1,7 +1,7 @@
 ---
 name: LocaleConverter
-antigen: blugin\lib\localeconverter
-version: 1.0.0
+antigen: blugin\lib\converter\locale
+version: 1.0.1
 api: 3.0.0
 authors: ['Blugin-team', 'PresentKim']
 description: "Converter to convert IETF_language_tag to ISO_639-3 code"
