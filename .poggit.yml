@@ -15,4 +15,10 @@ projects:
     type: library
     lint:
       phpstan: false
+  libtranslator:
+    path: libtranslator
+    model: virion
+    type: library
+    lint:
+      phpstan: false
 ...
