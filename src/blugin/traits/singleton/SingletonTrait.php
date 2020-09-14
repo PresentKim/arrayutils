@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace blugin\lib\traits\singleton;
+namespace blugin\traits\singleton;
 
 trait SingletonTrait{
     /** @var self */
