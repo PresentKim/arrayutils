@@ -1,0 +1,8 @@
+#Ignore all files
+/*
+
+#Ignore exceptions
+!.gitignore
+!README.md
+!libcommand/
+!libtranslator/
