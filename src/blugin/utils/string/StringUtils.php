@@ -33,15 +33,24 @@ class StringUtils{
         return preg_replace('/\s+/', '', $string);
     }
 
-    public static function startsWith(string $haystack, string $needle) : bool{
-        return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+    public static function equals(string $a, string $b, bool $caseSensitive = true) : bool{
+        return ($caseSensitive ? strcmp($a, $b) : strcasecmp($a, $b)) === 0;
     }
 
-    public static function endsWith(string $haystack, string $needle) : bool{
-        return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+    public static function indexOf(string $haystack, string $needle, bool $caseSensitive = true) : int{
+        $ret = ($caseSensitive ? strpos($haystack, $needle) : stripos($haystack, $needle));
+        return $ret === false ? -1 : $ret;
     }
 
-    public static function contains(string $haystack, string $needle) : bool{
-        return $needle === "" || strpos($haystack, $needle) !== false;
+    public static function startsWith(string $haystack, string $needle, bool $caseSensitive = true) : bool{
+        return $needle === "" || self::indexOf($haystack, $needle, $caseSensitive) === 0;
+    }
+
+    public static function endsWith(string $haystack, string $needle, bool $caseSensitive = true) : bool{
+        return $needle === "" || self::equals(substr($haystack, -strlen($needle)), $needle, $caseSensitive);
+    }
+
+    public static function contains(string $haystack, string $needle, bool $caseSensitive = true) : bool{
+        return $needle === "" || self::indexOf($haystack, $needle, $caseSensitive) === -1;
     }
 }
