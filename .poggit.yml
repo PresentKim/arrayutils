@@ -21,4 +21,10 @@ projects:
     type: library
     lint:
       phpstan: false
+  stringutils:
+    path: stringutils
+    model: virion
+    type: library
+    lint:
+      phpstan: false
 ...
