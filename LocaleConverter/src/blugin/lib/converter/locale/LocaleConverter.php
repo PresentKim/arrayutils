@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace blugin\lib\conveter\locale;
+namespace blugin\lib\converter\locale;
 
 final class LocaleConverter{
     private function __construct(){
