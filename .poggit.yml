@@ -3,6 +3,18 @@ submodule: true
 branches:
 - master
 projects:
+  libcommand:
+    path: libcommand
+    model: virion
+    type: library
+    lint:
+      phpstan: false
+  libtranslator:
+    path: libtranslator
+    model: virion
+    type: library
+    lint:
+      phpstan: false
   MultilingualConfigTrait:
     path: MultilingualConfigTrait
     model: virion
