@@ -23,7 +23,7 @@
 
 declare(strict_types=1);
 
-namespace blugin\utils\stringutils;
+namespace blugin\utils\string;
 
 class StringUtils{
     private function __construct(){
