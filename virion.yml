@@ -1,6 +1,6 @@
 ---
 name: MultilingualConfigTrait
-antigen: blugin\lib\traits\multilingualconfig
+antigen: blugin\traits\multilingualconfig
 version: 1.0.1
 api: 3.0.0
 authors: ['Blugin-team', 'PresentKim']
