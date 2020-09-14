@@ -12,3 +12,4 @@
 #local projects
 !LocaleConverter/
 !MultilingualConfigTrait/
+!SingletonTrait/
