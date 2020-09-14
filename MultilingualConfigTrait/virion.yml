@@ -1,0 +1,8 @@
+---
+name: MultilingualConfigTrait
+antigen: blugin\lib\multilingualconfigtrait
+version: 1.0.0
+api: 3.0.0
+authors: ['Blugin-team', 'PresentKim']
+description: "Trait for multilingual configuration file support"
+...

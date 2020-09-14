@@ -4,5 +4,10 @@
 #Ignore exceptions
 !.gitignore
 !README.md
+
+#submodule projects
 !libcommand/
 !libtranslator/
+
+#local projects
+!MultilingualConfigTrait/

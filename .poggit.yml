@@ -2,5 +2,11 @@
 build-by-default: true
 branches:
 - master
-projects: []
+projects:
+  MultilingualConfigTrait:
+    path: MultilingualConfigTrait
+    model: virion
+    type: library
+    lint:
+      phpstan: false
 ...
