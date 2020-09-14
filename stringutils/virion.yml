@@ -1,6 +1,6 @@
 ---
 name: stringutils
-antigen: blugin\utils\stringutils
+antigen: blugin\utils\string
 version: 1.0.0
 api: 3.0.0
 authors: ['Blugin-team', 'PresentKim']
