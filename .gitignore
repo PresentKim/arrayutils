@@ -10,4 +10,5 @@
 !libtranslator/
 
 #local projects
+!LocalConveter/
 !MultilingualConfigTrait/

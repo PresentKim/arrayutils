@@ -9,4 +9,10 @@ projects:
     type: library
     lint:
       phpstan: false
+  LocaleConverter:
+    path: LocaleConverter
+    model: virion
+    type: library
+    lint:
+      phpstan: false
 ...
