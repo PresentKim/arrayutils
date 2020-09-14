@@ -1,0 +1,8 @@
+---
+name: stringutils
+antigen: blugin\utils\stringutils
+version: 1.0.0
+api: 3.0.0
+authors: ['Blugin-team', 'PresentKim']
+description: "String utils"
+...
