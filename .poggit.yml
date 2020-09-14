@@ -1,5 +1,5 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Blugin/virions
-build-by-default: true
+submodule: true
 branches:
 - master
 projects:
