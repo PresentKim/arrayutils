@@ -1,0 +1,8 @@
+---
+name: SelfFactoryTrait
+antigen: blugin\lib\traits\selffactory
+version: 1.0.0
+api: 3.0.0
+authors: ['Blugin-team', 'PresentKim']
+description: "Trait for self factory class"
+...
