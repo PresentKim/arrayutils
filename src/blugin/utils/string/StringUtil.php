@@ -25,7 +25,7 @@ declare(strict_types=1);
 
 namespace blugin\utils\string;
 
-class StringUtils{
+class StringUtil{
     private function __construct(){
     }
 
