@@ -42,8 +42,18 @@ class ArrayUtil extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $origin */
+    public static function sliceAs($origin, int $offset, ?int $length = null, bool $preserveKeys = false) : array{
+        return self::from($origin)->sliceAs($offset, $length, $preserveKeys);
+    }
+
+    /** @param array|ArrayBuilder $origin */
     public static function map($origin, callable $callable) : ArrayBuilder{
         return self::from($origin)->map($callable);
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function mapAs($origin, callable $callable) : array{
+        return self::from($origin)->mapAs($callable);
     }
 
     /** @param array|ArrayBuilder $origin */
@@ -52,8 +62,18 @@ class ArrayUtil extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $origin */
+    public static function filterAs($origin, callable $callable, int $flag = 0) : array{
+        return self::from($origin)->filterAs($callable, $flag);
+    }
+
+    /** @param array|ArrayBuilder $origin */
     public static function keys($origin) : ArrayBuilder{
         return self::from($origin)->keys();
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function keysAs($origin) : array{
+        return self::from($origin)->keysAs();
     }
 
     /** @param array|ArrayBuilder $origin */
@@ -62,8 +82,18 @@ class ArrayUtil extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $origin */
+    public static function valuesAs($origin) : array{
+        return self::from($origin)->valuesAs();
+    }
+
+    /** @param array|ArrayBuilder $origin */
     public static function combine($origin) : ArrayBuilder{
         return self::from($origin)->combine();
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function combineAs($origin) : array{
+        return self::from($origin)->combineAs();
     }
 
     /**
@@ -78,8 +108,24 @@ class ArrayUtil extends \ArrayObject{
      * @param array|ArrayBuilder $origin
      * @param array|ArrayBuilder $array
      */
+    public static function mergeAs($origin, $array) : array{
+        return self::from($origin)->mergeAs($array);
+    }
+
+    /**
+     * @param array|ArrayBuilder $origin
+     * @param array|ArrayBuilder $array
+     */
     public static function mergeSoft($origin, $array) : ArrayBuilder{
         return self::from($origin)->mergeSoft($array);
+    }
+
+    /**
+     * @param array|ArrayBuilder $origin
+     * @param array|ArrayBuilder $array
+     */
+    public static function mergeSoftAs($origin, $array) : array{
+        return self::from($origin)->mergeSoftAs($array);
     }
 
     /** @param array|ArrayBuilder $origin */
@@ -88,7 +134,17 @@ class ArrayUtil extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $origin */
+    public static function mapAssocAs($origin, callable $callable) : array{
+        return self::from($origin)->mapAssocAs($callable);
+    }
+
+    /** @param array|ArrayBuilder $origin */
     public static function keyMap($origin, callable $callable) : ArrayBuilder{
         return self::from($origin)->keyMap($callable);
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function keyMapAs($origin, callable $callable) : array{
+        return self::from($origin)->keyMapAs($callable);
     }
 }
