@@ -45,4 +45,10 @@ projects:
     type: library
     lint:
       phpstan: false
+  arrayutils:
+    path: arrayutils
+    model: virion
+    type: library
+    lint:
+      phpstan: false
 ...
