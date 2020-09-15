@@ -50,45 +50,89 @@ class ArrayBuilder extends \ArrayObject{
     }
 
     public function slice(int $offset, ?int $length = null, bool $preserveKeys = false) : ArrayBuilder{
-        return $this->exchangeTo(array_slice($this->toArray(), $offset, $length, $preserveKeys));
+        return $this->exchangeTo($this->sliceAs($offset, $length, $preserveKeys));
+    }
+
+    public function sliceAs(int $offset, ?int $length = null, bool $preserveKeys = false) : array{
+        return array_slice($this->toArray(), $offset, $length, $preserveKeys);
     }
 
     public function map(callable $callable) : ArrayBuilder{
-        return $this->exchangeTo(array_map($callable, $this->toArray()));
+        return $this->exchangeTo($this->mapAs($callable));
+    }
+
+    public function mapAs(callable $callable) : array{
+        return array_map($callable, $this->toArray());
     }
 
     public function filter(callable $callable, int $flag = 0) : ArrayBuilder{
-        return $this->exchangeTo(array_filter($this->toArray(), $callable, $flag));
+        return $this->exchangeTo($this->filterAs($callable, $flag));
+    }
+
+    public function filterAs(callable $callable, int $flag = 0) : array{
+        return array_filter($this->toArray(), $callable, $flag);
     }
 
     public function keys() : ArrayBuilder{
-        return $this->exchangeTo(array_keys($this->toArray()));
+        return $this->exchangeTo($this->keysAs());
+    }
+
+    public function keysAs() : array{
+        return array_keys($this->toArray());
     }
 
     public function values() : ArrayBuilder{
-        return $this->exchangeTo(array_values($this->toArray()));
+        return $this->exchangeTo($this->valuesAs());
+    }
+
+    public function valuesAs() : array{
+        return array_values($this->toArray());
     }
 
     public function combine() : ArrayBuilder{
-        return $this->exchangeTo(array_combine($array = $this->toArray(), $array));
+        return $this->exchangeTo($this->combineAs());
+    }
+
+    public function combineAs() : array{
+        return array_combine($array = $this->toArray(), $array);
     }
 
     /** @param array|ArrayBuilder $array */
     public function merge($array) : ArrayBuilder{
-        return $this->exchangeTo(array_merge_recursive($this->toArray(), self::getArray($array)));
+        return $this->exchangeTo($this->mergeAs($array));
+    }
+
+    /** @param array|ArrayBuilder $array */
+    public function mergeAs($array) : array{
+        return array_merge_recursive($this->toArray(), self::getArray($array));
     }
 
     /** @param array|ArrayBuilder $array */
     public function mergeSoft($array) : ArrayBuilder{
-        return $this->exchangeTo(array_merge_recursive($origin = $this->toArray(), array_diff_key(self::getArray($array), $origin)));
+        return $this->exchangeTo($this->mergeSoftAs($array));
+    }
+
+    /** @param array|ArrayBuilder $array */
+    public function mergeSoftAs($array) : array{
+        return array_merge_recursive($origin = $this->toArray(), array_diff_key(self::getArray($array), $origin));
     }
 
     public function mapAssoc(callable $callable) : ArrayBuilder{
-        return $this->exchangeTo(array_column(array_map($callable, array_keys($array = $this->toArray()), $array), 1, 0));
+        return $this->exchangeTo($this->mapAssocAs($callable));
+    }
+
+    public function mapAssocAs(callable $callable) : array{
+        return array_column(array_map($callable, array_keys($array = $this->toArray()), $array), 1, 0);
     }
 
     public function keyMap(callable $callable) : ArrayBuilder{
         return $this->mapAssoc(function($_, $value) use ($callable){
+            return [$callable($value), $value];
+        });
+    }
+
+    public function keyMapAs(callable $callable) : array{
+        return $this->mapAssocAs(function($_, $value) use ($callable){
             return [$callable($value), $value];
         });
     }
