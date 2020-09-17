@@ -37,8 +37,8 @@ class ArrayBuilder extends \ArrayObject{
         return $this;
     }
 
-    public function join(string $glue = "") : string{
-        return implode($glue, $this->toArray());
+    public function join(string $glue = "", string $prefix = "", string $suffix = "") : string{
+        return $prefix . implode($glue, $this->toArray()) . $suffix;
     }
 
     public function toArray() : array{
