@@ -32,8 +32,8 @@ class ArrayUtil extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $origin */
-    public static function join($origin, string $glue = "") : string{
-        return self::from($origin)->join($glue);
+    public static function join($origin, string $glue = "", string $prefix = "", string $suffix = "") : string{
+        return self::from($origin)->join($glue, $prefix, $suffix);
     }
 
     /** @param array|ArrayBuilder $origin */
