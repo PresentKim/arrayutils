@@ -41,6 +41,15 @@ class ArrayBuilder extends \ArrayObject{
         return $prefix . implode($glue, $this->toArray()) . $suffix;
     }
 
+    public function validate(callable $callable, bool $invertBreak = false) : bool{
+        foreach($this->toArray() as $key => $value){
+            if($callable($key, $value) === $invertBreak){
+                return $invertBreak;
+            }
+        }
+        return !$invertBreak;
+    }
+
     public function toArray() : array{
         return $this->__toArray();
     }
