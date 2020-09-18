@@ -51,7 +51,7 @@ class StringUtil{
     }
 
     public static function contains(string $haystack, string $needle, bool $caseSensitive = true) : bool{
-        return $needle === "" || self::indexOf($haystack, $needle, $caseSensitive) === -1;
+        return $needle === "" || self::indexOf($haystack, $needle, $caseSensitive) !== -1;
     }
 
     public static function removeExtension(string $string) : string{
