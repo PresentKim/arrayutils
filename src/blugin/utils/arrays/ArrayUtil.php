@@ -37,6 +37,11 @@ class ArrayUtil extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $origin */
+    public static function validate($origin, callable $callable, bool $invertBreak = false) : bool{
+        return self::from($origin)->validate($callable, $invertBreak);
+    }
+
+    /** @param array|ArrayBuilder $origin */
     public static function slice($origin, int $offset, ?int $length = null, bool $preserveKeys = false) : ArrayBuilder{
         return self::from($origin)->slice($offset, $length, $preserveKeys);
     }
