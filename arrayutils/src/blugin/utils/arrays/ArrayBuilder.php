@@ -50,14 +50,6 @@ class ArrayBuilder extends \ArrayObject{
         return !$invertBreak;
     }
 
-    public function toArray() : array{
-        return $this->__toArray();
-    }
-
-    public function __toArray() : array{
-        return $this->getArrayCopy();
-    }
-
     public function slice(int $offset, ?int $length = null, bool $preserveKeys = false) : ArrayBuilder{
         return $this->exchangeTo($this->sliceAs($offset, $length, $preserveKeys));
     }
@@ -144,6 +136,14 @@ class ArrayBuilder extends \ArrayObject{
         return $this->mapAssocAs(function($_, $value) use ($callable){
             return [$callable($value), $value];
         });
+    }
+
+    public function toArray() : array{
+        return $this->__toArray();
+    }
+
+    public function __toArray() : array{
+        return $this->getArrayCopy();
     }
 
     public function __toString() : string{
