@@ -50,6 +50,30 @@ class ArrayBuilder extends \ArrayObject{
         return !$invertBreak;
     }
 
+    public function firstKey(){
+        return $this->keysAs()[0] ?? null;
+    }
+
+    public function lastKey(){
+        return $this->keysAs()[$this->count() - 1] ?? null;
+    }
+
+    public function randomKey(){
+        return ($keys = $this->keysAs())[rand(0, count($keys) - 1)] ?? null;
+    }
+
+    public function first(){
+        return $this->toArray()[$this->firstKey()] ?? null;
+    }
+
+    public function last(){
+        return $this->toArray()[$this->lastKey()] ?? null;
+    }
+
+    public function random(){
+        return $this->toArray()[$this->randomKey()] ?? null;
+    }
+
     public function slice(int $offset, ?int $length = null, bool $preserveKeys = false) : ArrayBuilder{
         return $this->exchangeTo($this->sliceAs($offset, $length, $preserveKeys));
     }

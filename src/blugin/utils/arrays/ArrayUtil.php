@@ -42,6 +42,36 @@ class ArrayUtil extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $origin */
+    public static function firstKey($origin){
+        return self::from($origin)->firstKey();
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function lastKey($origin){
+        return self::from($origin)->lastKey();
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function randomKey($origin){
+        return self::from($origin)->randomKey();
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function first($origin){
+        return self::from($origin)->first();
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function last($origin){
+        return self::from($origin)->last();
+    }
+
+    /** @param array|ArrayBuilder $origin */
+    public static function random($origin){
+        return self::from($origin)->random();
+    }
+
+    /** @param array|ArrayBuilder $origin */
     public static function slice($origin, int $offset, ?int $length = null, bool $preserveKeys = false) : ArrayBuilder{
         return self::from($origin)->slice($offset, $length, $preserveKeys);
     }
