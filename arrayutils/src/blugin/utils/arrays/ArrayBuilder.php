@@ -43,6 +43,9 @@ use blugin\utils\arrays\ArrayUtil as Arr;
  * @method self mergeSoft(array|self $array)
  * @method self mapAssoc(callable $callable)
  * @method self keyMap(callable $callable)
+ * @method self flip()
+ * @method self diff(array|self $array)
+ * @method self diffKey(array|self $array)
  *
  * Mapping ~Key method calls omitting "Key", returns the value at that key
  * @method mixed first()
@@ -133,6 +136,20 @@ class ArrayBuilder extends \ArrayObject{
         return $this->mapAssocAs(function($_, $value) use ($callable){
             return [$callable($value), $value];
         });
+    }
+
+    public function flipAs() : array{
+        return array_flip($this->toArray());
+    }
+
+    /** @param array|ArrayBuilder $array */
+    public function diffAs($array) : array{
+        return array_diff($this->toArray(), self::getArray($array));
+    }
+
+    /** @param array|ArrayBuilder $array */
+    public function diffKeyAs($array) : array{
+        return array_diff_key($this->toArray(), self::getArray($array));
     }
 
     public function __toArray() : array{

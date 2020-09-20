@@ -72,6 +72,15 @@ use blugin\utils\arrays\ArrayBuilder as Builder;
  *
  * @method static Builder keyMap(mixed[]|Builder $origin, callable $callable)
  * @method static array keyMapAs(mixed[]|Builder $origin, callable $callable)
+ *
+ * @method static Builder flip()
+ * @method static array flipAs()
+ *
+ * @method static Builder diff(array|self $array)
+ * @method static array diffAs(array|self $array)
+ *
+ * @method static Builder diffKey(array|self $array)
+ * @method static array diffKeyAs(array|self $array)
  */
 class ArrayUtil extends \ArrayObject{
     /** @param array|Builder $origin */
