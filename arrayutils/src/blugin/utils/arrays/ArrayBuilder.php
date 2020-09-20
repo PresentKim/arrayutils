@@ -28,10 +28,11 @@ namespace blugin\utils\arrays;
 use blugin\utils\arrays\ArrayUtil as Arr;
 
 /**
- * @method mixed first()
- * @method mixed last()
- * @method mixed random()
+ * Mapping magic method calls omitting "__", returns original magic method's results
+ * @method array toArray()
+ * @method string toString()
  *
+ * Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
  * @method self slice(int $offset, ?int $length = null, bool $preserveKeys = false)
  * @method self map(callable $callable)
  * @method self filter(callable $callable, int $flag = 0)
@@ -42,13 +43,17 @@ use blugin\utils\arrays\ArrayUtil as Arr;
  * @method self mergeSoft(array|self $array)
  * @method self mapAssoc(callable $callable)
  * @method self keyMap(callable $callable)
+ *
+ * Mapping ~Key method calls omitting "Key", returns the value at that key
+ * @method mixed first()
+ * @method mixed last()
+ * @method mixed random()
+ *
+ * Mapping array_function omitting "array_", returns array_function result, and save modified array to itself
  * @method array sliceAs(int $offset, ?int $length = null, bool $preserveKeys = false)
  * @method array filterAs(callable $callable, int $flag = 0)
  * @method array keysAs()
  * @method array valuesAs()
- *
- * @method array toArray()
- * @method string toString()
  */
 class ArrayBuilder extends \ArrayObject{
     /** @param array|ArrayBuilder $array */
