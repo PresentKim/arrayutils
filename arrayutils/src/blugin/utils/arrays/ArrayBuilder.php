@@ -25,6 +25,8 @@ declare(strict_types=1);
 
 namespace blugin\utils\arrays;
 
+use blugin\utils\arrays\ArrayUtil as Arr;
+
 /**
  * Mapping magic method calls omitting "__", returns original magic method's results
  * @method array toArray()
@@ -46,6 +48,11 @@ namespace blugin\utils\arrays;
  * @method mixed first()
  * @method mixed last()
  * @method mixed random()
+ *
+ * Mapping array_function omitting "array_", returns array_function result, and save modified array to itself
+ * @method mixed pop()
+ * @method mixed shift()
+ * @method int|float sum()
  */
 class ArrayBuilder extends \ArrayObject{
     /** @param array|ArrayBuilder $array */
@@ -149,6 +156,17 @@ class ArrayBuilder extends \ArrayObject{
         //Mapping ~Key method calls omitting "Key", returns the value at that key
         if(method_exists($this, $keyMethod = $name . "Key"))
             return $this->toArray()[$this->$keyMethod(...$arguments)] ?? null;
+
+        //Mapping array_function omitting "array_", returns array_function result, and save modified array to itself
+        if(function_exists($arrayFunc = "array_" . $name)){
+            //Mapping arguments with converting ArrayBuilder to array
+            $arguments = Arr::map($arguments, function($value){ return $value instanceof self ? $value->toArray() : $value; });
+
+            $array = $this->toArray();
+            $result = $arrayFunc($array, ...$arguments);
+            $this->exchangeTo($array);
+            return $result;
+        }
 
         throw new \Error("Call to undefined method " . self::class . "::$name()");
     }
