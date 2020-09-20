@@ -135,19 +135,21 @@ class ArrayBuilder extends \ArrayObject{
 
     /** @throws \Error */
     public function __call(string $name, array $arguments){
-        //Mapping magic method calls omitting "__"
-        if(method_exists($this, $magicMethod = "__" . $name))
-            return $this->$magicMethod(...$arguments);
+        try{
+            //Mapping magic method calls omitting "__"
+            if(method_exists($this, $magicMethod = "__" . $name))
+                return $this->$magicMethod(...$arguments);
 
-        //Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
-        if(method_exists($this, $asMethod = $name . "As"))
-            return $this->exchangeTo($this->$asMethod(...$arguments));
+            //Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
+            if(method_exists($this, $asMethod = $name . "As"))
+                return $this->exchangeTo($this->$asMethod(...$arguments));
 
-        //Mapping ~Key method calls omitting "Key", returns the value at that key
-        if(method_exists($this, $keyMethod = $name . "Key"))
-            return $this->toArray()[$this->$keyMethod(...$arguments)] ?? null;
-
-        throw new \Error("Call to undefined method " . self::class . "::$name()");
+            //Mapping ~Key method calls omitting "Key", returns the value at that key
+            if(method_exists($this, $keyMethod = $name . "Key"))
+                return $this->toArray()[$this->$keyMethod(...$arguments)] ?? null;
+        }finally{
+            throw new \Error("Call to undefined method " . self::class . "::$name()");
+        }
     }
 
     /** @param array|ArrayBuilder $value */
