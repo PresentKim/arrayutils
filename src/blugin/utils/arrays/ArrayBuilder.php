@@ -25,6 +25,8 @@ declare(strict_types=1);
 
 namespace blugin\utils\arrays;
 
+use blugin\utils\arrays\ArrayUtil as Arr;
+
 /**
  * @method mixed first()
  * @method mixed last()
@@ -40,6 +42,10 @@ namespace blugin\utils\arrays;
  * @method self mergeSoft(array|self $array)
  * @method self mapAssoc(callable $callable)
  * @method self keyMap(callable $callable)
+ * @method array sliceAs(int $offset, ?int $length = null, bool $preserveKeys = false)
+ * @method array filterAs(callable $callable, int $flag = 0)
+ * @method array keysAs()
+ * @method array valuesAs()
  *
  * @method array toArray()
  * @method string toString()
@@ -81,24 +87,8 @@ class ArrayBuilder extends \ArrayObject{
         return ($keys = $this->keysAs())[rand(0, count($keys) - 1)] ?? null;
     }
 
-    public function sliceAs(int $offset, ?int $length = null, bool $preserveKeys = false) : array{
-        return array_slice($this->toArray(), $offset, $length, $preserveKeys);
-    }
-
     public function mapAs(callable $callable) : array{
         return array_map($callable, $this->toArray());
-    }
-
-    public function filterAs(callable $callable, int $flag = 0) : array{
-        return array_filter($this->toArray(), $callable, $flag);
-    }
-
-    public function keysAs() : array{
-        return array_keys($this->toArray());
-    }
-
-    public function valuesAs() : array{
-        return array_values($this->toArray());
     }
 
     public function combineAs() : array{
@@ -147,6 +137,20 @@ class ArrayBuilder extends \ArrayObject{
             //Mapping ~Key method calls omitting "Key", returns the value at that key
             if(method_exists($this, $keyMethod = $name . "Key"))
                 return $this->toArray()[$this->$keyMethod(...$arguments)] ?? null;
+
+            //Mapping array_function omitting "array_" (and ends with "As" or not), returns array_function result, and save modified array to itself
+            if(substr($name, -2) === "As"){
+                $name = substr($name, 0, strlen($name) - 2);
+            }
+            if(function_exists($arrayFunc = "array_" . $name)){
+                //Mapping arguments with converting ArrayBuilder to array
+                $arguments = Arr::map($arguments, function($value){ return $value instanceof self ? $value->toArray() : $value; });
+
+                $array = $this->toArray();
+                $result = $arrayFunc($array, ...$arguments);
+                $this->exchangeTo($array);
+                return $result;
+            }
         }finally{
             throw new \Error("Call to undefined method " . self::class . "::$name()");
         }
