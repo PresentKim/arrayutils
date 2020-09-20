@@ -33,15 +33,9 @@ use blugin\utils\arrays\ArrayBuilder as Builder;
  *
  * @link \blugin\utils\arrays\ArrayBuilder
  *
+ * @method static string join(mixed[]|Builder $origin, string $glue = "", string $prefix = "", string $suffix = "")
  * @method static bool validate(mixed[]|Builder $origin, callable $callable, bool $invertBreak = false)
  *
- * @method static mixed firstKey(mixed[]|Builder $origin)
- * @method static mixed lastKey(mixed[]|Builder $origin)
- * @method static mixed randomKey(mixed[]|Builder $origin)
- *
- * @method static mixed first(mixed[]|Builder $origin)
- * @method static mixed last(mixed[]|Builder $origin)
- * @method static mixed random(mixed[]|Builder $origin)
  *
  * @method static Builder slice(mixed[]|Builder $origin, int $offset, ?int $length = null, bool $preserveKeys = false)
  * @method static array sliceAs(mixed[]|Builder $origin, int $offset, ?int $length = null, bool $preserveKeys = false)
@@ -73,14 +67,33 @@ use blugin\utils\arrays\ArrayBuilder as Builder;
  * @method static Builder keyMap(mixed[]|Builder $origin, callable $callable)
  * @method static array keyMapAs(mixed[]|Builder $origin, callable $callable)
  *
- * @method static Builder flip()
- * @method static array flipAs()
+ * @method static Builder flip(mixed[]|Builder $origin)
+ * @method static array flipAs(mixed[]|Builder $origin)
  *
- * @method static Builder diff(array|self $array)
- * @method static array diffAs(array|self $array)
+ * @method static Builder diff(mixed[]|Builder $origin, array|self $array)
+ * @method static array diffAs(mixed[]|Builder $origin, array|self $array)
  *
- * @method static Builder diffKey(array|self $array)
- * @method static array diffKeyAs(array|self $array)
+ * @method static Builder diffKey(mixed[]|Builder $origin, array|self $array)
+ * @method static array diffKeyAs(mixed[]|Builder $origin, array|self $array)
+ *
+ *
+ * @method static mixed first(mixed[]|Builder $origin)
+ * @method static mixed firstKey(mixed[]|Builder $origin)
+ *
+ * @method static mixed last(mixed[]|Builder $origin)
+ * @method static mixed lastKey(mixed[]|Builder $origin)
+ *
+ * @method static mixed random(mixed[]|Builder $origin)
+ * @method static mixed randomKey(mixed[]|Builder $origin)
+ *
+ *
+ * @method static mixed pop(mixed[]|Builder $origin)
+ * @method static mixed shift(mixed[]|Builder $origin)
+ * @method static int|float sum(mixed[]|Builder $origin)
+ *
+ *
+ * @method static array toArray(mixed[]|Builder $origin)
+ * @method static string toString(mixed[]|Builder $origin)
  */
 class ArrayUtil extends \ArrayObject{
     /** @param array|Builder $origin */
