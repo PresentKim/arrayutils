@@ -130,35 +130,32 @@ class ArrayBuilder extends \ArrayObject{
 
     /** @throws \Error */
     public function __call(string $name, array $arguments){
-        try{
-            //Mapping magic method calls omitting "__"
-            if(method_exists($this, $magicMethod = "__" . $name))
-                return $this->$magicMethod(...$arguments);
+        //Mapping magic method calls omitting "__"
+        if(method_exists($this, $magicMethod = "__" . $name))
+            return $this->$magicMethod(...$arguments);
 
-            //Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
-            if(method_exists($this, $asMethod = $name . "As"))
-                return $this->exchangeTo($this->$asMethod(...$arguments));
+        //Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
+        if(method_exists($this, $asMethod = $name . "As"))
+            return $this->exchangeTo($this->$asMethod(...$arguments));
 
-            //Mapping ~Key method calls omitting "Key", returns the value at that key
-            if(method_exists($this, $keyMethod = $name . "Key"))
-                return $this->toArray()[$this->$keyMethod(...$arguments)] ?? null;
+        //Mapping ~Key method calls omitting "Key", returns the value at that key
+        if(method_exists($this, $keyMethod = $name . "Key"))
+            return $this->toArray()[$this->$keyMethod(...$arguments)] ?? null;
 
-            //Mapping array_function omitting "array_" (and ends with "As" or not), returns array_function result, and save modified array to itself
-            if(substr($name, -2) === "As"){
-                $name = substr($name, 0, strlen($name) - 2);
-            }
-            if(function_exists($arrayFunc = "array_" . $name)){
-                //Mapping arguments with converting ArrayBuilder to array
-                $arguments = Arr::map($arguments, function($value){ return $value instanceof self ? $value->toArray() : $value; });
-
-                $array = $this->toArray();
-                $result = $arrayFunc($array, ...$arguments);
-                $this->exchangeTo($array);
-                return $result;
-            }
-        }finally{
-            throw new \Error("Call to undefined method " . self::class . "::$name()");
+        //Mapping array_function omitting "array_" (and ends with "As" or not), returns array_function result, and save modified array to itself
+        if(substr($name, -2) === "As"){
+            $name = substr($name, 0, strlen($name) - 2);
         }
+        if(function_exists($arrayFunc = "array_" . $name)){
+            //Mapping arguments with converting ArrayBuilder to array
+            $arguments = Arr::map($arguments, function($value){ return $value instanceof self ? $value->toArray() : $value; });
+
+            $array = $this->toArray();
+            $result = $arrayFunc($array, ...$arguments);
+            $this->exchangeTo($array);
+            return $result;
+        }
+        throw new \Error("Call to undefined method " . self::class . "::$name()");
     }
 
     /** @param array|ArrayBuilder $value */
