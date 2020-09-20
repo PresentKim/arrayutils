@@ -25,6 +25,25 @@ declare(strict_types=1);
 
 namespace blugin\utils\arrays;
 
+/**
+ * @method mixed first()
+ * @method mixed last()
+ * @method mixed random()
+ *
+ * @method self slice(int $offset, ?int $length = null, bool $preserveKeys = false)
+ * @method self map(callable $callable)
+ * @method self filter(callable $callable, int $flag = 0)
+ * @method self keys()
+ * @method self values()
+ * @method self combine()
+ * @method self merge(array|self $array)
+ * @method self mergeSoft(array|self $array)
+ * @method self mapAssoc(callable $callable)
+ * @method self keyMap(callable $callable)
+ *
+ * @method array toArray()
+ * @method string toString()
+ */
 class ArrayBuilder extends \ArrayObject{
     /** @param array|ArrayBuilder $array */
     public function __construct($array, $flags = 0, $iteratorClass = "ArrayIterator"){
@@ -62,69 +81,28 @@ class ArrayBuilder extends \ArrayObject{
         return ($keys = $this->keysAs())[rand(0, count($keys) - 1)] ?? null;
     }
 
-    public function first(){
-        return $this->toArray()[$this->firstKey()] ?? null;
-    }
-
-    public function last(){
-        return $this->toArray()[$this->lastKey()] ?? null;
-    }
-
-    public function random(){
-        return $this->toArray()[$this->randomKey()] ?? null;
-    }
-
-    public function slice(int $offset, ?int $length = null, bool $preserveKeys = false) : ArrayBuilder{
-        return $this->exchangeTo($this->sliceAs($offset, $length, $preserveKeys));
-    }
-
     public function sliceAs(int $offset, ?int $length = null, bool $preserveKeys = false) : array{
         return array_slice($this->toArray(), $offset, $length, $preserveKeys);
-    }
-
-    public function map(callable $callable) : ArrayBuilder{
-        return $this->exchangeTo($this->mapAs($callable));
     }
 
     public function mapAs(callable $callable) : array{
         return array_map($callable, $this->toArray());
     }
 
-    public function filter(callable $callable, int $flag = 0) : ArrayBuilder{
-        return $this->exchangeTo($this->filterAs($callable, $flag));
-    }
-
     public function filterAs(callable $callable, int $flag = 0) : array{
         return array_filter($this->toArray(), $callable, $flag);
-    }
-
-    public function keys() : ArrayBuilder{
-        return $this->exchangeTo($this->keysAs());
     }
 
     public function keysAs() : array{
         return array_keys($this->toArray());
     }
 
-    public function values() : ArrayBuilder{
-        return $this->exchangeTo($this->valuesAs());
-    }
-
     public function valuesAs() : array{
         return array_values($this->toArray());
     }
 
-    public function combine() : ArrayBuilder{
-        return $this->exchangeTo($this->combineAs());
-    }
-
     public function combineAs() : array{
         return array_combine($array = $this->toArray(), $array);
-    }
-
-    /** @param array|ArrayBuilder $array */
-    public function merge($array) : ArrayBuilder{
-        return $this->exchangeTo($this->mergeAs($array));
     }
 
     /** @param array|ArrayBuilder $array */
@@ -133,27 +111,12 @@ class ArrayBuilder extends \ArrayObject{
     }
 
     /** @param array|ArrayBuilder $array */
-    public function mergeSoft($array) : ArrayBuilder{
-        return $this->exchangeTo($this->mergeSoftAs($array));
-    }
-
-    /** @param array|ArrayBuilder $array */
     public function mergeSoftAs($array) : array{
         return array_merge_recursive($origin = $this->toArray(), array_diff_key(self::getArray($array), $origin));
     }
 
-    public function mapAssoc(callable $callable) : ArrayBuilder{
-        return $this->exchangeTo($this->mapAssocAs($callable));
-    }
-
     public function mapAssocAs(callable $callable) : array{
         return array_column(array_map($callable, array_keys($array = $this->toArray()), $array), 1, 0);
-    }
-
-    public function keyMap(callable $callable) : ArrayBuilder{
-        return $this->mapAssoc(function($_, $value) use ($callable){
-            return [$callable($value), $value];
-        });
     }
 
     public function keyMapAs(callable $callable) : array{
@@ -162,16 +125,29 @@ class ArrayBuilder extends \ArrayObject{
         });
     }
 
-    public function toArray() : array{
-        return $this->__toArray();
-    }
-
     public function __toArray() : array{
         return $this->getArrayCopy();
     }
 
     public function __toString() : string{
         return $this->join("");
+    }
+
+    /** @throws \Error */
+    public function __call(string $name, array $arguments){
+        //Mapping magic method calls omitting "__"
+        if(method_exists($this, $magicMethod = "__" . $name))
+            return $this->$magicMethod(...$arguments);
+
+        //Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
+        if(method_exists($this, $asMethod = $name . "As"))
+            return $this->exchangeTo($this->$asMethod(...$arguments));
+
+        //Mapping ~Key method calls omitting "Key", returns the value at that key
+        if(method_exists($this, $keyMethod = $name . "Key"))
+            return $this->toArray()[$this->$keyMethod(...$arguments)] ?? null;
+
+        throw new \Error("Call to undefined method " . self::class . "::$name()");
     }
 
     /** @param array|ArrayBuilder $value */
