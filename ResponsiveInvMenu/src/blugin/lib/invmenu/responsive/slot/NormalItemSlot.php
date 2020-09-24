@@ -38,13 +38,6 @@ class NormalItemSlot extends ResponsiveSlot{
         $this->item = $item;
     }
 
-    public function handleTransaction(SlotTransactionEvent $event) : bool{
-        $this->getItem()->setLore(["[" . $event->getSlot() . "] " . $event->getSourceItem()->getName() . "->" . $event->getTargetItem()->getName()]);
-        $this->getItem()->count++;
-        $event->getInventory()->setItem($event->getSlot(), $this->getItem());
-        return false;
-    }
-
     public function getItem() : ?Item{
         return $this->item;
     }
