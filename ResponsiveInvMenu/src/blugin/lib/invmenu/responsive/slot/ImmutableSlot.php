@@ -30,23 +30,8 @@ namespace blugin\lib\invmenu\responsive\slot;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
 
-class ImmutableSlot extends ResponsiveSlot{
-    /** @var Item */
-    protected $item;
-
-    public function __construct(Item $item){
-        $this->item = $item;
-    }
-
+class ImmutableSlot extends NormalItemSlot{
     public function handleTransaction(SlotTransactionEvent $event) : bool{
         return false;
-    }
-
-    public function getItem() : ?Item{
-        return $this->item;
-    }
-
-    public function setItem(?Item $item) : void{
-        $this->item = $item ?? ItemFactory::get(Item::AIR, 0, 0);
     }
 }
