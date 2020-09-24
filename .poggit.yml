@@ -58,4 +58,13 @@ projects:
     type: library
     lint:
       phpstan: false
+  ResponsiveInvMenu:
+    path: ResponsiveInvMenu
+    model: virion
+    type: library
+    lint:
+      phpstan: false
+    libs:
+      - src: Muqsit/InvMenu/InvMenu
+        version: 4.0.0
 ...

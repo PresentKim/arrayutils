@@ -11,6 +11,7 @@
 
 #local projects
 !LocaleConverter/
+!ResponsiveInvMenu/
 !MultilingualConfigTrait/
 !SingletonTrait/
 !SelfFactoryTrait/
