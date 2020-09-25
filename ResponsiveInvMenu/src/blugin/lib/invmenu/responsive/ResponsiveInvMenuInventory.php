@@ -34,6 +34,7 @@ use muqsit\invmenu\InvMenu;
 use muqsit\invmenu\metadata\MenuMetadata;
 use muqsit\invmenu\transaction\InvMenuTransaction;
 use muqsit\invmenu\transaction\InvMenuTransactionResult;
+use pocketmine\network\mcpe\protocol\types\ContainerIds;
 
 class ResponsiveInvMenuInventory extends InvMenuInventory{
     /** @var InvMenu|null */
@@ -82,9 +83,19 @@ class ResponsiveInvMenuInventory extends InvMenuInventory{
         $event = new SlotTransactionEvent($transaction, $this, $this->bindedMenu);
         $slot = $this->getSlot($event->getSlot());
         if($slot !== null){
+            $player = $event->getPlayer();
+
             $result = $slot->handleTransaction($event);
+            if($player->getWindowId($this) === ContainerIds::NONE){
+                $callback = $result->getPostTransactionCallback();
+                if($callback !== null){
+                    $result->then(null);
+                    $event->setCloseListener($callback);
+                }
+            }
+            ResponsiveInvMenuEventHandler::getInstance()->pending($event);
+
             if($result->isCancelled()){
-                $player = $event->getPlayer();
                 $player->getCursorInventory()->sendSlot(0, $player);
             }
             return $result;

@@ -27,14 +27,36 @@ declare(strict_types=1);
 
 namespace blugin\lib\invmenu\responsive;
 
+use blugin\lib\invmenu\responsive\slot\SlotTransactionEvent;
+use blugin\traits\singleton\SingletonTrait;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\event\server\DataPacketSendEvent;
 use pocketmine\network\mcpe\protocol\ContainerClosePacket;
 
 class ResponsiveInvMenuEventHandler implements Listener{
+    use SingletonTrait;
+
     /** @var bool */
     private $cancel = true;
+
+    /** @var SlotTransactionEvent[] */
+    private $pendingEvents = [];
+
+    public function pending(SlotTransactionEvent $event) : void{
+        if($event->getCloseListener() !== null){
+            $this->pendingEvents[] = $event;
+        }
+    }
+
+    public function removePending(SlotTransactionEvent $event) : void{
+        foreach($this->pendingEvents as $key => $pendingEvent){
+            if($pendingEvent === $event){
+                unset($this->pendingEvents[$key]);
+                break;
+            }
+        }
+    }
 
     /** @priority HIGHEST */
     public function onDataPacketSendEvent(DataPacketSendEvent $event) : void{
@@ -43,13 +65,26 @@ class ResponsiveInvMenuEventHandler implements Listener{
         }
     }
 
-    /** @priority HIGHEST */
+    /**
+     * @priority HIGHEST
+     * @ignoreCancelled
+     */
     public function onDataPacketReceiveEvent(DataPacketReceiveEvent $event) : void{
         $packet = $event->getPacket();
         if($packet instanceof ContainerClosePacket){
+            $player = $event->getPlayer();
+
             $this->cancel = false;
-            $event->getPlayer()->sendDataPacket($packet);
+            $player->sendDataPacket($packet);
             $this->cancel = true;
+
+            foreach($this->pendingEvents as $pendingEvent){
+                if($pendingEvent->getPlayer() === $player && $pendingEvent->getWindowId() === $packet->windowId){
+                    $pendingEvent->getCloseListener()($player);
+                    $this->removePending($pendingEvent);
+                    break;
+                }
+            }
         }
     }
 }

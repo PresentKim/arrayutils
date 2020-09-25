@@ -51,12 +51,20 @@ class SlotTransactionEvent{
     /** @var InvMenu */
     protected $menu;
 
+    /** @var int */
+    private $windowId;
+
+    /** @var \Closure|null */
+    private $closeListener = null;
+
     public function __construct(InvMenuTransaction $transaction, ResponsiveInvMenuInventory $inventory, InvMenu $menu){
         $this->transaction = $transaction;
         $this->player = $transaction->getPlayer();
         $this->action = $transaction->getAction();
         $this->inventory = $inventory;
         $this->menu = $menu;
+
+        $this->windowId = $this->player->getWindowId($inventory);
     }
 
     public function getTransaction() : InvMenuTransaction{
@@ -91,11 +99,23 @@ class SlotTransactionEvent{
         return $this->action->getTargetItem();
     }
 
+    public function getWindowId() : int{
+        return $this->windowId;
+    }
+
     public function continue() : InvMenuTransactionResult{
         return $this->transaction->continue();
     }
 
     public function discard() : InvMenuTransactionResult{
         return $this->transaction->discard();
+    }
+
+    public function getCloseListener() : ?\Closure{
+        return $this->closeListener;
+    }
+
+    public function setCloseListener(?\Closure $closure) : void{
+        $this->closeListener = $closure;
     }
 }

@@ -67,4 +67,6 @@ projects:
     libs:
       - src: Muqsit/InvMenu/InvMenu
         version: 4.0.0
+      - src: Blugin/virions/SingletonTrait
+        version: 1.0.0
 ...

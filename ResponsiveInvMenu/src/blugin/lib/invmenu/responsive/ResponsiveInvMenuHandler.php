@@ -57,6 +57,6 @@ class ResponsiveInvMenuHandler implements ResponsiveMenuIds{
         InvMenuHandler::registerMenuType(new DoubleBlockResponsiveMenuMetadata(self::TYPE_DOUBLE_CHEST, 54, WindowTypes::CONTAINER, BlockFactory::get(BlockIds::CHEST), Tile::CHEST));
         InvMenuHandler::registerMenuType(new SingleBlockResponsiveMenuMetadata(self::TYPE_HOPPER, 5, WindowTypes::HOPPER, BlockFactory::get(BlockIds::HOPPER_BLOCK), "Hopper"));
 
-        Server::getInstance()->getPluginManager()->registerEvents(new ResponsiveInvMenuEventHandler(), $plugin);
+        Server::getInstance()->getPluginManager()->registerEvents(ResponsiveInvMenuEventHandler::getInstance(), $plugin);
     }
 }
