@@ -36,7 +36,7 @@ use pocketmine\network\mcpe\protocol\types\WindowTypes;
 use pocketmine\plugin\Plugin;
 use pocketmine\tile\Tile;
 
-class ResponsiveInvMenu implements ResponsiveMenuIds{
+class ResponsiveInvMenuHandler implements ResponsiveMenuIds{
     /** @var bool */
     private static $registered = false;
 
