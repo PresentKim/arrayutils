@@ -79,12 +79,15 @@ class ResponsiveInvMenuInventory extends InvMenuInventory{
      * @return InvMenuTransactionResult
      */
     public function onTransaction(InvMenuTransaction $transaction) : InvMenuTransactionResult{
-        $event = new SlotTransactionEvent($transaction->getPlayer(), $transaction->getAction(), $this, $this->bindedMenu);
+        $event = new SlotTransactionEvent($transaction, $this, $this->bindedMenu);
         $slot = $this->getSlot($event->getSlot());
-        if($slot !== null && !$slot->handleTransaction($event)){
-            $player = $event->getPlayer();
-            $player->getCursorInventory()->sendSlot(0, $player);
-            return $transaction->discard();
+        if($slot !== null){
+            $result = $slot->handleTransaction($event);
+            if($result->isCancelled()){
+                $player = $event->getPlayer();
+                $player->getCursorInventory()->sendSlot(0, $player);
+            }
+            return $result;
         }
         return $transaction->continue();
     }

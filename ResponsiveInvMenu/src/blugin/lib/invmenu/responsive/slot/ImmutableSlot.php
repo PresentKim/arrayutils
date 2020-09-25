@@ -27,11 +27,10 @@ declare(strict_types=1);
 
 namespace blugin\lib\invmenu\responsive\slot;
 
-use pocketmine\item\Item;
-use pocketmine\item\ItemFactory;
+use muqsit\invmenu\transaction\InvMenuTransactionResult;
 
 class ImmutableSlot extends NormalItemSlot{
-    public function handleTransaction(SlotTransactionEvent $event) : bool{
-        return false;
+    public function handleTransaction(SlotTransactionEvent $event) : InvMenuTransactionResult{
+        return $event->discard();
     }
 }

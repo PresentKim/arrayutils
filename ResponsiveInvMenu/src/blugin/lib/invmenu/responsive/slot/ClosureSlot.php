@@ -27,6 +27,7 @@ declare(strict_types=1);
 
 namespace blugin\lib\invmenu\responsive\slot;
 
+use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use pocketmine\item\Item;
 
 class ClosureSlot extends NormalItemSlot{
@@ -38,7 +39,7 @@ class ClosureSlot extends NormalItemSlot{
         $this->closure = $closure;
     }
 
-    public function handleTransaction(SlotTransactionEvent $event) : bool{
+    public function handleTransaction(SlotTransactionEvent $event) : InvMenuTransactionResult{
         return ($this->closure)($event)();
     }
 }

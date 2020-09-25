@@ -27,10 +27,13 @@ declare(strict_types=1);
 
 namespace blugin\lib\invmenu\responsive\slot;
 
+use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use pocketmine\item\Item;
 
 abstract class ResponsiveSlot{
-    public function handleTransaction(SlotTransactionEvent $event) : bool{ return true; }
+    public function handleTransaction(SlotTransactionEvent $event) : InvMenuTransactionResult{
+        return $event->continue();
+    }
 
     abstract public function getItem() : ?Item;
 

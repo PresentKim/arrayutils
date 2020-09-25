@@ -29,11 +29,16 @@ namespace blugin\lib\invmenu\responsive\slot;
 
 use blugin\lib\invmenu\responsive\ResponsiveInvMenuInventory;
 use muqsit\invmenu\InvMenu;
+use muqsit\invmenu\transaction\InvMenuTransaction;
+use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use pocketmine\inventory\transaction\action\SlotChangeAction;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
 class SlotTransactionEvent{
+    /** @var InvMenuTransaction */
+    protected $transaction;
+
     /** @var Player */
     protected $player;
 
@@ -46,11 +51,16 @@ class SlotTransactionEvent{
     /** @var InvMenu */
     protected $menu;
 
-    public function __construct(Player $player, SlotChangeAction $action, ResponsiveInvMenuInventory $inventory, InvMenu $menu){
-        $this->player = $player;
-        $this->action = $action;
+    public function __construct(InvMenuTransaction $transaction, ResponsiveInvMenuInventory $inventory, InvMenu $menu){
+        $this->transaction = $transaction;
+        $this->player = $transaction->getPlayer();
+        $this->action = $transaction->getAction();
         $this->inventory = $inventory;
         $this->menu = $menu;
+    }
+
+    public function getTransaction() : InvMenuTransaction{
+        return $this->transaction;
     }
 
     public function getPlayer() : Player{
@@ -79,5 +89,13 @@ class SlotTransactionEvent{
 
     public function getTargetItem() : Item{
         return $this->action->getTargetItem();
+    }
+
+    public function continue() : InvMenuTransactionResult{
+        return $this->transaction->continue();
+    }
+
+    public function discard() : InvMenuTransactionResult{
+        return $this->transaction->discard();
     }
 }
