@@ -67,39 +67,28 @@ class ResponsiveInvMenuInventory extends InvMenuInventory{
     }
 
     public function getListener() : \Closure{
-        return function(InvMenuTransaction $transaction){ return $this->onTransaction($transaction); };
-    }
+        return function(InvMenuTransaction $transaction) : InvMenuTransactionResult{
+            $event = new SlotTransactionEvent($transaction, $this, $this->bindedMenu);
+            $slot = $this->getSlot($event->getSlot());
+            if($slot !== null){
+                $player = $event->getPlayer();
 
-    /**
-     * @param InvMenuTransaction $transaction
-     *
-     * Must return an InvMenuTransactionResult instance.
-     * Return $transaction->continue() to continue the transaction.
-     * Return $transaction->discard() to cancel the transaction.
-     *
-     * @return InvMenuTransactionResult
-     */
-    public function onTransaction(InvMenuTransaction $transaction) : InvMenuTransactionResult{
-        $event = new SlotTransactionEvent($transaction, $this, $this->bindedMenu);
-        $slot = $this->getSlot($event->getSlot());
-        if($slot !== null){
-            $player = $event->getPlayer();
-
-            $result = $slot->handleTransaction($event);
-            if($player->getWindowId($this) === ContainerIds::NONE){
-                $callback = $result->getPostTransactionCallback();
-                if($callback !== null){
-                    $result->then(null);
-                    $event->setCloseListener($callback);
+                $result = $slot->handleTransaction($event);
+                if($player->getWindowId($this) === ContainerIds::NONE){
+                    $callback = $result->getPostTransactionCallback();
+                    if($callback !== null){
+                        $result->then(null);
+                        $event->setCloseListener($callback);
+                    }
                 }
-            }
-            ResponsiveInvMenuEventHandler::getInstance()->pending($event);
+                ResponsiveInvMenuEventHandler::getInstance()->pending($event);
 
-            if($result->isCancelled()){
-                $player->getCursorInventory()->sendSlot(0, $player);
+                if($result->isCancelled()){
+                    $player->getCursorInventory()->sendSlot(0, $player);
+                }
+                return $result;
             }
-            return $result;
-        }
-        return $transaction->continue();
+            return $transaction->continue();
+        };
     }
 }
