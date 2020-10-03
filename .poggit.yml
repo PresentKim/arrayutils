@@ -3,33 +3,8 @@ submodule: true
 branches:
 - master
 projects:
-  libcommand:
-    path: libcommand
-    model: virion
-    type: library
-    lint:
-      phpstan: false
-    libs:
-      - src: Blugin/virions/stringutils
-        version: ^1.1.1
-      - src: Blugin/virions/arrayutils
-        version: ^2.0.0
-      - src: Blugin/virions/SingletonTrait
-        version: ^1.0.0
-  libtranslator:
-    path: libtranslator
-    model: virion
-    type: library
-    lint:
-      phpstan: false
   MultilingualConfigTrait:
     path: MultilingualConfigTrait
-    model: virion
-    type: library
-    lint:
-      phpstan: false
-  LocaleConverter:
-    path: LocaleConverter
     model: virion
     type: library
     lint:
