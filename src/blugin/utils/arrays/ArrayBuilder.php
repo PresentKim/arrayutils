@@ -2,19 +2,18 @@
 
 /*
  *
- *  ____  _             _         _____
- * | __ )| |_   _  __ _(_)_ __   |_   _|__  __ _ _ __ ___
- * |  _ \| | | | |/ _` | | '_ \    | |/ _ \/ _` | '_ ` _ \
- * | |_) | | |_| | (_| | | | | |   | |  __/ (_| | | | | | |
- * |____/|_|\__,_|\__, |_|_| |_|   |_|\___|\__,_|_| |_| |_|
- *                |___/
+ *  ____                           _   _  ___
+ * |  _ \ _ __ ___  ___  ___ _ __ | |_| |/ (_)_ __ ___
+ * | |_) | '__/ _ \/ __|/ _ \ '_ \| __| ' /| | '_ ` _ \
+ * |  __/| | |  __/\__ \  __/ | | | |_| . \| | | | | | |
+ * |_|   |_|  \___||___/\___|_| |_|\__|_|\_\_|_| |_| |_|
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the MIT License.
+ * it under the terms of the MIT License. see <https://opensource.org/licenses/MIT>.
  *
- * @author  Blugin team
- * @link    https://github.com/Blugin
- * @license https://www.gnu.org/licenses/mit MIT License
+ * @author  PresentKim (debe3721@gmail.com)
+ * @link    https://github.com/PresentKim
+ * @license https://opensource.org/licenses/MIT MIT License
  *
  *   (\ /)
  *  ( . .) ♥
