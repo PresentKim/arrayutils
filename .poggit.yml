@@ -1,0 +1,10 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/PresentKim/arrayutils
+branches:
+  - main
+projects:
+  arrayutils:
+    model: virion
+    type: library
+    lint:
+      phpstan: false
+...
