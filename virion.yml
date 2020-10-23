@@ -4,5 +4,5 @@ antigen: blugin\utils\arrays
 version: 2.0.0
 api: 3.0.0
 authors: ['PresentKim', 'Blugin-team']
-description: "[virion] Library that provides a method to fancy manipulate an array"
+description: "Library that provides a method to fancy manipulate an array"
 ...
