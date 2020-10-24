@@ -94,7 +94,7 @@ use kim\present\utils\arrays\ArrayBuilder as Builder;
  * @method static array toArray(mixed[]|Builder $origin)
  * @method static string toString(mixed[]|Builder $origin)
  */
-class ArrayUtils extends \ArrayObject{
+class ArrayUtils{
     /** @param array|Builder $origin */
     public static function from($origin) : Builder{
         return new Builder($origin);
