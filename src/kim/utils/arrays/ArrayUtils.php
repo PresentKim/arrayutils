@@ -22,15 +22,15 @@
 
 declare(strict_types=1);
 
-namespace blugin\utils\arrays;
+namespace kim\present\utils\arrays;
 
-use blugin\utils\arrays\ArrayBuilder as Builder;
+use kim\present\utils\arrays\ArrayBuilder as Builder;
 
 /**
  * Utility class for quick access to ArrayBuilder.
  * Automatic static mapping of ArrayBuilder's methods.
  *
- * @link \blugin\utils\arrays\ArrayBuilder
+ * @link \kim\present\utils\arrays\ArrayBuilder
  *
  * @method static string join(mixed[]|Builder $origin, string $glue = "", string $prefix = "", string $suffix = "")
  * @method static bool validate(mixed[]|Builder $origin, callable $callable, bool $invertBreak = false)
@@ -94,7 +94,7 @@ use blugin\utils\arrays\ArrayBuilder as Builder;
  * @method static array toArray(mixed[]|Builder $origin)
  * @method static string toString(mixed[]|Builder $origin)
  */
-class ArrayUtil extends \ArrayObject{
+class ArrayUtils extends \ArrayObject{
     /** @param array|Builder $origin */
     public static function from($origin) : Builder{
         return new Builder($origin);

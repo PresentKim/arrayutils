@@ -22,9 +22,9 @@
 
 declare(strict_types=1);
 
-namespace blugin\utils\arrays;
+namespace kim\present\utils\arrays;
 
-use blugin\utils\arrays\ArrayUtil as Arr;
+use kim\present\utils\arrays\ArrayUtils as Arr;
 
 /**
  * Mapping magic method calls omitting "__", returns original magic method's results
