@@ -32,19 +32,19 @@ use kim\present\utils\arrays\ArrayUtils as Arr;
  * @method string toString()
  *
  * Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
- * @method self slice(int $offset, ?int $length = null, bool $preserveKeys = false)
- * @method self map(callable $callable)
- * @method self filter(callable $callable, int $flag = 0)
- * @method self keys()
- * @method self values()
- * @method self combine()
- * @method self merge(array|self $array)
- * @method self mergeSoft(array|self $array)
- * @method self mapAssoc(callable $callable)
- * @method self keyMap(callable $callable)
- * @method self flip()
- * @method self diff(array|self $array)
- * @method self diffKey(array|self $array)
+ * @method ArrayBuilder slice(int $offset, ?int $length = null, bool $preserveKeys = false)
+ * @method ArrayBuilder map(callable $callable)
+ * @method ArrayBuilder filter(callable $callable, int $flag = 0)
+ * @method ArrayBuilder keys()
+ * @method ArrayBuilder values()
+ * @method ArrayBuilder combine()
+ * @method ArrayBuilder merge(array|\ArrayObject $array)
+ * @method ArrayBuilder mergeSoft(array|\ArrayObject $array)
+ * @method ArrayBuilder mapAssoc(callable $callable)
+ * @method ArrayBuilder keyMap(callable $callable)
+ * @method ArrayBuilder flip()
+ * @method ArrayBuilder diff(array|\ArrayObject $array)
+ * @method ArrayBuilder diffKey(array|\ArrayObject $array)
  *
  * Mapping ~Key method calls omitting "Key", returns the value at that key
  * @method mixed first()
@@ -57,12 +57,12 @@ use kim\present\utils\arrays\ArrayUtils as Arr;
  * @method int|float sum()
  */
 class ArrayBuilder extends \ArrayObject{
-    /** @param array|ArrayBuilder $array */
+    /** @param array|\ArrayObject $array */
     public function __construct($array, $flags = 0, $iteratorClass = "ArrayIterator"){
         parent::__construct(self::getArray($array), $flags, $iteratorClass);
     }
 
-    /** @param array|ArrayBuilder $array */
+    /** @param array|\ArrayObject $array */
     public function exchangeTo($array) : ArrayBuilder{
         $this->exchangeArray(self::getArray($array));
         return $this;
@@ -117,12 +117,12 @@ class ArrayBuilder extends \ArrayObject{
         return array_combine($array = $this->toArray(), $array);
     }
 
-    /** @param array|ArrayBuilder $array */
+    /** @param array|\ArrayObject $array */
     public function mergeAs($array) : array{
         return array_merge_recursive($this->toArray(), self::getArray($array));
     }
 
-    /** @param array|ArrayBuilder $array */
+    /** @param array|\ArrayObject $array */
     public function mergeSoftAs($array) : array{
         return array_merge_recursive($origin = $this->toArray(), array_diff_key(self::getArray($array), $origin));
     }
@@ -141,12 +141,12 @@ class ArrayBuilder extends \ArrayObject{
         return array_flip($this->toArray());
     }
 
-    /** @param array|ArrayBuilder $array */
+    /** @param array|\ArrayObject $array */
     public function diffAs($array) : array{
         return array_diff($this->toArray(), self::getArray($array));
     }
 
-    /** @param array|ArrayBuilder $array */
+    /** @param array|\ArrayObject $array */
     public function diffKeyAs($array) : array{
         return array_diff_key($this->toArray(), self::getArray($array));
     }
@@ -166,8 +166,10 @@ class ArrayBuilder extends \ArrayObject{
             return $this->$magicMethod(...$arguments);
 
         //Mapping ~As method calls omitting "As", returns the result wrapped with ArrayBuilder
-        if(method_exists($this, $asMethod = $name . "As"))
-            return $this->exchangeTo($this->$asMethod(...$arguments));
+        if(method_exists($this, $asMethod = $name . "As")){
+            $this->exchangeArray($this->$asMethod(...$arguments));
+            return $this;
+        }
 
         //Mapping ~Key method calls omitting "Key", returns the value at that key
         if(method_exists($this, $keyMethod = $name . "Key"))
@@ -176,7 +178,7 @@ class ArrayBuilder extends \ArrayObject{
         //Mapping array_function omitting "array_", returns array_function result, and save modified array to itself
         if(function_exists($arrayFunc = "array_" . $name)){
             //Mapping arguments with converting ArrayBuilder to array
-            $arguments = Arr::map($arguments, function($value){ return $value instanceof self ? $value->toArray() : $value; });
+            $arguments = Arr::map($arguments, function($value){ return $value instanceof \ArrayObject ? $value->getArrayCopy() : $value; });
 
             $array = $this->toArray();
             $result = $arrayFunc($array, ...$arguments);
@@ -184,16 +186,16 @@ class ArrayBuilder extends \ArrayObject{
             return $result;
         }
 
-        throw new \Error("Call to undefined method " . self::class . "::$name()");
+        throw new \Error("Call to undefined method " . ArrayBuilder::class . "::$name()");
     }
 
-    /** @param array|ArrayBuilder $value */
+    /** @param array|\ArrayObject $value */
     public static function getArray($value) : array{
         if(is_array($value))
             return $value;
 
-        if($value instanceof ArrayBuilder)
-            return $value->toArray();
+        if($value instanceof \ArrayObject)
+            return $value->getArrayCopy();
 
         throw new \TypeError("Argument must be of the type array or ArrayBuilder, " . gettype($value) . " given");
     }
