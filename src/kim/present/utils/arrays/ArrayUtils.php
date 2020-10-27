@@ -285,17 +285,27 @@ class ArrayUtils extends ArrayObject{
      * Creates a new, shallow-copied ArrayUtils instance from an array-like (array or array-object or iterable-object)
      *
      * @param array|ArrayObject|iterable $arrayLike
-     *
-     * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
      */
-    public static function from($arrayLike, ?callable $mapFn = null, ...$mapArgs) : ArrayUtils{
+    public function __construct($arrayLike, ...$arguments){
         $array = self::toArray($arrayLike);
         assert(is_array($array), "Argument must be of the type array-like, " . gettype($arrayLike) . " given");
 
+        parent::__construct($array, ...$arguments);
+    }
+
+    /**
+     * Creates a new, shallow-copied ArrayUtils instance from an array-like (array or array-object or iterable-object)
+     *
+     * @param array|ArrayObject|iterable $arrayLike
+     *
+     * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+     */
+    public static function from($arrayLike, ?callable $mapFn = null) : ArrayUtils{
+        $instance = new self($arrayLike);
         if($mapFn !== null){
-            $array = array_map($mapArgs, $array, $mapArgs);
+            $instance = $instance->map($mapFn);
         }
-        return new self($array);
+        return $instance;
     }
 
     /**
