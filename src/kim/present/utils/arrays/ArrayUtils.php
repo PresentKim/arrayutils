@@ -25,7 +25,6 @@ declare(strict_types=1);
 namespace kim\present\utils\arrays;
 
 use ArrayObject;
-use iterable;
 
 /**
  * Class ArrayUtils is provides a method to fancy manipulate an array
@@ -36,272 +35,261 @@ use iterable;
  * @link https://www.php.net/manual/en/ref.array.php
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
  *
- * @param array|ArrayObject|iterable|mixed ...$values if is not array-like, wrap value in an array
- *
  * ===================================
  *
  * @method        ArrayUtils chunk(int $size, bool $preserveKeys = false)
  * @method        array      chunkAs(int $size, bool $preserveKeys = false)
- * @method static ArrayUtils chunkFrom(array|ArrayObject|iterable $from, int $size, bool $preserveKeys = false)
- * @method static array      chunkFromAs(array|ArrayObject|iterable $from, int $size, bool $preserveKeys = false)
+ * @method static ArrayUtils chunkFrom(iterable $from, int $size, bool $preserveKeys = false)
+ * @method static array      chunkFromAs(iterable $from, int $size, bool $preserveKeys = false)
  *
  * @method        ArrayUtils column(mixed $column_key, mixed $indexKey = null)
  * @method        array      columnAs(mixed $column_key, mixed $indexKey = null)
- * @method static ArrayUtils columnFrom(array|ArrayObject|iterable $from, mixed $column_key, mixed $indexKey = null)
- * @method static array      columnFromAs(array|ArrayObject|iterable $from, mixed $column_key, mixed $indexKey = null)
+ * @method static ArrayUtils columnFrom(iterable $from, mixed $column_key, mixed $indexKey = null)
+ * @method static array      columnFromAs(iterable $from, mixed $column_key, mixed $indexKey = null)
  *
- * @method        ArrayUtils combine(array|ArrayObject|iterable|null $arrayLikes = null)
- * @method        array      combineAs(array|ArrayObject|iterable|null $arrayLikes = null)
- * @method static ArrayUtils combineFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable|null $arrayLikes = null)
- * @method static array      combineFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable|null $arrayLikes = null)
+ * @method        ArrayUtils combine(iterable|null $iterables = null)
+ * @method        array      combineAs(iterable|null $iterables = null)
+ * @method static ArrayUtils combineFrom(iterable $from, iterable|null $iterables = null)
+ * @method static array      combineFromAs(iterable $from, iterable|null $iterables = null)
  *
- * @method        ArrayUtils concat(mixed ...$arrayLikes)
- * @method        array      concatAs(mixed ...$arrayLikes)
- * @method static ArrayUtils concatFrom(mixed ...$arrayLikes)
- * @method static array      concatFromAs(mixed ...$arrayLikes)
+ * @method        ArrayUtils concat(mixed ...$values)
+ * @method        array      concatAs(mixed ...$values)
+ * @method static ArrayUtils concatFrom(mixed ...$values)
+ * @method static array      concatFromAs(mixed ...$values)
  *
- * @method        ArrayUtils concatSoft(mixed ...$arrayLikes)
- * @method        array      concatSoftAs(mixed ...$arrayLikes)
- * @method static ArrayUtils concatSoftFrom(mixed ...$arrayLikes)
- * @method static array      concatSoftFromAs(mixed ...$arrayLikes)
+ * @method        ArrayUtils concatSoft(mixed ...$values)
+ * @method        array      concatSoftAs(mixed ...$values)
+ * @method static ArrayUtils concatSoftFrom(mixed ...$values)
+ * @method static array      concatSoftFromAs(mixed ...$values)
  *
  * @method        ArrayUtils countValues()
  * @method        array      countValuesAs()
- * @method static ArrayUtils countValuesFrom(array|ArrayObject|iterable $from)
- * @method static array      countValuesFromAs(array|ArrayObject|iterable $from)
+ * @method static ArrayUtils countValuesFrom(iterable $from)
+ * @method static array      countValuesFromAs(iterable $from)
  *
- * @method        ArrayUtils diff(array|ArrayObject|iterable ...$arrayLikes)
- * @method        array      diffAs(array|ArrayObject|iterable ...$arrayLikes)
- * @method static ArrayUtils diffFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
- * @method static array      diffFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
+ * @method        ArrayUtils diff(iterable ...$iterables)
+ * @method        array      diffAs(iterable ...$iterables)
+ * @method static ArrayUtils diffFrom(iterable $from, iterable ...$iterables)
+ * @method static array      diffFromAs(iterable $from, iterable ...$iterables)
  *
- * @method        ArrayUtils diffAssoc(array|ArrayObject|iterable ...$arrayLikes)
- * @method        array      diffAssocAs(array|ArrayObject|iterable ...$arrayLikes)
- * @method static ArrayUtils diffAssocFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
- * @method static array      diffAssocFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
+ * @method        ArrayUtils diffAssoc(iterable ...$iterables)
+ * @method        array      diffAssocAs(iterable ...$iterables)
+ * @method static ArrayUtils diffAssocFrom(iterable $from, iterable ...$iterables)
+ * @method static array      diffAssocFromAs(iterable $from, iterable ...$iterables)
  *
- * @method        ArrayUtils diffKey(array|ArrayObject|iterable ...$arrayLikes)
- * @method        array      diffKeyAs(array|ArrayObject|iterable ...$arrayLikes)
- * @method static ArrayUtils diffKeyFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
- * @method static array      diffKeyFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
+ * @method        ArrayUtils diffKey(iterable ...$iterables)
+ * @method        array      diffKeyAs(iterable ...$iterables)
+ * @method static ArrayUtils diffKeyFrom(iterable $from, iterable ...$iterables)
+ * @method static array      diffKeyFromAs(iterable $from, iterable ...$iterables)
  *
  * @method        ArrayUtils fill(mixed $value, int $start = 0, int $end = null)
  * @method        array      fillAs(mixed $value, int $start = 0, int $end = null)
- * @method static ArrayUtils fillFrom(array|ArrayObject|iterable $from, mixed $value, int $start = 0, int $end = null)
- * @method static array      fillFromAs(array|ArrayObject|iterable $from, mixed $value, int $start = 0, int $end = null)
+ * @method static ArrayUtils fillFrom(iterable $from, mixed $value, int $start = 0, int $end = null)
+ * @method static array      fillFromAs(iterable $from, mixed $value, int $start = 0, int $end = null)
  *
  * @method        ArrayUtils fillKeys(mixed $value)
  * @method        array      fillKeysAs(mixed $value)
- * @method static ArrayUtils fillKeysFrom(array|ArrayObject|iterable $from, mixed $value)
- * @method static array      fillKeysFromAs(array|ArrayObject|iterable $from, mixed $value)
+ * @method static ArrayUtils fillKeysFrom(iterable $from, mixed $value)
+ * @method static array      fillKeysFromAs(iterable $from, mixed $value)
  *
  * @method        ArrayUtils filter(callable $callback, int $flag = 0)
  * @method        array      filterAs(callable $callback, int $flag = 0)
- * @method static ArrayUtils filterFrom(array|ArrayObject|iterable $from, callable $callback, int $flag = 0)
- * @method static array      filterFromAs(array|ArrayObject|iterable $from, callable $callback, int $flag = 0)
+ * @method static ArrayUtils filterFrom(iterable $from, callable $callback, int $flag = 0)
+ * @method static array      filterFromAs(iterable $from, callable $callback, int $flag = 0)
  *
  * @method        ArrayUtils flat(int $dept = 1)
  * @method        array      flatAs(int $dept = 1)
- * @method static ArrayUtils flatFrom(array|ArrayObject|iterable $from, int $dept = 1)
- * @method static array      flatFromAs(array|ArrayObject|iterable $from, int $dept = 1)
+ * @method static ArrayUtils flatFrom(iterable $from, int $dept = 1)
+ * @method static array      flatFromAs(iterable $from, int $dept = 1)
  *
  * @method        ArrayUtils flatMap(callable $callback)
  * @method        array      flatMapAs(callable $callback)
- * @method static ArrayUtils flatMapFrom(array|ArrayObject|iterable $from, callable $callback)
- * @method static array      flatMapFromAs(array|ArrayObject|iterable $from, callable $callback)
+ * @method static ArrayUtils flatMapFrom(iterable $from, callable $callback)
+ * @method static array      flatMapFromAs(iterable $from, callable $callback)
  *
  * @method        ArrayUtils flip()
  * @method        array      flipAs()
- * @method static ArrayUtils flipFrom(array|ArrayObject|iterable $from)
- * @method static array      flipFromAs(array|ArrayObject|iterable $from)
+ * @method static ArrayUtils flipFrom(iterable $from)
+ * @method static array      flipFromAs(iterable $from)
  *
  * @method        ArrayUtils forEach(callable $callback)
  * @method        array      forEachAs(callable $callback)
- * @method static ArrayUtils forEachFrom(array|ArrayObject|iterable $from, callable $callback)
- * @method static array      forEachFromAs(array|ArrayObject|iterable $from, callable $callback)
+ * @method static ArrayUtils forEachFrom(iterable $from, callable $callback)
+ * @method static array      forEachFromAs(iterable $from, callable $callback)
  *
- * @method        ArrayUtils intersect(array|ArrayObject|iterable ...$arrayLikes)
- * @method        array      intersectAs(array|ArrayObject|iterable ...$arrayLikes)
- * @method static ArrayUtils intersectFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
- * @method static array      intersectFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
+ * @method        ArrayUtils intersect(iterable ...$iterables)
+ * @method        array      intersectAs(iterable ...$iterables)
+ * @method static ArrayUtils intersectFrom(iterable $from, iterable ...$iterables)
+ * @method static array      intersectFromAs(iterable $from, iterable ...$iterables)
  *
- * @method        ArrayUtils intersectAssoc(array|ArrayObject|iterable ...$arrayLikes)
- * @method        array      intersectAssocAs(array|ArrayObject|iterable ...$arrayLikes)
- * @method static ArrayUtils intersectAssocFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
- * @method static array      intersectAssocFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
+ * @method        ArrayUtils intersectAssoc(iterable ...$iterables)
+ * @method        array      intersectAssocAs(iterable ...$iterables)
+ * @method static ArrayUtils intersectAssocFrom(iterable $from, iterable ...$iterables)
+ * @method static array      intersectAssocFromAs(iterable $from, iterable ...$iterables)
  *
- * @method        ArrayUtils intersectkey(array|ArrayObject|iterable ...$arrayLikes)
- * @method        array      intersectkeyAs(array|ArrayObject|iterable ...$arrayLikes)
- * @method static ArrayUtils intersectkeyFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
- * @method static array      intersectkeyFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
+ * @method        ArrayUtils intersectkey(iterable ...$iterables)
+ * @method        array      intersectkeyAs(iterable ...$iterables)
+ * @method static ArrayUtils intersectkeyFrom(iterable $from, iterable ...$iterables)
+ * @method static array      intersectkeyFromAs(iterable $from, iterable ...$iterables)
  *
  * @method        ArrayUtils keys()
  * @method        array      keysAs()
- * @method static ArrayUtils keysFrom(array|ArrayObject|iterable $from)
- * @method static array      keysFromAs(array|ArrayObject|iterable $from)
+ * @method static ArrayUtils keysFrom(iterable $from)
+ * @method static array      keysFromAs(iterable $from)
  *
  * @method        ArrayUtils map(callable $callback)
  * @method        array      mapAs(callable $callback)
- * @method static ArrayUtils mapFrom(array|ArrayObject|iterable $from, callable $callback)
- * @method static array      mapFromAs(array|ArrayObject|iterable $from, callable $callback)
+ * @method static ArrayUtils mapFrom(iterable $from, callable $callback)
+ * @method static array      mapFromAs(iterable $from, callable $callback)
  *
  * @method        ArrayUtils mapAssoc(callable $callback)
  * @method        array      mapAssocAs(callable $callback)
- * @method static ArrayUtils mapAssocFrom(array|ArrayObject|iterable $from, callable $callback)
- * @method static array      mapAssocFromAs(array|ArrayObject|iterable $from, callable $callback)
+ * @method static ArrayUtils mapAssocFrom(iterable $from, callable $callback)
+ * @method static array      mapAssocFromAs(iterable $from, callable $callback)
  *
  * @method        ArrayUtils mapKey(callable $callback)
  * @method        array      mapKeyAs(callable $callback)
- * @method static ArrayUtils mapKeyFrom(array|ArrayObject|iterable $from, callable $callback)
- * @method static array      mapKeyFromAs(array|ArrayObject|iterable $from, callable $callback)
+ * @method static ArrayUtils mapKeyFrom(iterable $from, callable $callback)
+ * @method static array      mapKeyFromAs(iterable $from, callable $callback)
  *
- * @method        ArrayUtils merge(mixed ...$arrayLikes)
- * @method        array      mergeAs(mixed ...$arrayLikes)
- * @method static ArrayUtils mergeFrom(mixed ...$arrayLikes)
- * @method static array      mergeFromAs(mixed ...$arrayLikes)
+ * @method        ArrayUtils merge(mixed ...$iterables)
+ * @method        array      mergeAs(mixed ...$iterables)
+ * @method static ArrayUtils mergeFrom(mixed ...$iterables)
+ * @method static array      mergeFromAs(mixed ...$iterables)
  *
- * @method        ArrayUtils mergeSoft(mixed ...$arrayLikes)
- * @method        array      mergeSoftAs(mixed ...$arrayLikes)
- * @method static ArrayUtils mergeSoftFrom(array|ArrayObject|iterable $from, mixed ...$arrayLikes)
- * @method static array      mergeSoftFromAs(array|ArrayObject|iterable $from, mixed ...$arrayLikes)
+ * @method        ArrayUtils mergeSoft(mixed ...$iterables)
+ * @method        array      mergeSoftAs(mixed ...$iterables)
+ * @method static ArrayUtils mergeSoftFrom(iterable $from, mixed ...$iterables)
+ * @method static array      mergeSoftFromAs(iterable $from, mixed ...$iterables)
  *
  * @method        ArrayUtils pad(int $size, mixed $value)
  * @method        array      padAs(int $size, mixed $value)
- * @method static ArrayUtils padFrom(array|ArrayObject|iterable $from, int $size, mixed $value)
- * @method static array      padFromAs(array|ArrayObject|iterable $from, int $size, mixed $value)
+ * @method static ArrayUtils padFrom(iterable $from, int $size, mixed $value)
+ * @method static array      padFromAs(iterable $from, int $size, mixed $value)
  *
  * @method        ArrayUtils push(mixed ...$values)
  * @method        array      pushAs(mixed ...$values)
- * @method static ArrayUtils pushFrom(array|ArrayObject|iterable $from, mixed ...$values)
- * @method static array      pushFromAs(array|ArrayObject|iterable $from, mixed ...$values)
+ * @method static ArrayUtils pushFrom(iterable $from, mixed ...$values)
+ * @method static array      pushFromAs(iterable $from, mixed ...$values)
  *
- * @method        ArrayUtils replace(array|ArrayObject|iterable ...$arrayLikes)
- * @method        array      replaceAs(array|ArrayObject|iterable ...$arrayLikes)
- * @method static ArrayUtils replaceFrom(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
- * @method static array      replaceFromAs(array|ArrayObject|iterable $from, array|ArrayObject|iterable ...$arrayLikes)
+ * @method        ArrayUtils replace(iterable ...$iterables)
+ * @method        array      replaceAs(iterable ...$iterables)
+ * @method static ArrayUtils replaceFrom(iterable $from, iterable ...$iterables)
+ * @method static array      replaceFromAs(iterable $from, iterable ...$iterables)
  *
  * @method        ArrayUtils reverse(bool $preserveKeys = false)
  * @method        array      reverseAs(bool $preserveKeys = false)
- * @method static ArrayUtils reverseFrom(array|ArrayObject|iterable $from, bool $preserveKeys = false)
- * @method static array      reverseFromAs(array|ArrayObject|iterable $from, bool $preserveKeys = false)
+ * @method static ArrayUtils reverseFrom(iterable $from, bool $preserveKeys = false)
+ * @method static array      reverseFromAs(iterable $from, bool $preserveKeys = false)
  *
  * @method        ArrayUtils slice(int $start = 0, int $end = null, mixed $preserve_keys = false)
  * @method        array      sliceAs(int $start = 0, int $end = null, mixed $preserve_keys = false)
- * @method static ArrayUtils sliceFrom(array|ArrayObject|iterable $from, int $start = 0, int $end = null, mixed $preserve_keys = false)
- * @method static array      sliceFromAs(array|ArrayObject|iterable $from, int $start = 0, int $end = null, mixed $preserve_keys = false)
+ * @method static ArrayUtils sliceFrom(iterable $from, int $start = 0, int $end = null, mixed $preserve_keys = false)
+ * @method static array      sliceFromAs(iterable $from, int $start = 0, int $end = null, mixed $preserve_keys = false)
  *
  * @method        ArrayUtils sort(?callable $callback = null)
  * @method        array      sortAs(?callable $callback = null)
- * @method static ArrayUtils sortFrom(array|ArrayObject|iterable $from, ?callable $callback = null)
- * @method static array      sortFromAs(array|ArrayObject|iterable $from, ?callable $callback = null)
+ * @method static ArrayUtils sortFrom(iterable $from, ?callable $callback = null)
+ * @method static array      sortFromAs(iterable $from, ?callable $callback = null)
  *
  * @method        ArrayUtils sortKey(?callable $callback = null)
  * @method        array      sortKeyAs(?callable $callback = null)
- * @method static ArrayUtils sortKeyFrom(array|ArrayObject|iterable $from, ?callable $callback = null)
- * @method static array      sortKeyFromAs(array|ArrayObject|iterable $from, ?callable $callback = null)
+ * @method static ArrayUtils sortKeyFrom(iterable $from, ?callable $callback = null)
+ * @method static array      sortKeyFromAs(iterable $from, ?callable $callback = null)
  *
  * @method        ArrayUtils splice(int $offset, ?int $length = null, mixed ...$replacement)
  * @method        array      spliceAs(int $offset, ?int $length = null, mixed ...$replacement)
- * @method static ArrayUtils spliceFrom(array|ArrayObject|iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
- * @method static array      spliceFromAs(array|ArrayObject|iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
+ * @method static ArrayUtils spliceFrom(iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
+ * @method static array      spliceFromAs(iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
  *
  * @method        ArrayUtils unique(int $sort_flags = SORT_STRING)
  * @method        array      uniqueAs(int $sort_flags = SORT_STRING)
- * @method static ArrayUtils uniqueFrom(array|ArrayObject|iterable $from, int $sort_flags = SORT_STRING)
- * @method static array      uniqueFromAs(array|ArrayObject|iterable $from, int $sort_flags = SORT_STRING)
+ * @method static ArrayUtils uniqueFrom(iterable $from, int $sort_flags = SORT_STRING)
+ * @method static array      uniqueFromAs(iterable $from, int $sort_flags = SORT_STRING)
  *
  * @method        ArrayUtils unshift(mixed ...$values)
  * @method        array      unshiftAs(mixed ...$values)
- * @method static ArrayUtils unshiftFrom(array|ArrayObject|iterable $from, mixed ...$values)
- * @method static array      unshiftFromAs(array|ArrayObject|iterable $from, mixed ...$values)
+ * @method static ArrayUtils unshiftFrom(iterable $from, mixed ...$values)
+ * @method static array      unshiftFromAs(iterable $from, mixed ...$values)
  *
  * @method        ArrayUtils values()
  * @method        array      valuesAs()
- * @method static ArrayUtils valuesFrom(array|ArrayObject|iterable $from)
- * @method static array      valuesFromAs(array|ArrayObject|iterable $from)
+ * @method static ArrayUtils valuesFrom(iterable $from)
+ * @method static array      valuesFromAs(iterable $from)
  *
  * @method        bool       every(callable $callback)
- * @method static bool       everyFrom(array|ArrayObject|iterable $from, callable $callback)
+ * @method static bool       everyFrom(iterable $from, callable $callback)
  *
  * @method        bool       includes(mixed $needle, int $start = 0)
- * @method static bool       includesFrom(array|ArrayObject|iterable $from, mixed $needle, int $start = 0)
+ * @method static bool       includesFrom(iterable $from, mixed $needle, int $start = 0)
  *
  * @method        bool       keyExists(mixed $key)
- * @method static bool       keyExistsFrom(array|ArrayObject|iterable $from, mixed $key)
+ * @method static bool       keyExistsFrom(iterable $from, mixed $key)
  *
  * @method        bool       some(callable $callback)
- * @method static bool       someFrom(array|ArrayObject|iterable $from, callable $callback)
+ * @method static bool       someFrom(iterable $from, callable $callback)
  *
  * @method        int|float  sum()
- * @method static int|float  sumFrom(array|ArrayObject|iterable $from)
+ * @method static int|float  sumFrom(iterable $from)
  *
  * @method        mixed      find(callable $callback)
- * @method static mixed      findFrom(array|ArrayObject|iterable $from, callable $callback)
+ * @method static mixed      findFrom(iterable $from, callable $callback)
  *
  * @method        mixed      findIndex(callable $callback)
- * @method static mixed      findIndexFrom(array|ArrayObject|iterable $from, callable $callback)
+ * @method static mixed      findIndexFrom(iterable $from, callable $callback)
  *
  * @method        mixed      first()
- * @method static mixed      firstFrom(array|ArrayObject|iterable $from)
+ * @method static mixed      firstFrom(iterable $from)
  *
  * @method        mixed      indexOf(mixed $needle, int $start = 0)
- * @method static mixed      indexOfFrom(array|ArrayObject|iterable $from, mixed $needle, int $start = 0)
+ * @method static mixed      indexOfFrom(iterable $from, mixed $needle, int $start = 0)
  *
  * @method        mixed      keyFirst()
- * @method static mixed      keyFirstFrom(array|ArrayObject|iterable $from)
+ * @method static mixed      keyFirstFrom(iterable $from)
  *
  * @method        mixed      keyLast()
- * @method static mixed      keyLastFrom(array|ArrayObject|iterable $from)
+ * @method static mixed      keyLastFrom(iterable $from)
  *
  * @method        mixed      keyRandom()
- * @method static mixed      keyRandomFrom(array|ArrayObject|iterable $from)
+ * @method static mixed      keyRandomFrom(iterable $from)
  *
  * @method        mixed      last()
- * @method static mixed      lastFrom(array|ArrayObject|iterable $from)
+ * @method static mixed      lastFrom(iterable $from)
  *
  * @method        mixed      pop()
- * @method static mixed      popFrom(array|ArrayObject|iterable &$from)
+ * @method static mixed      popFrom(iterable &$from)
  *
  * @method        mixed      random()
- * @method static mixed      randomFrom(array|ArrayObject|iterable $from)
+ * @method static mixed      randomFrom(iterable $from)
  *
  * @method        mixed      reduce(callable $callback, mixed $initialValue = null)
- * @method static mixed      reduceFrom(array|ArrayObject|iterable $from, callable $callback, mixed $initialValue = null)
+ * @method static mixed      reduceFrom(iterable $from, callable $callback, mixed $initialValue = null)
  *
  * @method        mixed      reduceRight(callable $callback, mixed $initialValue = null)
- * @method static mixed      reduceRightFrom(array|ArrayObject|iterable $from, callable $callback, mixed $initialValue = null)
+ * @method static mixed      reduceRightFrom(iterable $from, callable $callback, mixed $initialValue = null)
  *
  * @method        mixed      search(mixed $needle, int $start = 0)
- * @method static mixed      searchFrom(array|ArrayObject|iterable $from, mixed $needle, int $start = 0)
+ * @method static mixed      searchFrom(iterable $from, mixed $needle, int $start = 0)
  *
  * @method        mixed      shift()
- * @method static mixed      shiftFrom(array|ArrayObject|iterable &$from)
+ * @method static mixed      shiftFrom(iterable &$from)
  *
  * @method        string     join(string $glue = ",", string $prefix = "", string $suffix = "")
- * @method static string     joinFrom(array|ArrayObject|iterable $from, string $glue = ",", string $prefix = "", string $suffix = "")
+ * @method static string     joinFrom(iterable $from, string $glue = ",", string $prefix = "", string $suffix = "")
  */
 class ArrayUtils extends ArrayObject{
-    /**
-     * Creates a new, shallow-copied ArrayUtils instance from an array-like (array or array-object or iterable-object)
-     *
-     * @param array|ArrayObject|iterable $arrayLike
-     */
-    public function __construct($arrayLike, ...$arguments){
-        $array = self::toArray($arrayLike);
-        assert(is_array($array), "Argument must be of the type array-like, " . gettype($arrayLike) . " given");
-
-        parent::__construct($array, ...$arguments);
+    /** Creates a new, shallow-copied ArrayUtils instance from an iterable */
+    public function __construct(iterable $iterable, ...$arguments){
+        parent::__construct((array) $iterable, ...$arguments);
     }
 
     /**
-     * Creates a new, shallow-copied ArrayUtils instance from an array-like (array or array-object or iterable-object)
-     *
-     * @param array|ArrayObject|iterable $arrayLike
+     * Creates a new, shallow-copied ArrayUtils instance from an iterable
      *
      * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
      */
-    public static function from($arrayLike, ?callable $mapFn = null) : ArrayUtils{
-        $instance = new self($arrayLike);
+    public static function from(iterable $iterable, ?callable $mapFn = null) : ArrayUtils{
+        $instance = new self($iterable);
         if($mapFn !== null){
             $instance = $instance->map($mapFn);
         }
@@ -315,6 +303,11 @@ class ArrayUtils extends ArrayObject{
      */
     public static function of(...$elements) : ArrayUtils{
         return new self($elements);
+    }
+
+    /** Cast all elements of the iterable to an array */
+    public static function mapToArray(iterable $iterables) : array{
+        return self::__map((array) $iterables, function($iterable){ return (array) $iterable; });
     }
 
     /** Exchange the array for another one */
@@ -351,8 +344,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_combine
      * @url https://www.php.net/manual/en/function.array-column.php
      */
-    protected static function __combine(array $from, ?array $values = null){
-        return array_combine($from, $values ?? $from);
+    protected static function __combine(array $from, ?iterable $values = null){
+        return array_combine($from, (array) ($values ?? $from));
     }
 
     /**
@@ -360,16 +353,22 @@ class ArrayUtils extends ArrayObject{
      *
      * @see \array_merge
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat
+     *
+     * @params mixed ...$value
      */
-    protected static function __concat(array ...$values){
-        return array_merge(...self::__map($values, function($value){ return is_array($value) ? $value : [$value]; }));
+    protected static function __concat(...$values){
+        return array_merge(...self::mapToArray($values));
     }
 
-    /** All similar to @see __concat(), but not overwrite existing keys */
-    protected static function __concatSoft(array ...$values){
+    /**
+     * All similar to @see __concat(), but not overwrite existing keys
+     *
+     * @params mixed ...$value
+     */
+    protected static function __concatSoft(...$values){
         $array = [];
         foreach($values as $value){
-            $array += $value;
+            $array += (array) $value;
         }
         return $array;
     }
@@ -390,8 +389,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff
      * @url https://www.php.net/manual/en/function.array-diff.php
      */
-    protected static function __diff(array $from, array ...$arrays){
-        return array_diff($from, ...$arrays);
+    protected static function __diff(array $from, iterable ...$iterables){
+        return array_diff($from, ...self::mapToArray($iterables));
     }
 
     /**
@@ -400,8 +399,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff_assoc
      * @url https://www.php.net/manual/en/function.array-diff-assoc.php
      */
-    protected static function __diffAssoc(array $from, array ...$arrays){
-        return array_diff_assoc($from, ...$arrays);
+    protected static function __diffAssoc(array $from, iterable ...$iterables){
+        return array_diff_assoc($from, ...self::mapToArray($iterables));
     }
 
     /**
@@ -410,8 +409,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff_key
      * @url https://www.php.net/manual/en/function.array-diff-key.php
      */
-    protected static function __diffKey(array $from, array ...$arrays){
-        return array_diff_key($from, ...$arrays);
+    protected static function __diffKey(array $from, iterable ...$iterables){
+        return array_diff_key($from, ...self::mapToArray($iterables));
     }
 
     /**
@@ -590,8 +589,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect
      * @url https://www.php.net/manual/en/function.array-intersect.php
      */
-    protected static function __intersect(array $from, array ...$arrays){
-        return array_intersect($from, ...$arrays);
+    protected static function __intersect(array $from, iterable ...$iterables){
+        return array_intersect($from, ...self::mapToArray($iterables));
     }
 
     /**
@@ -600,8 +599,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect_assoc
      * @url https://www.php.net/manual/en/function.array-intersect-assoc.php
      */
-    protected static function __intersectAssoc(array $from, array ...$arrays){
-        return array_intersect_assoc($from, ...$arrays);
+    protected static function __intersectAssoc(array $from, iterable ...$iterables){
+        return array_intersect_assoc($from, ...self::mapToArray($iterables));
     }
 
     /**
@@ -610,8 +609,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect_key
      * @url https://www.php.net/manual/en/function.array-intersect-key.php
      */
-    protected static function __intersectkey(array $from, array ...$arrays){
-        return array_intersect_key($from, ...$arrays);
+    protected static function __intersectkey(array $from, iterable ...$iterables){
+        return array_intersect_key($from, ...self::mapToArray($iterables));
     }
 
     /**
@@ -708,13 +707,21 @@ class ArrayUtils extends ArrayObject{
         return $array;
     }
 
-    /** Alias of @see __concat() */
-    protected static function __merge(array ...$values){
+    /**
+     * Alias of @see __concat()
+     *
+     * @params mixed ...$value
+     */
+    protected static function __merge(...$values){
         return self::__concat(...$values);
     }
 
-    /** Alias of @see __concatSoft() */
-    protected static function __mergeSoft(array ...$values){
+    /**
+     * Alias of @see __concatSoft()
+     *
+     * @params mixed ...$value
+     */
+    protected static function __mergeSoft(...$values){
         return self::__concatSoft(...$values);
     }
 
@@ -783,8 +790,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_replace_recursive
      * @url https://www.php.net/manual/en/function.array-replace-recursive.php
      */
-    protected static function __replace(array $from, array ...$arrays){
-        return array_replace_recursive($from, ...$arrays);
+    protected static function __replace(array $from, iterable ...$iterables){
+        return array_replace_recursive($from, ...self::mapToArray($iterables));
     }
 
     /**
@@ -952,15 +959,14 @@ class ArrayUtils extends ArrayObject{
         if($raw = substr($name, -2) === "As"){
             $name = substr($name, 0, -2);
         }
-        $arguments = self::__map($arguments, function($value){ return self::toArray($value) ?? $value; });
 
         if(method_exists(self::class, $method = "__$name")){
             //Mapping method calls omitting "__" (It is meaning result is array)
-            $result = self::$method($this->getArrayCopy(), ...$arguments);
+            $result = self::$method((array) $this, ...$arguments);
             return $raw || !is_array($result) ? $result : $this->exchange($result);
         }elseif(method_exists(self::class, $method = "_$name")){
             //Mapping method calls omitting "_" (It is meaning result is not array)
-            $array = $this->getArrayCopy();
+            $array = (array) $this;
             $result = self::$method($array, ...$arguments);
             $this->exchangeArray($array);
             return $result;
@@ -980,27 +986,5 @@ class ArrayUtils extends ArrayObject{
         }
         $instance = self::from(array_shift($arguments));
         return $instance->$name(...$arguments);
-    }
-
-    /**
-     * Returns the array get from array-like (array or array-object or iterable-object)
-     * if it failed, returns null
-     *
-     * @param array|ArrayObject|iterable $arrayLike
-     */
-    private static function toArray($arrayLike) : ?array{
-        if(is_array($arrayLike)){
-            return $arrayLike;
-        }elseif($arrayLike instanceof ArrayObject){
-            return $arrayLike->getArrayCopy();
-        }elseif($arrayLike instanceof iterable){
-            $array = [];
-            foreach($arrayLike as $key => $value){
-                $array[$key] = $value;
-            }
-            return $array;
-        }else{
-            return null;
-        }
     }
 }
