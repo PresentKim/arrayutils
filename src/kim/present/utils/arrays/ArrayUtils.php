@@ -329,7 +329,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_chunk
      * @url https://www.php.net/manual/en/function.array-chunk.php
      */
-    public static function __chunk(array $from, int $size, bool $preserveKeys = false){
+    protected static function __chunk(array $from, int $size, bool $preserveKeys = false){
         return array_chunk($from, $size, $preserveKeys);
     }
 
@@ -339,7 +339,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_column
      * @url https://www.php.net/manual/en/function.array-column.php
      */
-    public static function __column(array $from, $column_key, $indexKey = null){
+    protected static function __column(array $from, $column_key, $indexKey = null){
         return array_column($from, $column_key, $indexKey);
     }
 
@@ -351,7 +351,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_combine
      * @url https://www.php.net/manual/en/function.array-column.php
      */
-    public static function __combine(array $from, ?array $values = null){
+    protected static function __combine(array $from, ?array $values = null){
         return array_combine($from, $values ?? $from);
     }
 
@@ -361,12 +361,12 @@ class ArrayUtils extends ArrayObject{
      * @see \array_merge
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat
      */
-    public static function __concat(array ...$values){
+    protected static function __concat(array ...$values){
         return array_merge(...self::__map($values, function($value){ return is_array($value) ? $value : [$value]; }));
     }
 
     /** All similar to @see __concat(), but not overwrite existing keys */
-    public static function __concatSoft(array ...$values){
+    protected static function __concatSoft(array ...$values){
         $array = [];
         foreach($values as $value){
             $array += $value;
@@ -380,7 +380,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_count_values
      * @url https://www.php.net/manual/en/function.array-count-values.php
      */
-    public static function __countValues(array $from){
+    protected static function __countValues(array $from){
         return array_count_values($from);
     }
 
@@ -390,7 +390,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff
      * @url https://www.php.net/manual/en/function.array-diff.php
      */
-    public static function __diff(array $from, array ...$arrays){
+    protected static function __diff(array $from, array ...$arrays){
         return array_diff($from, ...$arrays);
     }
 
@@ -400,7 +400,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff_assoc
      * @url https://www.php.net/manual/en/function.array-diff-assoc.php
      */
-    public static function __diffAssoc(array $from, array ...$arrays){
+    protected static function __diffAssoc(array $from, array ...$arrays){
         return array_diff_assoc($from, ...$arrays);
     }
 
@@ -410,7 +410,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff_key
      * @url https://www.php.net/manual/en/function.array-diff-key.php
      */
-    public static function __diffKey(array $from, array ...$arrays){
+    protected static function __diffKey(array $from, array ...$arrays){
         return array_diff_key($from, ...$arrays);
     }
 
@@ -419,7 +419,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
      */
-    public static function _every(array $from, callable $callback) : bool{
+    protected static function _every(array $from, callable $callback) : bool{
         foreach($from as $key => $value){
             if(!$callback($value, $key, $from))
                 return false;
@@ -432,7 +432,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
      */
-    public static function __fill(array $from, $value, int $start = 0, int $end = null){
+    protected static function __fill(array $from, $value, int $start = 0, int $end = null){
         $count = count($from);
         $end = $end ?? $count;
 
@@ -451,7 +451,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_fill_keys
      * @url https://www.php.net/manual/en/function.array-fill-keys.php
      */
-    public static function __fillKeys(array $from, $value){
+    protected static function __fillKeys(array $from, $value){
         return array_fill_keys($from, $value);
     }
 
@@ -461,7 +461,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_filter
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
      */
-    public static function __filter(array $from, callable $callback, int $flag = 0){
+    protected static function __filter(array $from, callable $callback, int $flag = 0){
         $array = [];
         foreach($from as $key => $value){
             if($callback($value, $key, $from))
@@ -475,7 +475,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
      */
-    public static function _find(array $from, callable $callback){
+    protected static function _find(array $from, callable $callback){
         foreach($from as $key => $value){
             if($callback($value, $key, $from))
                 return $value;
@@ -488,7 +488,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
      */
-    public static function _findIndex(array $from, callable $callback){
+    protected static function _findIndex(array $from, callable $callback){
         foreach($from as $key => $value){
             if($callback($value, $key, $from))
                 return $key;
@@ -497,7 +497,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** Returns the value at the result of @see _keyFirst() */
-    public static function _first(array $from){
+    protected static function _first(array $from){
         return $from[self::_keyFirst($from)];
     }
 
@@ -506,7 +506,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
      */
-    public static function __flat(array $from, int $dept = 1){
+    protected static function __flat(array $from, int $dept = 1){
         if($dept > 0) return [$from];
         return self::_reduce($from,
             function($currentValue, $value) use ($dept){
@@ -522,7 +522,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
      */
-    public static function __flatMap(array $from, callable $callback){
+    protected static function __flatMap(array $from, callable $callback){
         return self::__concat(...self::__map($from, $callback));
     }
 
@@ -532,7 +532,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_flip
      * @url https://www.php.net/manual/en/function.array-flip.php
      */
-    public static function __flip(array $from){
+    protected static function __flip(array $from){
         return array_flip($from);
     }
 
@@ -542,7 +542,7 @@ class ArrayUtils extends ArrayObject{
      * @see foreach
      * @url https://www.php.net/manual/en/function.array-map.php
      */
-    public static function __forEach(array $from, callable $callback){
+    protected static function __forEach(array $from, callable $callback){
         foreach($from as $key => $value){
             $callback($value, $key, $from);
         }
@@ -554,7 +554,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
      */
-    public static function _includes(array $from, $needle, int $start = 0) : bool{
+    protected static function _includes(array $from, $needle, int $start = 0) : bool{
         $values = array_values($from);
         $count = count($from);
         $i = $start < 0 ? max($count + $start, 0) : min($start, $count);
@@ -571,7 +571,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
      */
-    public static function _indexOf(array $from, $needle, int $start = 0){
+    protected static function _indexOf(array $from, $needle, int $start = 0){
         $keys = array_keys($from);
         $values = array_values($from);
         $count = count($from);
@@ -590,7 +590,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect
      * @url https://www.php.net/manual/en/function.array-intersect.php
      */
-    public static function __intersect(array $from, array ...$arrays){
+    protected static function __intersect(array $from, array ...$arrays){
         return array_intersect($from, ...$arrays);
     }
 
@@ -600,7 +600,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect_assoc
      * @url https://www.php.net/manual/en/function.array-intersect-assoc.php
      */
-    public static function __intersectAssoc(array $from, array ...$arrays){
+    protected static function __intersectAssoc(array $from, array ...$arrays){
         return array_intersect_assoc($from, ...$arrays);
     }
 
@@ -610,7 +610,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect_key
      * @url https://www.php.net/manual/en/function.array-intersect-key.php
      */
-    public static function __intersectkey(array $from, array ...$arrays){
+    protected static function __intersectkey(array $from, array ...$arrays){
         return array_intersect_key($from, ...$arrays);
     }
 
@@ -620,12 +620,12 @@ class ArrayUtils extends ArrayObject{
      * @see \implode
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
      */
-    public static function _join(array $from, string $glue = ",", string $prefix = "", string $suffix = "") : string{
+    protected static function _join(array $from, string $glue = ",", string $prefix = "", string $suffix = "") : string{
         return $prefix . implode($glue, $from) . $suffix;
     }
 
     /** Alias of @see offsetExists() */
-    public static function _keyExists(array $from, $key) : bool{
+    protected static function _keyExists(array $from, $key) : bool{
         return isset($from[$key]);
     }
 
@@ -635,7 +635,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_key_first
      * @url https://www.php.net/manual/en/function.array-key-first.php
      */
-    public static function _keyFirst(array $from){
+    protected static function _keyFirst(array $from){
         return array_keys($from)[0] ?? null;
     }
 
@@ -645,7 +645,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_key_last
      * @url https://www.php.net/manual/en/function.array-key-last.php
      */
-    public static function _keyLast(array $from){
+    protected static function _keyLast(array $from){
         return array_keys($from)[count($from) - 1] ?? null;
     }
 
@@ -656,7 +656,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_rand
      * @url https://www.php.net/manual/en/function.array-rand.php
      */
-    public static function _keyRandom(array $from){
+    protected static function _keyRandom(array $from){
         return ($keys = array_keys($from))[rand(0, count($keys) - 1)] ?? null;
     }
 
@@ -666,12 +666,12 @@ class ArrayUtils extends ArrayObject{
      * @see \array_keys
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/keys
      */
-    public static function __keys(array $from){
+    protected static function __keys(array $from){
         return array_keys($from);
     }
 
     /** Returns the value at the result of @see _keyLast() */
-    public static function _last(array $from){
+    protected static function _last(array $from){
         return $from[self::_keyLast($from)];
     }
 
@@ -681,7 +681,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_map
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
      */
-    public static function __map(array $from, callable $callback){
+    protected static function __map(array $from, callable $callback){
         $array = [];
         foreach($from as $key => $value){
             $array[$key] = $callback($value, $key, $from);
@@ -690,7 +690,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** All similar to @see __map(), but this applies to both keys and values */
-    public static function __mapAssoc(array $from, callable $callback){
+    protected static function __mapAssoc(array $from, callable $callback){
         $array = [];
         foreach($from as $key => $value){
             [$newKey, $newValue] = $callback($value, $key, $from);
@@ -700,7 +700,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** All similar to @see __map(), but this applies to keys */
-    public static function __mapKey(array $from, callable $callback){
+    protected static function __mapKey(array $from, callable $callback){
         $array = [];
         foreach($from as $key => $value){
             $array[$callback($value, $key, $from)] = $value;
@@ -709,12 +709,12 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** Alias of @see __concat() */
-    public static function __merge(array ...$values){
+    protected static function __merge(array ...$values){
         return self::__concat(...$values);
     }
 
     /** Alias of @see __concatSoft() */
-    public static function __mergeSoft(array ...$values){
+    protected static function __mergeSoft(array ...$values){
         return self::__concatSoft(...$values);
     }
 
@@ -724,7 +724,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_pad
      * @url https://www.php.net/manual/en/function.array-pad.php
      */
-    public static function __pad(array $from, int $size, $value){
+    protected static function __pad(array $from, int $size, $value){
         return array_pad($from, $size, $value);
     }
 
@@ -734,7 +734,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_pop
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop
      */
-    public static function _pop(array &$from){
+    protected static function _pop(array &$from){
         return array_pop($from);
     }
 
@@ -744,13 +744,13 @@ class ArrayUtils extends ArrayObject{
      * @see \array_push
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
      */
-    public static function __push(array $from, ...$values){
+    protected static function __push(array $from, ...$values){
         array_push($from, ...$values);
         return $from;
     }
 
     /** Returns the value at the result of @see _keyRandom() */
-    public static function _random(array $from){
+    protected static function _random(array $from){
         return $from[self::_keyRandom($from)];
     }
 
@@ -760,7 +760,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_reduce
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
      */
-    public static function _reduce(array $from, callable $callback, $initialValue = null){
+    protected static function _reduce(array $from, callable $callback, $initialValue = null){
         $currentValue = $initialValue;
         foreach($from as $key => $value){
             $currentValue = $callback($currentValue, $value, $key, $from);
@@ -769,7 +769,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** All similar to @see _reduce(), but reverse order */
-    public static function _reduceRight(array $from, callable $callback, $initialValue = null){
+    protected static function _reduceRight(array $from, callable $callback, $initialValue = null){
         $currentValue = $initialValue;
         foreach($from as $key => $value){
             $currentValue = $callback($currentValue, $value, $key, $from);
@@ -783,7 +783,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_replace_recursive
      * @url https://www.php.net/manual/en/function.array-replace-recursive.php
      */
-    public static function __replace(array $from, array ...$arrays){
+    protected static function __replace(array $from, array ...$arrays){
         return array_replace_recursive($from, ...$arrays);
     }
 
@@ -793,12 +793,12 @@ class ArrayUtils extends ArrayObject{
      * @see \array_reverse
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
      */
-    public static function __reverse(array $from, bool $preserveKeys = false) : array{
+    protected static function __reverse(array $from, bool $preserveKeys = false) : array{
         return array_reverse($from, $preserveKeys);
     }
 
     /** Alias of @see _indexOf() */
-    public static function _search(array $from, $needle, int $start = 0){
+    protected static function _search(array $from, $needle, int $start = 0){
         return self::_indexOf($from, $needle, $start);
     }
 
@@ -808,7 +808,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_shift
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift
      */
-    public static function _shift(array &$from){
+    protected static function _shift(array &$from){
         return array_shift($from);
     }
 
@@ -820,7 +820,7 @@ class ArrayUtils extends ArrayObject{
      * @url https://www.php.net/manual/en/function.array-slice.php
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
      */
-    public static function __slice(array $from, int $start = 0, int $end = null, $preserve_keys = false){
+    protected static function __slice(array $from, int $start = 0, int $end = null, $preserve_keys = false){
         $array = [];
         $keys = array_keys($from);
         $values = array_values($from);
@@ -845,7 +845,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
      */
-    public static function _some(array $from, callable $callback) : bool{
+    protected static function _some(array $from, callable $callback) : bool{
         foreach($from as $key => $value){
             if($callback($value, $key, $from))
                 return true;
@@ -864,7 +864,7 @@ class ArrayUtils extends ArrayObject{
      * @see \sort
      * @url https://www.php.net/manual/en/function.sort.php
      */
-    public static function __sort(array $from, ?callable $callback = null){
+    protected static function __sort(array $from, ?callable $callback = null){
         if($callback === null){
             sort($from);
         }else{
@@ -884,7 +884,7 @@ class ArrayUtils extends ArrayObject{
      * @see \ksort
      * @url https://www.php.net/manual/en/function.ksort.php
      */
-    public static function __sortKey(array $from, ?callable $callback = null){
+    protected static function __sortKey(array $from, ?callable $callback = null){
         if($callback === null){
             ksort($from);
         }else{
@@ -901,7 +901,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_splice
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
      */
-    public static function __splice(array $from, int $offset, ?int $length = null, ...$replacement){
+    protected static function __splice(array $from, int $offset, ?int $length = null, ...$replacement){
         return array_splice($array, $offset, $length ?? count($from), $replacement);
     }
 
@@ -912,7 +912,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_sum
      * @url https://www.php.net/manual/en/function.array-sum.php
      */
-    public static function _sum(array $from){
+    protected static function _sum(array $from){
         return array_sum($from);
     }
 
@@ -922,7 +922,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_unique
      * @url https://www.php.net/manual/en/function.array-unique.php
      */
-    public static function __unique(array $from, int $sort_flags = SORT_STRING){
+    protected static function __unique(array $from, int $sort_flags = SORT_STRING){
         return array_unique($from, $sort_flags);
     }
 
@@ -932,7 +932,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_unshift
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift
      */
-    public static function __unshift(array $from, ...$values){
+    protected static function __unshift(array $from, ...$values){
         array_unshift($from, ...$values);
         return $from;
     }
@@ -943,7 +943,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_values
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values
      */
-    public static function __values(array $from){
+    protected static function __values(array $from){
         return array_values($from);
     }
 
