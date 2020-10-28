@@ -5,11 +5,17 @@ on:
       - master
 jobs:
   build:
+    name: Build and deploy
     runs-on: ubuntu-latest
+    env:
+      MY_SECRET   : ${{secrets.PERSONAL_TOKEN}}
+      USER_NAME   : PresentKim
+      USER_EMAIL  : debe3721@gmail.com
+      BOOK_DIR    : /
+
     steps:
     - name: Checkout action
       uses: actions/checkout@v2
-    - name: Gitbook Action # https://github.com/ZanderZhao/gitbook-action/releases
-      uses: ZanderZhao/gitbook-action@v1.2.4
-      with:
-        token: ${{ secrets.PERSONAL_TOKEN }}
+
+    - name: Build and Deploy
+      uses: onejar99/gitbook-build-publish-action@v1.0.0
