@@ -1,7 +1,7 @@
 ---
 name: arrayutils
 antigen: kim\present\utils\arrays
-version: 3.0.0
+version: 4.0.0
 api: 3.0.0
 authors: [PresentKim, Blugin-team]
 description: Library that provides a method to fancy manipulate an array

@@ -5,6 +5,7 @@ projects:
   arrayutils:
     model: virion
     type: library
+    icon: assets/icon.png
     lint:
       phpstan: false
 ...
