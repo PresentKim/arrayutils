@@ -197,11 +197,6 @@ use ArrayObject;
  * @method static ArrayUtils sortKeyFrom(iterable $from, ?callable $callback = null)
  * @method static array      sortKeyFromAs(iterable $from, ?callable $callback = null)
  *
- * @method        ArrayUtils splice(int $offset, ?int $length = null, mixed ...$replacement)
- * @method        array      spliceAs(int $offset, ?int $length = null, mixed ...$replacement)
- * @method static ArrayUtils spliceFrom(iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
- * @method static array      spliceFromAs(iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
- *
  * @method        ArrayUtils unique(int $sortFlags = SORT_STRING)
  * @method        array      uniqueAs(int $sortFlags = SORT_STRING)
  * @method static ArrayUtils uniqueFrom(iterable $from, int $sortFlags = SORT_STRING)
@@ -273,6 +268,9 @@ use ArrayObject;
  *
  * @method        mixed      shift()
  * @method static mixed      shiftFrom(iterable &$from)
+ *
+ * @method        array      splice(int $offset, ?int $length = null, mixed ...$replacement)
+ * @method static array      spliceFrom(iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
  *
  * @method        string     join(string $glue = ",", string $prefix = "", string $suffix = "")
  * @method static string     joinFrom(iterable $from, string $glue = ",", string $prefix = "", string $suffix = "")
@@ -934,8 +932,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_splice
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
      */
-    protected static function __splice(array $from, int $offset, ?int $length = null, ...$replacement) : array{
-        return array_splice($array, $offset, $length ?? count($from), $replacement);
+    protected static function _splice(array &$from, int $offset, ?int $length = null, ...$replacement) : array{
+        return array_splice($from, $offset, $length ?? count($from), $replacement);
     }
 
     /**
