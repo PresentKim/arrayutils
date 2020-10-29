@@ -506,7 +506,7 @@ class ArrayUtils extends ArrayObject{
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
      */
     protected static function __flat(array $from, int $dept = 1){
-        if($dept > 0) return [$from];
+        if($dept === 0) return (array) $from;
         return self::_reduce($from,
             function($currentValue, $value) use ($dept){
                 return self::__concat(
