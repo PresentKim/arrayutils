@@ -864,9 +864,9 @@ class ArrayUtils extends ArrayObject{
         $max = $end < 0 ? max($count + $end, 0) : min($end, $count);
         for(; $i < $max; ++$i){
             if($preserveKeys){
-                $from[$keys[$i]] = $values[$i];
+                $array[$keys[$i]] = $values[$i];
             }else{
-                $from[] = $values[$i];
+                $array[] = $values[$i];
             }
         }
 
