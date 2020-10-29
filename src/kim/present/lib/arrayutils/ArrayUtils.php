@@ -802,7 +802,7 @@ class ArrayUtils extends ArrayObject{
     /** All similar to @see _reduce(), but reverse order */
     protected static function _reduceRight(array $from, callable $callback, $initialValue = null){
         $currentValue = $initialValue;
-        foreach($from as $key => $value){
+        foreach(array_reverse($from) as $key => $value){
             $currentValue = $callback($currentValue, $value, $key, $from);
         }
         return $currentValue;
