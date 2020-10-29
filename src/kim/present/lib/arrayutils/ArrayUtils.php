@@ -42,15 +42,15 @@ use ArrayObject;
  * @method static ArrayUtils chunkFrom(iterable $from, int $size, bool $preserveKeys = false)
  * @method static array      chunkFromAs(iterable $from, int $size, bool $preserveKeys = false)
  *
- * @method        ArrayUtils column(mixed $column_key, mixed $indexKey = null)
- * @method        array      columnAs(mixed $column_key, mixed $indexKey = null)
- * @method static ArrayUtils columnFrom(iterable $from, mixed $column_key, mixed $indexKey = null)
- * @method static array      columnFromAs(iterable $from, mixed $column_key, mixed $indexKey = null)
+ * @method        ArrayUtils column(mixed $valueKey, mixed $indexKey = null)
+ * @method        array      columnAs(mixed $valueKey, mixed $indexKey = null)
+ * @method static ArrayUtils columnFrom(iterable $from, mixed $valueKey, mixed $indexKey = null)
+ * @method static array      columnFromAs(iterable $from, mixed $valueKey, mixed $indexKey = null)
  *
- * @method        ArrayUtils combine(iterable|null $iterables = null)
- * @method        array      combineAs(iterable|null $iterables = null)
- * @method static ArrayUtils combineFrom(iterable $from, iterable|null $iterables = null)
- * @method static array      combineFromAs(iterable $from, iterable|null $iterables = null)
+ * @method        ArrayUtils combine(iterable|null $valueArray = null)
+ * @method        array      combineAs(iterable|null $valueArray = null)
+ * @method static ArrayUtils combineFrom(iterable $from, iterable|null $valueArray = null)
+ * @method static array      combineFromAs(iterable $from, iterable|null $valueArray = null)
  *
  * @method        ArrayUtils concat(mixed ...$values)
  * @method        array      concatAs(mixed ...$values)
@@ -182,10 +182,10 @@ use ArrayObject;
  * @method static ArrayUtils reverseFrom(iterable $from, bool $preserveKeys = false)
  * @method static array      reverseFromAs(iterable $from, bool $preserveKeys = false)
  *
- * @method        ArrayUtils slice(int $start = 0, int $end = null, mixed $preserve_keys = false)
- * @method        array      sliceAs(int $start = 0, int $end = null, mixed $preserve_keys = false)
- * @method static ArrayUtils sliceFrom(iterable $from, int $start = 0, int $end = null, mixed $preserve_keys = false)
- * @method static array      sliceFromAs(iterable $from, int $start = 0, int $end = null, mixed $preserve_keys = false)
+ * @method        ArrayUtils slice(int $start = 0, int $end = null, bool $preserveKeys = false)
+ * @method        array      sliceAs(int $start = 0, int $end = null, bool $preserveKeys = false)
+ * @method static ArrayUtils sliceFrom(iterable $from, int $start = 0, int $end = null, bool $preserveKeys = false)
+ * @method static array      sliceFromAs(iterable $from, int $start = 0, int $end = null, bool $preserveKeys = false)
  *
  * @method        ArrayUtils sort(?callable $callback = null)
  * @method        array      sortAs(?callable $callback = null)
@@ -202,10 +202,10 @@ use ArrayObject;
  * @method static ArrayUtils spliceFrom(iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
  * @method static array      spliceFromAs(iterable $from, int $offset, ?int $length = null, mixed ...$replacement)
  *
- * @method        ArrayUtils unique(int $sort_flags = SORT_STRING)
- * @method        array      uniqueAs(int $sort_flags = SORT_STRING)
- * @method static ArrayUtils uniqueFrom(iterable $from, int $sort_flags = SORT_STRING)
- * @method static array      uniqueFromAs(iterable $from, int $sort_flags = SORT_STRING)
+ * @method        ArrayUtils unique(int $sortFlags = SORT_STRING)
+ * @method        array      uniqueAs(int $sortFlags = SORT_STRING)
+ * @method static ArrayUtils uniqueFrom(iterable $from, int $sortFlags = SORT_STRING)
+ * @method static array      uniqueFromAs(iterable $from, int $sortFlags = SORT_STRING)
  *
  * @method        ArrayUtils unshift(mixed ...$values)
  * @method        array      unshiftAs(mixed ...$values)
@@ -223,8 +223,8 @@ use ArrayObject;
  * @method        bool       includes(mixed $needle, int $start = 0)
  * @method static bool       includesFrom(iterable $from, mixed $needle, int $start = 0)
  *
- * @method        bool       keyExists(mixed $key)
- * @method static bool       keyExistsFrom(iterable $from, mixed $key)
+ * @method        bool       keyExists(int|string $key)
+ * @method static bool       keyExistsFrom(iterable $from, int|string $key)
  *
  * @method        bool       some(callable $callback)
  * @method static bool       someFrom(iterable $from, callable $callback)
@@ -235,23 +235,23 @@ use ArrayObject;
  * @method        mixed      find(callable $callback)
  * @method static mixed      findFrom(iterable $from, callable $callback)
  *
- * @method        mixed      findIndex(callable $callback)
- * @method static mixed      findIndexFrom(iterable $from, callable $callback)
+ * @method        int|string|null findIndex(callable $callback)
+ * @method static int|string|null findIndexFrom(iterable $from, callable $callback)
  *
  * @method        mixed      first()
  * @method static mixed      firstFrom(iterable $from)
  *
- * @method        mixed      indexOf(mixed $needle, int $start = 0)
- * @method static mixed      indexOfFrom(iterable $from, mixed $needle, int $start = 0)
+ * @method        int|string|null indexOf(mixed $needle, int $start = 0)
+ * @method static int|string|null indexOfFrom(iterable $from, mixed $needle, int $start = 0)
  *
- * @method        mixed      keyFirst()
- * @method static mixed      keyFirstFrom(iterable $from)
+ * @method        int|string|null keyFirst()
+ * @method static int|string|null keyFirstFrom(iterable $from)
  *
- * @method        mixed      keyLast()
- * @method static mixed      keyLastFrom(iterable $from)
+ * @method        int|string|null keyLast()
+ * @method static int|string|null keyLastFrom(iterable $from)
  *
- * @method        mixed      keyRandom()
- * @method static mixed      keyRandomFrom(iterable $from)
+ * @method        int|string|null keyRandom()
+ * @method static int|string|null keyRandomFrom(iterable $from)
  *
  * @method        mixed      last()
  * @method static mixed      lastFrom(iterable $from)
@@ -279,12 +279,14 @@ use ArrayObject;
  */
 class ArrayUtils extends ArrayObject{
     /** Creates a new, shallow-copied ArrayUtils instance from an iterable */
-    public function __construct(iterable $iterable, ...$arguments){
-        parent::__construct((array) $iterable, ...$arguments);
+    public function __construct(iterable $iterable, int $flags = 0, string $iteratorClass = "ArrayIterator"){
+        parent::__construct((array) $iterable, $flags, $iteratorClass);
     }
 
     /**
      * Creates a new, shallow-copied ArrayUtils instance from an iterable
+     *
+     * @param mixed ...$elements
      *
      * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
      */
@@ -298,6 +300,8 @@ class ArrayUtils extends ArrayObject{
 
     /**
      * Creates a new, ArrayUtils instance from variadic function arguments
+     *
+     * @param mixed ...$elements
      *
      * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of
      */
@@ -322,41 +326,44 @@ class ArrayUtils extends ArrayObject{
      * @see \array_chunk
      * @url https://www.php.net/manual/en/function.array-chunk.php
      */
-    protected static function __chunk(array $from, int $size, bool $preserveKeys = false){
+    protected static function __chunk(array $from, int $size, bool $preserveKeys = false) : array{
         return array_chunk($from, $size, $preserveKeys);
     }
 
     /**
-     * Return the values from a single column in the input array
+     * Returns the values from a single column in the input array
+     *
+     * @param mixed $valueKey
+     * @param mixed $indexKey = null
      *
      * @see \array_column
      * @url https://www.php.net/manual/en/function.array-column.php
      */
-    protected static function __column(array $from, $column_key, $indexKey = null){
-        return array_column($from, $column_key, $indexKey);
+    protected static function __column(array $from, $valueKey, $indexKey = null) : array{
+        return array_column($from, $valueKey, $indexKey);
     }
 
     /**
      * Creates an array by using one array for keys and another for its values
      *
-     * @param array|null $values If is null, Use self clone
+     * @param array|null $valueArray If is null, Use self clone
      *
      * @see \array_combine
      * @url https://www.php.net/manual/en/function.array-column.php
      */
-    protected static function __combine(array $from, ?iterable $values = null){
-        return array_combine($from, (array) ($values ?? $from));
+    protected static function __combine(array $from, ?iterable $valueArray = null) : array{
+        return array_combine($from, (array) ($valueArray ?? $from));
     }
 
     /**
      * Merge one or more arrays
      *
+     * @params mixed ...$value
+     *
      * @see \array_merge
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat
-     *
-     * @params mixed ...$value
      */
-    protected static function __concat(...$values){
+    protected static function __concat(...$values) : array{
         return array_merge(...self::mapToArray($values));
     }
 
@@ -365,7 +372,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @params mixed ...$value
      */
-    protected static function __concatSoft(...$values){
+    protected static function __concatSoft(...$values) : array{
         $array = [];
         foreach($values as $value){
             $array += (array) $value;
@@ -379,7 +386,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_count_values
      * @url https://www.php.net/manual/en/function.array-count-values.php
      */
-    protected static function __countValues(array $from){
+    protected static function __countValues(array $from) : array{
         return array_count_values($from);
     }
 
@@ -389,17 +396,17 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff
      * @url https://www.php.net/manual/en/function.array-diff.php
      */
-    protected static function __diff(array $from, iterable ...$iterables){
+    protected static function __diff(array $from, iterable ...$iterables) : array{
         return array_diff($from, ...self::mapToArray($iterables));
     }
 
     /**
-     * All similar to @see __diff(), but this applies to both keys and values
+     * All similar to @see __diff(), but this applies with additional index check
      *
      * @see \array_diff_assoc
      * @url https://www.php.net/manual/en/function.array-diff-assoc.php
      */
-    protected static function __diffAssoc(array $from, iterable ...$iterables){
+    protected static function __diffAssoc(array $from, iterable ...$iterables) : array{
         return array_diff_assoc($from, ...self::mapToArray($iterables));
     }
 
@@ -409,7 +416,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_diff_key
      * @url https://www.php.net/manual/en/function.array-diff-key.php
      */
-    protected static function __diffKey(array $from, iterable ...$iterables){
+    protected static function __diffKey(array $from, iterable ...$iterables) : array{
         return array_diff_key($from, ...self::mapToArray($iterables));
     }
 
@@ -431,7 +438,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
      */
-    protected static function __fill(array $from, $value, int $start = 0, int $end = null){
+    protected static function __fill(array $from, $value, int $start = 0, int $end = null) : array{
         $count = count($from);
         $end = $end ?? $count;
 
@@ -447,10 +454,12 @@ class ArrayUtils extends ArrayObject{
     /**
      * Fill an array with values, specifying keys
      *
+     * @param mixed $value
+     *
      * @see \array_fill_keys
      * @url https://www.php.net/manual/en/function.array-fill-keys.php
      */
-    protected static function __fillKeys(array $from, $value){
+    protected static function __fillKeys(array $from, $value) : array{
         return array_fill_keys($from, $value);
     }
 
@@ -472,6 +481,8 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the value of the first element that that pass the $callback function
      *
+     * @return mixed;
+     *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
      */
     protected static function _find(array $from, callable $callback){
@@ -485,6 +496,8 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the key of the first element that that pass the $callback function
      *
+     * @return int|string|null
+     *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
      */
     protected static function _findIndex(array $from, callable $callback){
@@ -495,7 +508,13 @@ class ArrayUtils extends ArrayObject{
         return null;
     }
 
-    /** Returns the value at the result of @see _keyFirst() */
+    /**
+     * Returns the value at the result of _keyFirst()
+     *
+     * @return mixed
+     *
+     * @see _keyFirst()
+     */
     protected static function _first(array $from){
         return $from[self::_keyFirst($from)];
     }
@@ -505,7 +524,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
      */
-    protected static function __flat(array $from, int $dept = 1){
+    protected static function __flat(array $from, int $dept = 1) : array{
         if($dept === 0) return (array) $from;
         return self::_reduce($from,
             function($currentValue, $value) use ($dept){
@@ -521,7 +540,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
      */
-    protected static function __flatMap(array $from, callable $callback){
+    protected static function __flatMap(array $from, callable $callback) : array{
         return self::__concat(...self::__map($from, $callback));
     }
 
@@ -531,7 +550,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_flip
      * @url https://www.php.net/manual/en/function.array-flip.php
      */
-    protected static function __flip(array $from){
+    protected static function __flip(array $from) : array{
         return array_flip($from);
     }
 
@@ -541,7 +560,7 @@ class ArrayUtils extends ArrayObject{
      * @see foreach
      * @url https://www.php.net/manual/en/function.array-map.php
      */
-    protected static function __forEach(array $from, callable $callback){
+    protected static function __forEach(array $from, callable $callback) : array{
         foreach($from as $key => $value){
             $callback($value, $key, $from);
         }
@@ -568,6 +587,8 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the first index at which a given element can be found in the array
      *
+     * @return int|string|null
+     *
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
      */
     protected static function _indexOf(array $from, $needle, int $start = 0){
@@ -589,7 +610,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect
      * @url https://www.php.net/manual/en/function.array-intersect.php
      */
-    protected static function __intersect(array $from, iterable ...$iterables){
+    protected static function __intersect(array $from, iterable ...$iterables) : array{
         return array_intersect($from, ...self::mapToArray($iterables));
     }
 
@@ -599,7 +620,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect_assoc
      * @url https://www.php.net/manual/en/function.array-intersect-assoc.php
      */
-    protected static function __intersectAssoc(array $from, iterable ...$iterables){
+    protected static function __intersectAssoc(array $from, iterable ...$iterables) : array{
         return array_intersect_assoc($from, ...self::mapToArray($iterables));
     }
 
@@ -609,7 +630,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_intersect_key
      * @url https://www.php.net/manual/en/function.array-intersect-key.php
      */
-    protected static function __intersectkey(array $from, iterable ...$iterables){
+    protected static function __intersectkey(array $from, iterable ...$iterables) : array{
         return array_intersect_key($from, ...self::mapToArray($iterables));
     }
 
@@ -631,6 +652,8 @@ class ArrayUtils extends ArrayObject{
     /**
      * Gets the first key of an array
      *
+     * @return int|string|null
+     *
      * @see \array_key_first
      * @url https://www.php.net/manual/en/function.array-key-first.php
      */
@@ -640,6 +663,8 @@ class ArrayUtils extends ArrayObject{
 
     /**
      * Gets the last key of an array
+     *
+     * @return int|string|null
      *
      * @see \array_key_last
      * @url https://www.php.net/manual/en/function.array-key-last.php
@@ -651,7 +676,8 @@ class ArrayUtils extends ArrayObject{
     /**
      * Gets the random key of an array
      *
-     * @return mixed
+     * @return int|string|null
+     *
      * @see \array_rand
      * @url https://www.php.net/manual/en/function.array-rand.php
      */
@@ -660,12 +686,12 @@ class ArrayUtils extends ArrayObject{
     }
 
     /**
-     * Return all the keys of an array
+     * Returns all the keys of an array
      *
      * @see \array_keys
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/keys
      */
-    protected static function __keys(array $from){
+    protected static function __keys(array $from) : array{
         return array_keys($from);
     }
 
@@ -680,7 +706,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_map
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
      */
-    protected static function __map(array $from, callable $callback){
+    protected static function __map(array $from, callable $callback) : array{
         $array = [];
         foreach($from as $key => $value){
             $array[$key] = $callback($value, $key, $from);
@@ -689,7 +715,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** All similar to @see __map(), but this applies to both keys and values */
-    protected static function __mapAssoc(array $from, callable $callback){
+    protected static function __mapAssoc(array $from, callable $callback) : array{
         $array = [];
         foreach($from as $key => $value){
             [$newKey, $newValue] = $callback($value, $key, $from);
@@ -699,7 +725,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** All similar to @see __map(), but this applies to keys */
-    protected static function __mapKey(array $from, callable $callback){
+    protected static function __mapKey(array $from, callable $callback) : array{
         $array = [];
         foreach($from as $key => $value){
             $array[$callback($value, $key, $from)] = $value;
@@ -712,7 +738,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @params mixed ...$value
      */
-    protected static function __merge(...$values){
+    protected static function __merge(...$values) : array{
         return self::__concat(...$values);
     }
 
@@ -721,7 +747,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @params mixed ...$value
      */
-    protected static function __mergeSoft(...$values){
+    protected static function __mergeSoft(...$values) : array{
         return self::__concatSoft(...$values);
     }
 
@@ -795,7 +821,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /**
-     * Return an array with elements in reverse order
+     * Returns an array with elements in reverse order
      *
      * @see \array_reverse
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
@@ -820,14 +846,14 @@ class ArrayUtils extends ArrayObject{
     }
 
     /**
-     * Return an array with selected from start to end
+     * Returns an array with selected from start to end
      * Extract a slice of the array
      *
      * @see \array_slice
      * @url https://www.php.net/manual/en/function.array-slice.php
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
      */
-    protected static function __slice(array $from, int $start = 0, int $end = null, $preserve_keys = false){
+    protected static function __slice(array $from, int $start = 0, int $end = null, bool $preserveKeys = false): array{
         $array = [];
         $keys = array_keys($from);
         $values = array_values($from);
@@ -837,7 +863,7 @@ class ArrayUtils extends ArrayObject{
         $i = $start < 0 ? max($count + $start, 0) : min($start, $count);
         $max = $end < 0 ? max($count + $end, 0) : min($end, $count);
         for(; $i < $max; ++$i){
-            if($preserve_keys){
+            if($preserveKeys){
                 $from[$keys[$i]] = $values[$i];
             }else{
                 $from[] = $values[$i];
@@ -871,7 +897,7 @@ class ArrayUtils extends ArrayObject{
      * @see \sort
      * @url https://www.php.net/manual/en/function.sort.php
      */
-    protected static function __sort(array $from, ?callable $callback = null){
+    protected static function __sort(array $from, ?callable $callback = null): array{
         if($callback === null){
             sort($from);
         }else{
@@ -891,7 +917,7 @@ class ArrayUtils extends ArrayObject{
      * @see \ksort
      * @url https://www.php.net/manual/en/function.ksort.php
      */
-    protected static function __sortKey(array $from, ?callable $callback = null){
+    protected static function __sortKey(array $from, ?callable $callback = null) : array{
         if($callback === null){
             ksort($from);
         }else{
@@ -908,7 +934,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_splice
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
      */
-    protected static function __splice(array $from, int $offset, ?int $length = null, ...$replacement){
+    protected static function __splice(array $from, int $offset, ?int $length = null, ...$replacement) : array{
         return array_splice($array, $offset, $length ?? count($from), $replacement);
     }
 
@@ -916,6 +942,7 @@ class ArrayUtils extends ArrayObject{
      * Calculate the sum of values in an array
      *
      * @return int|float
+     *
      * @see \array_sum
      * @url https://www.php.net/manual/en/function.array-sum.php
      */
@@ -929,8 +956,8 @@ class ArrayUtils extends ArrayObject{
      * @see \array_unique
      * @url https://www.php.net/manual/en/function.array-unique.php
      */
-    protected static function __unique(array $from, int $sort_flags = SORT_STRING){
-        return array_unique($from, $sort_flags);
+    protected static function __unique(array $from, int $sortFlags = SORT_STRING){
+        return array_unique($from, $sortFlags);
     }
 
     /**
@@ -945,7 +972,7 @@ class ArrayUtils extends ArrayObject{
     }
 
     /**
-     * Return all the values of an array
+     * Returns all the values of an array
      *
      * @see \array_values
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values
