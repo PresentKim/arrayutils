@@ -92,10 +92,10 @@ use ArrayObject;
  * @method static ArrayUtils fillKeysFrom(iterable $from, mixed $value)
  * @method static array      fillKeysFromAs(iterable $from, mixed $value)
  *
- * @method        ArrayUtils filter(callable $callback, int $flag = 0)
- * @method        array      filterAs(callable $callback, int $flag = 0)
- * @method static ArrayUtils filterFrom(iterable $from, callable $callback, int $flag = 0)
- * @method static array      filterFromAs(iterable $from, callable $callback, int $flag = 0)
+ * @method        ArrayUtils filter(callable $callback)
+ * @method        array      filterAs(callable $callback)
+ * @method static ArrayUtils filterFrom(iterable $from, callable $callback)
+ * @method static array      filterFromAs(iterable $from, callable $callback)
  *
  * @method        ArrayUtils flat(int $dept = 1)
  * @method        array      flatAs(int $dept = 1)
@@ -460,7 +460,7 @@ class ArrayUtils extends ArrayObject{
      * @see \array_filter
      * @url https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
      */
-    protected static function __filter(array $from, callable $callback, int $flag = 0){
+    protected static function __filter(array $from, callable $callback) : array{
         $array = [];
         foreach($from as $key => $value){
             if($callback($value, $key, $from))
