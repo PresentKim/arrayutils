@@ -1,6 +1,14 @@
 <div align="center">  
   <img src="assets/title.svg"><br>  
   <h1><img src="https://views.whatilearened.today/views/github/PresentKim/arrayutils.svg?style=for-the-badge" height="24" align="right"></h1><br>  
+
+  <a href="https://packagist.org/packages/presentkim/arrayutils">  
+    <img src="https://poser.pugx.org/presentkim/arrayutils/v?style=for-the-badge" height="24">   
+  </a>  
+  <a href="https://packagist.org/packages/presentkim/arrayutils">  
+    <img src="https://poser.pugx.org/presentkim/arrayutils/downloads?style=for-the-badge" height="24">   
+  </a>  
+  <br>  
   <img src="https://img.shields.io/github/stars/PresentKim/arrayutils?style=for-the-badge" height="24">  
   <img src="https://img.shields.io/github/license/PresentKim/arrayutils.svg?style=for-the-badge" height="24">  
   <a href="https://poggit.pmmp.io/ci/PresentKim/arrayutils/~">  
@@ -12,42 +20,34 @@
 
 ## :clipboard: Table of Contents  
 - [:book: Introduction](#book-introduction)  
-- [:zap: Features](#zap-features)  
-- [:file_folder: Target software](#file_folder-target-software)  
-- [:wrench: Installation](#wrench-installation)  
 - [:package: Downloads](#package-downloads)  
 - [:memo: License](#memo-license)  
   
 <br>  
   
 ## :book: Introduction  
-PHP's array functions are painful for developers. (like `array_map`, `array_filter`)  
-- Array first or callback function first...  
-- Return value or reference a variable...  
+The ~~evil~~ PHP array functions give developers the pain of:
 
-In addition, since it is a `function`, the code breaks every time.  
-I created this library to solve these problems and make code flow like `js-array`.  
-  
-<br>  
-  
-## :zap: Features  
-You can use `ArrayUtils` to use the features of this library. 
-- For a detailed description, [Click here (Goto api docs)](https://arrayutils.docs.present.kim/)
-  
-<br>  
-  
-## :file_folder: Target software:  
-**This is works with [Pocketmine-MP](https://github.com/pmmp/PocketMine-MP)**  
-  
-<br>  
-  
-## :wrench: Installation
-See [poggit/support/virion](https://github.com/poggit/support/blob/master/virion.md)
+* Some functions **requires array first**, but some functions **require array last**...  
+* Some functions **returns result**, but some functions **modify referenced variables**...
+* Code was **line-break** because since it is a function...
+* Each function has **different parameters to the callback function**...
+* No modern functions using arrays. Such as `every`, `some`
+
+I created this library to solve these problems and make code flow like `js-array`
+
+For a detailed description, [Click here (GitBook)](https://arrayutils.docs.present.kim/)
   
 <br>  
   
 ## :package: Downloads:  
-Download from [Poggit](https://poggit.pmmp.io/ci/PresentKim/arrayutils/~)
+#### 1. Modern PHP developer
+You can use this library with composer.  
+- Go to [**Packagist**](https://packagist.org/packages/presentkim/arrayutils)  
+
+#### 2. PMMP plguin developer
+You can use this library with poggit.  
+- Go to [**Poggit**](https://poggit.pmmp.io/ci/PresentKim/arrayutils/~)   
   
 <br>  
   
