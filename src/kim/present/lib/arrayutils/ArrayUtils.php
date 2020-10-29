@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace kim\present\utils\arrays;
+namespace kim\present\lib\arrayutils;
 
 use ArrayObject;
 
