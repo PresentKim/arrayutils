@@ -1,6 +1,6 @@
 ---
 name: arrayutils
-antigen: kim\present\utils\arrays
+antigen: kim\present\lib\arrayutils
 version: 4.0.0
 api: 3.0.0
 authors: [PresentKim, Blugin-team]
