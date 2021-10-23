@@ -27,6 +27,46 @@ namespace kim\present\lib\arrayutils;
 use ArrayObject;
 use BadMethodCallException;
 
+use function array_chunk;
+use function array_column;
+use function array_combine;
+use function array_count_values;
+use function array_diff;
+use function array_diff_assoc;
+use function array_diff_key;
+use function array_fill_keys;
+use function array_flip;
+use function array_intersect;
+use function array_intersect_assoc;
+use function array_intersect_key;
+use function array_keys;
+use function array_merge;
+use function array_pad;
+use function array_pop;
+use function array_push;
+use function array_replace_recursive;
+use function array_reverse;
+use function array_shift;
+use function array_splice;
+use function array_sum;
+use function array_unique;
+use function array_unshift;
+use function array_values;
+use function count;
+use function implode;
+use function is_array;
+use function ksort;
+use function max;
+use function method_exists;
+use function min;
+use function rand;
+use function sort;
+use function strpos;
+use function substr;
+use function substr_replace;
+use function uksort;
+use function usort;
+
 /**
  * Class ArrayUtils is provides a method to fancy manipulate an array
  *
