@@ -1,15 +1,15 @@
 {
-  "name": "presentkim/arrayutils",
-  "description": "Library that provides a method to fancy manipulate an array",
-  "readme": "README.md",
-  "autoload": {
-    "psr-0": {
-      "kim\\present\\lib\\arrayutils": "src/"
-    }
-  },
-  "require": {
-    "php": "^7.3"
-  },
-  "license": "MIT",
-  "version": "4.1.0"
+    "name": "presentkim/arrayutils",
+    "description": "Library that provides a method to fancy manipulate an array",
+    "readme": "README.md",
+    "autoload": {
+        "psr-0": {
+            "kim\\present\\lib\\arrayutils": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.3"
+    },
+    "license": "MIT",
+    "version": "4.1.0"
 }

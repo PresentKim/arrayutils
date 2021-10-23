@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace kim\present\lib\arrayutils;
 
 use ArrayObject;
+use BadMethodCallException;
 
 /**
  * Class ArrayUtils is provides a method to fancy manipulate an array
@@ -1013,7 +1014,7 @@ class ArrayUtils extends ArrayObject{
         return self::_indexOf($from, $needle, $start);
     }
 
-    /** @throws \BadMethodCallException */
+    /** @throws BadMethodCallException */
     public function __call(string $name, array $arguments){
         if($raw = substr($name, -2) === "As"){
             $name = substr($name, 0, -2);
@@ -1030,14 +1031,14 @@ class ArrayUtils extends ArrayObject{
             $this->exchangeArray($array);
             return $result;
         }else{
-            throw new \BadMethodCallException("Call to undefined method " . self::class . "::$name()");
+            throw new BadMethodCallException("Call to undefined method " . self::class . "::$name()");
         }
     }
 
     /**
      * Process static accessing to use ArrayUtils quickly
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public static function __callStatic(string $name, array $arguments){
         if(($pos = strpos($name, "From")) !== false){
