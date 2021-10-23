@@ -185,11 +185,11 @@ use function usort;
  * @method static ArrayUtils intersectAssocFrom(iterable $from, iterable ...$iterables)
  * @method static array      intersectAssocFromAs(iterable $from, iterable ...$iterables)
  *
- * @see ArrayUtils::__intersectkey()
- * @method        ArrayUtils intersectkey(iterable ...$iterables)
- * @method        array      intersectkeyAs(iterable ...$iterables)
- * @method static ArrayUtils intersectkeyFrom(iterable $from, iterable ...$iterables)
- * @method static array      intersectkeyFromAs(iterable $from, iterable ...$iterables)
+ * @see ArrayUtils::__intersectKey()
+ * @method        ArrayUtils intersectKey(iterable ...$iterables)
+ * @method        array      intersectKeyAs(iterable ...$iterables)
+ * @method static ArrayUtils intersectKeyFrom(iterable $from, iterable ...$iterables)
+ * @method static array      intersectKeyFromAs(iterable $from, iterable ...$iterables)
  *
  * @see ArrayUtils::__keys()
  * @method        ArrayUtils keys()
@@ -637,7 +637,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/c/intersect/key
      */
-    protected static function __intersectkey(array $from, iterable ...$iterables) : array{
+    protected static function __intersectKey(array $from, iterable ...$iterables) : array{
         return array_intersect_key($from, ...self::mapToArray($iterables));
     }
 
