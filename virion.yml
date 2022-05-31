@@ -3,6 +3,6 @@ name: arrayutils
 antigen: kim\present\lib\arrayutils
 version: 4.1.0
 api: 3.0.0
-authors: [ PresentKim, Blugin-team ]
+authors: [ PresentKim ]
 description: Library that provides a method to fancy manipulate an array
 ...
