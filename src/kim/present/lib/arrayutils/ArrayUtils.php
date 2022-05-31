@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *
  *  ____                           _   _  ___
  * |  _ \ _ __ ___  ___  ___ _ __ | |_| |/ (_)_ __ ___
@@ -18,6 +18,9 @@
  *   (\ /)
  *  ( . .) ♥
  *  c(")(")
+ *
+ * @noinspection MagicMethodsValidityInspection
+ * @noinspection PhpDocSignatureIsNotCompleteInspection
  */
 
 declare(strict_types=1);
@@ -26,6 +29,7 @@ namespace kim\present\lib\arrayutils;
 
 use ArrayObject;
 use BadMethodCallException;
+use Exception;
 
 use function array_chunk;
 use function array_column;
@@ -59,8 +63,9 @@ use function ksort;
 use function max;
 use function method_exists;
 use function min;
-use function rand;
+use function random_int;
 use function sort;
+use function str_ends_with;
 use function strpos;
 use function substr;
 use function substr_replace;
@@ -380,7 +385,8 @@ class ArrayUtils extends ArrayObject{
     /**
      * Creates a new, shallow-copied ArrayUtils instance from an iterable
      *
-     * @param mixed ...$elements
+     * @param iterable  $iterable
+     * @param ?callable $mapFn = null
      *
      * @link https://arrayutils.docs.present.kim/methods/s/from
      */
@@ -409,7 +415,7 @@ class ArrayUtils extends ArrayObject{
      * @link https://arrayutils.docs.present.kim/methods/s/maptoarray
      */
     public static function mapToArray(iterable $iterables) : array{
-        return self::__map((array) $iterables, function($iterable){ return (array) $iterable; });
+        return self::__map((array) $iterables, static function($iterable){ return (array) $iterable; });
     }
 
     /** Exchange the array for another one */
@@ -430,19 +436,20 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the values from a single column in the input array
      *
-     * @param mixed $valueKey
-     * @param mixed $indexKey = null
+     * @param array           $from
+     * @param int|string      $valueKey
+     * @param int|string|null $indexKey = null
      *
      * @link https://arrayutils.docs.present.kim/methods/c/column
      */
-    protected static function __column(array $from, $valueKey, $indexKey = null) : array{
+    protected static function __column(array $from, int|string $valueKey, int|string|null $indexKey = null) : array{
         return array_column($from, $valueKey, $indexKey);
     }
 
     /**
      * Creates an array by using one array for keys and another for its values
      *
-     * @param array|null $valueArray If is null, Use self clone
+     * @param iterable|null $valueArray If is null, Use self clone
      *
      * @link https://arrayutils.docs.present.kim/methods/c/combine
      */
@@ -519,8 +526,9 @@ class ArrayUtils extends ArrayObject{
      */
     protected static function _every(array $from, callable $callback) : bool{
         foreach($from as $key => $value){
-            if(!$callback($value, $key, $from))
+            if(!$callback($value, $key, $from)){
                 return false;
+            }
         }
         return true;
     }
@@ -550,7 +558,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/c/fill/keys
      */
-    protected static function __fillKeys(array $from, $value) : array{
+    protected static function __fillKeys(array $from, mixed $value) : array{
         return array_fill_keys($from, $value);
     }
 
@@ -562,8 +570,9 @@ class ArrayUtils extends ArrayObject{
     protected static function __filter(array $from, callable $callback) : array{
         $array = [];
         foreach($from as $key => $value){
-            if($callback($value, $key, $from))
+            if($callback($value, $key, $from)){
                 $array[$key] = $value;
+            }
         }
         return $array;
     }
@@ -574,9 +583,11 @@ class ArrayUtils extends ArrayObject{
      * @link https://arrayutils.docs.present.kim/methods/c/flat
      */
     protected static function __flat(array $from, int $dept = 1) : array{
-        if($dept === 0) return (array) $from;
+        if($dept === 0){
+            return $from;
+        }
         return self::_reduce($from,
-            function($currentValue, $value) use ($dept){
+            static function($currentValue, $value) use ($dept){
                 return self::__concat(
                     $currentValue,
                     is_array($value) ? self::__flat($value, $dept - 1) : $value
@@ -832,8 +843,9 @@ class ArrayUtils extends ArrayObject{
         $count = count($from);
         $i = $start < 0 ? max($count + $start, 0) : min($start, $count);
         for(; $i < $count; ++$i){
-            if($needle === $values[$i])
+            if($needle === $values[$i]){
                 return true;
+            }
         }
 
         return false;
@@ -851,18 +863,17 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the first index at which a given element can be found in the array
      *
-     * @return int|string|null
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/index-of
      */
-    protected static function _indexOf(array $from, $needle, int $start = 0){
+    protected static function _indexOf(array $from, $needle, int $start = 0) : int|string|null{
         $keys = array_keys($from);
         $values = array_values($from);
         $count = count($from);
         $i = $start < 0 ? max($count + $start, 0) : min($start, $count);
         for(; $i < $count; ++$i){
-            if($needle === $values[$i])
+            if($needle === $values[$i]){
                 return $keys[$i];
+            }
         }
 
         return null;
@@ -871,14 +882,13 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the value of the first element that that pass the $callback function
      *
-     * @return mixed;
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/find
      */
-    protected static function _find(array $from, callable $callback){
+    protected static function _find(array $from, callable $callback) : mixed{
         foreach($from as $key => $value){
-            if($callback($value, $key, $from))
+            if($callback($value, $key, $from)){
                 return $value;
+            }
         }
         return null;
     }
@@ -886,14 +896,13 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the key of the first element that that pass the $callback function
      *
-     * @return int|string|null
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/find/index
      */
-    protected static function _findIndex(array $from, callable $callback){
+    protected static function _findIndex(array $from, callable $callback) : int|string|null{
         foreach($from as $key => $value){
-            if($callback($value, $key, $from))
+            if($callback($value, $key, $from)){
                 return $key;
+            }
         }
         return null;
     }
@@ -901,22 +910,18 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the value at the result of _keyFirst()
      *
-     * @return mixed
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/first
      */
-    protected static function _first(array $from){
+    protected static function _first(array $from) : mixed{
         return $from[self::_keyFirst($from)];
     }
 
     /**
      * Gets the first key of an array
      *
-     * @return int|string|null
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/first/key
      */
-    protected static function _keyFirst(array $from){
+    protected static function _keyFirst(array $from) : int|string|null{
         return array_keys($from)[0] ?? null;
     }
 
@@ -925,18 +930,16 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/g/last
      */
-    protected static function _last(array $from){
+    protected static function _last(array $from) : mixed{
         return $from[self::_keyLast($from)];
     }
 
     /**
      * Gets the last key of an array
      *
-     * @return int|string|null
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/last/key
      */
-    protected static function _keyLast(array $from){
+    protected static function _keyLast(array $from) : int|string|null{
         return array_keys($from)[count($from) - 1] ?? null;
     }
 
@@ -945,19 +948,21 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/g/random
      */
-    protected static function _random(array $from){
+    protected static function _random(array $from) : mixed{
         return $from[self::_keyRandom($from)];
     }
 
     /**
      * Gets the random key of an array
      *
-     * @return int|string|null
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/random/key
      */
-    protected static function _keyRandom(array $from){
-        return ($keys = array_keys($from))[rand(0, count($keys) - 1)] ?? null;
+    protected static function _keyRandom(array $from) : int|string|null{
+        try{
+            return ($keys = array_keys($from))[random_int(0, count($keys) - 1)] ?? null;
+        }catch(Exception){
+            return null;
+        }
     }
 
     /**
@@ -1011,8 +1016,9 @@ class ArrayUtils extends ArrayObject{
      */
     protected static function _some(array $from, callable $callback) : bool{
         foreach($from as $key => $value){
-            if($callback($value, $key, $from))
+            if($callback($value, $key, $from)){
                 return true;
+            }
         }
         return false;
     }
@@ -1031,11 +1037,9 @@ class ArrayUtils extends ArrayObject{
     /**
      * Calculate the sum of values in an array
      *
-     * @return int|float
-     *
      * @link https://arrayutils.docs.present.kim/methods/g/sum
      */
-    protected static function _sum(array $from){
+    protected static function _sum(array $from) : int|float{
         return array_sum($from);
     }
 
@@ -1050,13 +1054,13 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** Alias of @see ArrayUtils::_indexOf() */
-    protected static function _search(array $from, $needle, int $start = 0){
+    protected static function _search(array $from, $needle, int $start = 0) : int|string|null{
         return self::_indexOf($from, $needle, $start);
     }
 
     /** @throws BadMethodCallException */
     public function __call(string $name, array $arguments){
-        if($raw = substr($name, -2) === "As"){
+        if($raw = str_ends_with($name, "As")){
             $name = substr($name, 0, -2);
         }
 
@@ -1064,15 +1068,17 @@ class ArrayUtils extends ArrayObject{
             //Mapping method calls omitting "__" (It is meaning result is array)
             $result = self::$method((array) $this, ...$arguments);
             return $raw || !is_array($result) ? $result : $this->exchange($result);
-        }elseif(method_exists(self::class, $method = "_$name")){
+        }
+
+        if(method_exists(self::class, $method = "_$name")){
             //Mapping method calls omitting "_" (It is meaning result is not array)
             $array = (array) $this;
             $result = self::$method($array, ...$arguments);
             $this->exchangeArray($array);
             return $result;
-        }else{
-            throw new BadMethodCallException("Call to undefined method " . self::class . "::$name()");
         }
+
+        throw new BadMethodCallException("Call to undefined method " . self::class . "::$name()");
     }
 
     /**
@@ -1084,7 +1090,6 @@ class ArrayUtils extends ArrayObject{
         if(($pos = strpos($name, "From")) !== false){
             $name = substr_replace($name, "", $pos, 4);
         }
-        $instance = self::from(array_shift($arguments));
-        return $instance->$name(...$arguments);
+        return self::from(array_shift($arguments))->$name(...$arguments);
     }
 }
