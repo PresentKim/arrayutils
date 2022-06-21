@@ -19,6 +19,7 @@
  *  ( . .) ♥
  *  c(")(")
  *
+ * @noinspection PhpUnused
  * @noinspection MagicMethodsValidityInspection
  * @noinspection PhpDocSignatureIsNotCompleteInspection
  */
@@ -65,7 +66,6 @@ use function method_exists;
 use function min;
 use function random_int;
 use function sort;
-use function str_ends_with;
 use function strpos;
 use function substr;
 use function substr_replace;
@@ -442,7 +442,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/c/column
      */
-    protected static function __column(array $from, int|string $valueKey, int|string|null $indexKey = null) : array{
+    protected static function __column(array $from, $valueKey, $indexKey = null) : array{
         return array_column($from, $valueKey, $indexKey);
     }
 
@@ -538,14 +538,11 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/c/fill/keys
      */
-    protected static function __fill(array $from, $value, int $start = 0, int $end = null) : array{
-        $count = count($from);
-        $end = $end ?? $count;
-
-        $i = $start < 0 ? max($count + $start, 0) : min($start, $count);
-        $max = $end < 0 ? max($count + $end, 0) : min($end, $count);
+    protected static function __fill(array $from, $value, int $start = 0, int $end = PHP_INT_MAX) : array{
+        $keys = array_keys($from);
+        [$i, $max] = self::range(count($keys), $start, $end);
         for(; $i < $max; ++$i){
-            $from[$i] = $value;
+            $from[$keys[$i]] = $value;
         }
 
         return $from;
@@ -558,7 +555,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/c/fill/keys
      */
-    protected static function __fillKeys(array $from, mixed $value) : array{
+    protected static function __fillKeys(array $from, $value) : array{
         return array_fill_keys($from, $value);
     }
 
@@ -744,15 +741,11 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/c/slice
      */
-    protected static function __slice(array $from, int $start = 0, int $end = null, bool $preserveKeys = false) : array{
+    protected static function __slice(array $from, int $start = 0, int $end = PHP_INT_MAX, bool $preserveKeys = false) : array{
         $array = [];
         $keys = array_keys($from);
         $values = array_values($from);
-        $count = count($from);
-        $end = $end ?? $count;
-
-        $i = $start < 0 ? max($count + $start, 0) : min($start, $count);
-        $max = $end < 0 ? max($count + $end, 0) : min($end, $count);
+        [$i, $max] = self::range(count($keys), $start, $end);
         for(; $i < $max; ++$i){
             if($preserveKeys){
                 $array[$keys[$i]] = $values[$i];
@@ -863,9 +856,11 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the first index at which a given element can be found in the array
      *
+     *
+     * @return int|string|null
      * @link https://arrayutils.docs.present.kim/methods/g/index-of
      */
-    protected static function _indexOf(array $from, $needle, int $start = 0) : int|string|null{
+    protected static function _indexOf(array $from, $needle, int $start = 0){
         $keys = array_keys($from);
         $values = array_values($from);
         $count = count($from);
@@ -884,7 +879,7 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/g/find
      */
-    protected static function _find(array $from, callable $callback) : mixed{
+    protected static function _find(array $from, callable $callback){
         foreach($from as $key => $value){
             if($callback($value, $key, $from)){
                 return $value;
@@ -896,9 +891,10 @@ class ArrayUtils extends ArrayObject{
     /**
      * Returns the key of the first element that that pass the $callback function
      *
+     * @return int|string|null
      * @link https://arrayutils.docs.present.kim/methods/g/find/index
      */
-    protected static function _findIndex(array $from, callable $callback) : int|string|null{
+    protected static function _findIndex(array $from, callable $callback){
         foreach($from as $key => $value){
             if($callback($value, $key, $from)){
                 return $key;
@@ -912,16 +908,17 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/g/first
      */
-    protected static function _first(array $from) : mixed{
+    protected static function _first(array $from){
         return $from[self::_keyFirst($from)];
     }
 
     /**
      * Gets the first key of an array
      *
+     * @return int|string|null
      * @link https://arrayutils.docs.present.kim/methods/g/first/key
      */
-    protected static function _keyFirst(array $from) : int|string|null{
+    protected static function _keyFirst(array $from){
         return array_keys($from)[0] ?? null;
     }
 
@@ -930,16 +927,17 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/g/last
      */
-    protected static function _last(array $from) : mixed{
+    protected static function _last(array $from){
         return $from[self::_keyLast($from)];
     }
 
     /**
      * Gets the last key of an array
      *
+     * @return int|string|null
      * @link https://arrayutils.docs.present.kim/methods/g/last/key
      */
-    protected static function _keyLast(array $from) : int|string|null{
+    protected static function _keyLast(array $from){
         return array_keys($from)[count($from) - 1] ?? null;
     }
 
@@ -948,19 +946,20 @@ class ArrayUtils extends ArrayObject{
      *
      * @link https://arrayutils.docs.present.kim/methods/g/random
      */
-    protected static function _random(array $from) : mixed{
+    protected static function _random(array $from){
         return $from[self::_keyRandom($from)];
     }
 
     /**
      * Gets the random key of an array
      *
+     * @return int|string|null
      * @link https://arrayutils.docs.present.kim/methods/g/random/key
      */
-    protected static function _keyRandom(array $from) : int|string|null{
+    protected static function _keyRandom(array $from){
         try{
             return ($keys = array_keys($from))[random_int(0, count($keys) - 1)] ?? null;
-        }catch(Exception){
+        }catch(Exception $_){
             return null;
         }
     }
@@ -1037,9 +1036,10 @@ class ArrayUtils extends ArrayObject{
     /**
      * Calculate the sum of values in an array
      *
+     * @return int|float
      * @link https://arrayutils.docs.present.kim/methods/g/sum
      */
-    protected static function _sum(array $from) : int|float{
+    protected static function _sum(array $from){
         return array_sum($from);
     }
 
@@ -1054,13 +1054,20 @@ class ArrayUtils extends ArrayObject{
     }
 
     /** Alias of @see ArrayUtils::_indexOf() */
-    protected static function _search(array $from, $needle, int $start = 0) : int|string|null{
+    protected static function _search(array $from, $needle, int $start = 0){
         return self::_indexOf($from, $needle, $start);
+    }
+
+    private static function range(int $count, int $start, int $end = PHP_INT_MAX) : array{
+        return [
+            $start < 0 ? max($count + $start, 0) : min($start, $count),
+            $end < 0 ? max($count + $end, 0) : min($end, $count)
+        ];
     }
 
     /** @throws BadMethodCallException */
     public function __call(string $name, array $arguments){
-        if($raw = str_ends_with($name, "As")){
+        if($raw = (substr($name, -2) === "As")){
             $name = substr($name, 0, -2);
         }
 
