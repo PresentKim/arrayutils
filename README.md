@@ -1,29 +1,25 @@
-<div align="center">  
-  <img src="assets/title.svg"><br>  
-  <h1><img src="https://views.whatilearened.today/views/github/presentkim-pm/arrayutils.svg?style=for-the-badge" height="24" align="right"></h1><br>  
+<!-- PROJECT BADGES -->
+<div align="center">
 
-  <a href="https://packagist.org/packages/presentkim/arrayutils">  
-    <img src="https://poser.pugx.org/presentkim/arrayutils/v?style=for-the-badge" height="24">   
-  </a>  
-  <a href="https://packagist.org/packages/presentkim/arrayutils">  
-    <img src="https://poser.pugx.org/presentkim/arrayutils/downloads?style=for-the-badge" height="24">   
-  </a>  
-  <br>  
-  <img src="https://img.shields.io/github/stars/presentkim-pm/arrayutils?style=for-the-badge" height="24">  
-  <img src="https://img.shields.io/github/license/presentkim-pm/arrayutils.svg?style=for-the-badge" height="24">  
-  <a href="https://poggit.pmmp.io/ci/presentkim-pm/arrayutils/~">  
-    <img src="https://poggit.pmmp.io/ci.shield/presentkim-pm/arrayutils/~?style=for-the-badge" height="24">   
-  </a>  
-  
-  <h1><strong> Library that provides a method to fancy manipulate an array </strong></h1><br>  
-</div>  
+[![Packagist Status][packagist-status-badge]][packagist-url]
+[![Packagist Downloads][packagist-downloads-badge]][packagist-url]
+[![Stars][stars-badge]][stars-url]
+[![License][license-badge]][license-url]
 
-## :clipboard: Table of Contents  
-- [:book: Introduction](#book-introduction)  
-- [:package: Downloads](#package-downloads)  
-- [:memo: License](#memo-license)  
-  
-<br>  
+</div>
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <img src="https://raw.githubusercontent.com/presentkim/arrayutils/main/assets/icon.png" alt="Logo" width="80" height="80">
+  <h3>arrayutils</h3>
+  <p align="center">
+    An library that provides a method to fancy manipulate an array!
+
+[View in Packagist][packagist-url] · [Report a bug][issues-url] · [Request a feature][issues-url]
+
+  </p>
+</div>
   
 ## :book: Introduction  
 The ~~evil~~ PHP array functions give developers the pain of:
@@ -37,21 +33,33 @@ The ~~evil~~ PHP array functions give developers the pain of:
 I created this library to solve these problems and make code flow like `js-array`
 
 For a detailed description, [Click here (GitBook)](https://arrayutils.docs.present.kim/)
-  
-<br>  
-  
-## :package: Downloads:  
-#### 1. Modern PHP developer
-You can use this library with composer.  
-- Go to [**Packagist**](https://packagist.org/packages/presentkim/arrayutils)  
 
-#### 2. PMMP plguin developer
-You can use this library with poggit.  
-- Go to [**Poggit**](https://poggit.pmmp.io/ci/presentkim-pm/arrayutils/~)   
+-----
   
-<br>  
-  
+## :package: Installation
+You can use this library with composer.  
+- Go to [**Packagist**](https://packagist.org/packages/presentkim/arrayutils)
+
+> **Note** for [Pocketmine][pmmp-url] plugin developer  
+> You can use this library with poggit  
+> - Go to [**Poggit**](https://poggit.pmmp.io/ci/presentkim-pm/arrayutils/~)
+
+-----
+
 ## :memo: License  
 > You can check out the full license [here](LICENSE)  
   
 This project is licensed under the terms of the **MIT** license  
+
+
+[packagist-status-badge]: https://poser.pugx.org/presentkim/arrayutils/v?style=for-the-badge
+[packagist-downloads-badge]: https://poser.pugx.org/presentkim/arrayutils/downloads?style=for-the-badge
+[stars-badge]: https://img.shields.io/github/stars/presentkim/arrayutils.svg?style=for-the-badge
+[license-badge]: https://img.shields.io/github/license/presentkim/arrayutils.svg?style=for-the-badge
+
+[packagist-url]: https://packagist.org/packages/presentkim/arrayutils
+[stars-url]: https://github.com/presentkim/arrayutils/stargazers
+[issues-url]: https://github.com/presentkim/arrayutils/issues
+[license-url]: https://github.com/presentkim/arrayutils/blob/main/LICENSE
+
+[pmmp-url]: https://github.com/pmmp/Pocketmine-MP
