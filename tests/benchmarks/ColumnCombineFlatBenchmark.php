@@ -73,8 +73,3 @@ class ColumnCombineFlatBenchmark extends BaseBenchmark{
     }
 
 }
-
-
-
-
-

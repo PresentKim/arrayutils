@@ -56,8 +56,3 @@ class FilterBenchmark extends BaseBenchmark{
     }
 
 }
-
-
-
-
-

@@ -35,8 +35,3 @@ class CountValuesSumBenchmark extends BaseBenchmark{
     }
 
 }
-
-
-
-
-

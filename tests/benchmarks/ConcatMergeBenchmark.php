@@ -67,8 +67,3 @@ class ConcatMergeBenchmark extends BaseBenchmark{
     }
 
 }
-
-
-
-
-

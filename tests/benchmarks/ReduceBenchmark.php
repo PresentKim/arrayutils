@@ -37,8 +37,3 @@ class ReduceBenchmark extends BaseBenchmark{
     }
 
 }
-
-
-
-
-

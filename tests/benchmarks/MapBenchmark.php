@@ -58,8 +58,3 @@ class MapBenchmark extends BaseBenchmark{
     }
 
 }
-
-
-
-
-

@@ -50,8 +50,3 @@ class SpliceJoinFlipBenchmark extends BaseBenchmark{
     }
 
 }
-
-
-
-
-
