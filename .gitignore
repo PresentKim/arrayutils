@@ -2,3 +2,5 @@
 
 vendor
 .phpbench
+/tests/benchmarks_result.json
+/tests/benchmarks_result.md
