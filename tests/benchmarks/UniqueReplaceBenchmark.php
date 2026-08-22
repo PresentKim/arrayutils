@@ -6,6 +6,13 @@ use kim\present\lib\arrayutils\ArrayUtils;
 
 class UniqueReplaceBenchmark extends BaseBenchmark{
 
+    protected function initData() : void{
+        $this->data = [];
+        for($i = 0; $i < 1000; $i++){
+            $this->data[] = $i % 100;
+        }
+    }
+
     /**
      * @Revs(256)
      * @Iterations(3)

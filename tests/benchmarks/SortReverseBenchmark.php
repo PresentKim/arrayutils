@@ -6,6 +6,11 @@ use kim\present\lib\arrayutils\ArrayUtils;
 
 class SortReverseBenchmark extends BaseBenchmark{
 
+    protected function initData() : void{
+        $this->data = range(1, 1000);
+        shuffle($this->data);
+    }
+
     /**
      * @Revs(512)
      * @Iterations(5)
