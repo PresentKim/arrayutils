@@ -3,12 +3,20 @@
     "description": "Library that provides a method to fancy manipulate an array",
     "readme": "README.md",
     "autoload": {
-        "psr-0": {
-            "kim\\present\\lib\\arrayutils": "src/"
+        "psr-4": {
+            "kim\\present\\lib\\arrayutils\\": "src/kim/present/lib/arrayutils/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "kim\\present\\lib\\arrayutils\\tests\\benchmarks\\": "tests/benchmarks/"
         }
     },
     "require": {
-        "php": "^7.1"
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpbench/phpbench": "^1.0"
     },
     "license": "MIT",
     "version": "4.2.0"
