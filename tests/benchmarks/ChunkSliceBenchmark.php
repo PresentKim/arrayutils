@@ -1,0 +1,39 @@
+<?php
+
+namespace kim\present\lib\arrayutils\tests\benchmarks;
+
+use kim\present\lib\arrayutils\ArrayUtils;
+
+class ChunkSliceBenchmark extends BaseBenchmark{
+
+    /**
+     * @Revs(256)
+     * @Iterations(3)
+     * @ParamProviders("provideMethods")
+     */
+    public function bench_chunk($params){
+        if($params[KEY_MODE] === MODE_NATIVE){
+            array_chunk($this->data, 10);
+        }else{
+            ArrayUtils::chunkFrom($this->data, 10);
+        }
+    }
+
+    /**
+     * @Revs(256)
+     * @Iterations(3)
+     * @ParamProviders("provideMethods")
+     */
+    public function bench_slice($params){
+        if($params[KEY_MODE] === MODE_NATIVE){
+            array_slice($this->data, 10, 50);
+        }else{
+            ArrayUtils::sliceFrom($this->data, 10, 60);
+        }
+    }
+
+}
+
+
+
+
