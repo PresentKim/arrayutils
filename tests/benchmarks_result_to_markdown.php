@@ -27,23 +27,33 @@ if ($xml === false) {
 
 $results = [];
 
-// Parse PHPBench XML structure (suite -> benchmark -> subject -> variant)
+// Parse PHPBench XML structure
 foreach ($xml->xpath('//subject') as $subject) {
     $method = str_replace('bench_', '', (string)$subject['name']);
 
     foreach ($subject->variant as $variant) {
-        // Extract parameter set name
+        // Extract parameter set name from <parameter-set name="..."> or fallback to attribute/default
         $setName = 'default';
-        if (isset($variant->parameter)) {
-            $setName = (string)$variant->parameter['value'];
+        if (isset($variant->{'parameter-set'}['name'])) {
+            $setName = (string)$variant->{'parameter-set'}['name'];
         } elseif (isset($variant['name'])) {
             $setName = (string)$variant['name'];
         }
 
-        // Extract performance metric (mode time in microseconds)
+        // Extract performance metric (microsecond time)
         $time = 0.0;
         if (isset($variant->stats)) {
-            $time = (float)($variant->stats['mode'] ?? $variant->stats['mean'] ?? 0.0);
+            $time = (float)($variant->stats['mean'] ?? $variant->stats['mode'] ?? $variant->stats['min'] ?? 0.0);
+        } else {
+            // Fallback: Calculate mean time from iteration time-avg
+            $iterations = $variant->xpath('iteration');
+            if (!empty($iterations)) {
+                $sum = 0.0;
+                foreach ($iterations as $iteration) {
+                    $sum += (float)($iteration['time-avg'] ?? 0.0);
+                }
+                $time = $sum / count($iterations);
+            }
         }
 
         if (!isset($results[$method])) {
