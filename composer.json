@@ -13,10 +13,12 @@
         }
     },
     "require": {
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "ext-json": "*",
         "php": ">=7.1"
     },
     "require-dev": {
-        "ext-libxml": "*",
         "phpbench/phpbench": "^1.0"
     },
     "license": "MIT",
