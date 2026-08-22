@@ -45,6 +45,11 @@ jobs:
                     ./vendor/bin/phpbench run --report=expression --dump-file=results/bench_73.xml
                     php ./tests/benchmarks_result_to_markdown.php -i results/bench_73.xml -o results/bench_73.md
             # 2. PHP 8.4 Environment Execution
+            # --- Clean workspace before switching PHP version ---
+            -   name: Clean working directory for PHP 8.4
+                run: |
+                    git checkout .
+                    git clean -fd -e results/
             -   name: Setup PHP 8.4
                 uses: shivammathur/setup-php@v2
                 with:
