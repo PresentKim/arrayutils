@@ -42,7 +42,7 @@ jobs:
             -   name: Run Benchmark (PHP 7.3)
                 run: |
                     mkdir -p results
-                    ./vendor/bin/phpbench run --report=expression --output=json > results/bench_73.json
+                    ./vendor/bin/phpbench run --report=expression --dump-file=results/bench_73.json
                     php ./tests/benchmarks_result_to_markdown.php -i results/bench_73.json -o results/bench_73.md
 
             # 2. PHP 8.4 Environment Execution
@@ -72,7 +72,7 @@ jobs:
 
             -   name: Run Benchmark (PHP 8.4)
                 run: |
-                    ./vendor/bin/phpbench run --report=expression --output=json > results/bench_84.json
+                    ./vendor/bin/phpbench run --report=expression --dump-file=results/bench_84.json
                     php ./tests/benchmarks_result_to_markdown.php -i results/bench_84.json -o results/bench_84.md
 
             # 3. Create orphan branch and force push single result commit
