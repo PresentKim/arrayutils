@@ -4,7 +4,7 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class ReduceBenchmark extends BaseBenchmark{
+class ReduceBench extends BaseBench{
 
     /**
      * @Revs(512)

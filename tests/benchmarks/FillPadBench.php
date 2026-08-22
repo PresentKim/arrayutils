@@ -4,40 +4,19 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class SortReverseBenchmark extends BaseBenchmark{
-
-    protected function initData() : void{
-        $this->data = range(1, 1000);
-        shuffle($this->data);
-    }
+class FillPadBench extends BaseBench{
 
     /**
-     * @Revs(512)
+     * @Revs(2048)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_sort($params){
-        $data = $this->data;
+    public function bench_fill($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            sort($data);
+            array_fill(0, 10, 0);
         }else{
-            ArrayUtils::sortFrom($data);
-        }
-    }
-
-    /**
-     * @Revs(512)
-     * @Iterations(5)
-     * @Warmup(2)
-     * @ParamProviders("provideMethods")
-     */
-    public function bench_sortKey($params){
-        $data = $this->data;
-        if($params[KEY_MODE] === MODE_NATIVE){
-            ksort($data);
-        }else{
-            ArrayUtils::sortKeyFrom($data);
+            ArrayUtils::fillFrom([], 0, 10, 0);
         }
     }
 
@@ -47,11 +26,25 @@ class SortReverseBenchmark extends BaseBenchmark{
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_reverse($params){
+    public function bench_fillKeys($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_reverse($this->data);
+            array_fill_keys(['a', 'b', 'c'], 'value');
         }else{
-            ArrayUtils::reverseFrom($this->data);
+            ArrayUtils::fillKeysFrom(['a', 'b', 'c'], 'value');
+        }
+    }
+
+    /**
+     * @Revs(1024)
+     * @Iterations(5)
+     * @Warmup(2)
+     * @ParamProviders("provideMethods")
+     */
+    public function bench_pad($params){
+        if($params[KEY_MODE] === MODE_NATIVE){
+            array_pad($this->data, 1005, 'value');
+        }else{
+            ArrayUtils::padFrom($this->data, 1005, 'value');
         }
     }
 

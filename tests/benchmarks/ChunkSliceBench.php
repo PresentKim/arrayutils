@@ -4,7 +4,7 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class ChunkSliceBenchmark extends BaseBenchmark{
+class ChunkSliceBench extends BaseBench{
 
     /**
      * @Revs(512)

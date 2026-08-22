@@ -4,7 +4,7 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class DiffIntersectBenchmark extends BaseBenchmark{
+class DiffIntersectBench extends BaseBench{
 
     protected function initData() : void{
         $this->data = range(500, 1500);

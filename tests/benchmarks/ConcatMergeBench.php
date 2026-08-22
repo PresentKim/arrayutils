@@ -4,20 +4,23 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class StackQueueBenchmark extends BaseBenchmark{
+class ConcatMergeBench extends BaseBench{
+
+    protected function initData() : void{
+        $this->data = range(1001, 2000);
+    }
 
     /**
-     * @Revs(2048)
+     * @Revs(1024)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_push($params){
-        $data = $this->data;
+    public function bench_concat($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_push($data, 1001);
+            array_merge($this->data, $this->data);
         }else{
-            ArrayUtils::pushFrom($data, 1001);
+            ArrayUtils::concatFrom($this->data, $this->data);
         }
     }
 
@@ -27,42 +30,39 @@ class StackQueueBenchmark extends BaseBenchmark{
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_unshift($params){
-        $data = $this->data;
+    public function bench_concatSoft($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_unshift($data, 0);
+            array_merge($this->data, $this->data);
         }else{
-            ArrayUtils::unshiftFrom($data, 0);
+            ArrayUtils::concatSoftFrom($this->data, $this->data);
         }
     }
 
     /**
-     * @Revs(2048)
+     * @Revs(1024)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_pop($params){
-        $data = $this->data;
+    public function bench_merge($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_pop($data);
+            array_merge($this->data, $this->data);
         }else{
-            ArrayUtils::popFrom($data);
+            ArrayUtils::mergeFrom($this->data, $this->data);
         }
     }
 
     /**
-     * @Revs(2048)
+     * @Revs(1024)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_shift($params){
-        $data = $this->data;
+    public function bench_mergeSoft($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_shift($data);
+            array_merge($this->data, $this->data);
         }else{
-            ArrayUtils::shiftFrom($data);
+            ArrayUtils::mergeSoftFrom($this->data, $this->data);
         }
     }
 

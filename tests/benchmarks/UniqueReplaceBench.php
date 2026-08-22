@@ -4,7 +4,7 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class UniqueReplaceBenchmark extends BaseBenchmark{
+class UniqueReplaceBench extends BaseBench{
 
     protected function initData() : void{
         $this->data = [];

@@ -4,48 +4,54 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class SpliceJoinFlipBenchmark extends BaseBenchmark{
+class SortReverseBench extends BaseBench{
+
+    protected function initData() : void{
+        $this->data = range(1, 1000);
+        shuffle($this->data);
+    }
 
     /**
-     * @Revs(1024)
+     * @Revs(512)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_splice($params){
+    public function bench_sort($params){
         $data = $this->data;
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_splice($data, 10, 5, [1, 2]);
+            sort($data);
         }else{
-            ArrayUtils::spliceFrom($data, 10, 5, 1, 2);
+            ArrayUtils::sortFrom($data);
         }
     }
 
     /**
-     * @Revs(1024)
+     * @Revs(512)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_join($params){
+    public function bench_sortKey($params){
+        $data = $this->data;
         if($params[KEY_MODE] === MODE_NATIVE){
-            implode(',', $this->data);
+            ksort($data);
         }else{
-            ArrayUtils::joinFrom($this->data, ',');
+            ArrayUtils::sortKeyFrom($data);
         }
     }
 
     /**
-     * @Revs(1024)
+     * @Revs(2048)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_flip($params){
+    public function bench_reverse($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_flip($this->data);
+            array_reverse($this->data);
         }else{
-            ArrayUtils::flipFrom($this->data);
+            ArrayUtils::reverseFrom($this->data);
         }
     }
 

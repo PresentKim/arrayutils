@@ -6,7 +6,7 @@ const KEY_MODE = 0;
 const MODE_NATIVE = 0;
 const MODE_ARRAY_UTILS = 1;
 
-abstract class BaseBenchmark{
+abstract class BaseBench{
 
     /** @var array */
     protected $data;

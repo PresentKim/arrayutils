@@ -4,7 +4,7 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class ColumnCombineFlatBenchmark extends BaseBenchmark{
+class ColumnCombineFlatBench extends BaseBench{
 
     protected function initData() : void{
         $this->data = [['id' => 1, 'name' => 'a'], ['id' => 2, 'name' => 'b']];

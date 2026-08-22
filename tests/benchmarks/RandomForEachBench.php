@@ -4,7 +4,7 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class FillPadBenchmark extends BaseBenchmark{
+class RandomForEachBench extends BaseBench{
 
     /**
      * @Revs(2048)
@@ -12,11 +12,11 @@ class FillPadBenchmark extends BaseBenchmark{
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_fill($params){
+    public function bench_random($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_fill(0, 10, 0);
+            $this->data[array_rand($this->data)];
         }else{
-            ArrayUtils::fillFrom([], 0, 10, 0);
+            ArrayUtils::randomFrom($this->data);
         }
     }
 
@@ -26,25 +26,28 @@ class FillPadBenchmark extends BaseBenchmark{
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_fillKeys($params){
+    public function bench_keyRandom($params){
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_fill_keys(['a', 'b', 'c'], 'value');
+            array_rand($this->data);
         }else{
-            ArrayUtils::fillKeysFrom(['a', 'b', 'c'], 'value');
+            ArrayUtils::keyRandomFrom($this->data);
         }
     }
 
     /**
-     * @Revs(1024)
+     * @Revs(512)
      * @Iterations(5)
      * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
-    public function bench_pad($params){
+    public function bench_forEach($params){
+        $callback = function($v, $k){ return $v * 2; };
         if($params[KEY_MODE] === MODE_NATIVE){
-            array_pad($this->data, 1005, 'value');
+            foreach($this->data as $k => $v){
+                $callback($v, $k);
+            }
         }else{
-            ArrayUtils::padFrom($this->data, 1005, 'value');
+            ArrayUtils::forEachFrom($this->data, $callback);
         }
     }
 

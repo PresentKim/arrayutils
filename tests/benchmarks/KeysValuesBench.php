@@ -4,7 +4,7 @@ namespace kim\present\lib\arrayutils\tests\benchmarks;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 
-class KeysValuesBenchmark extends BaseBenchmark{
+class KeysValuesBench extends BaseBench{
 
     /**
      * @Revs(2048)
