@@ -7,8 +7,9 @@ use kim\present\lib\arrayutils\ArrayUtils;
 class RandomForEachBenchmark extends BaseBenchmark{
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_random($params){
@@ -20,8 +21,9 @@ class RandomForEachBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_keyRandom($params){
@@ -33,8 +35,9 @@ class RandomForEachBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_forEach($params){

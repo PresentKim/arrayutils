@@ -7,8 +7,9 @@ use kim\present\lib\arrayutils\ArrayUtils;
 class CountValuesSumBenchmark extends BaseBenchmark{
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_countValues($params){
@@ -20,8 +21,9 @@ class CountValuesSumBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(1024)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_sum($params){

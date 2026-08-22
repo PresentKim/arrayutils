@@ -7,8 +7,9 @@ use kim\present\lib\arrayutils\ArrayUtils;
 class ReduceBenchmark extends BaseBenchmark{
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_reduce($params){
@@ -21,8 +22,9 @@ class ReduceBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_reduceRight($params){

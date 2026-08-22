@@ -12,7 +12,8 @@ class DiffIntersectBenchmark extends BaseBenchmark{
 
     /**
      * @Revs(256)
-     * @Iterations(3)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_diff($params){
@@ -25,7 +26,8 @@ class DiffIntersectBenchmark extends BaseBenchmark{
 
     /**
      * @Revs(256)
-     * @Iterations(3)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_diffAssoc($params){
@@ -37,8 +39,9 @@ class DiffIntersectBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(1024)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_diffKey($params){
@@ -50,8 +53,9 @@ class DiffIntersectBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(128)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_intersect($params){
@@ -64,7 +68,8 @@ class DiffIntersectBenchmark extends BaseBenchmark{
 
     /**
      * @Revs(256)
-     * @Iterations(3)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_intersectAssoc($params){
@@ -76,8 +81,9 @@ class DiffIntersectBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_intersectKey($params){

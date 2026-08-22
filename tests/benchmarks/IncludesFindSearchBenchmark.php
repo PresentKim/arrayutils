@@ -7,8 +7,9 @@ use kim\present\lib\arrayutils\ArrayUtils;
 class IncludesFindSearchBenchmark extends BaseBenchmark{
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(1024)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_includes($params){
@@ -20,8 +21,9 @@ class IncludesFindSearchBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(1024)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_indexOf($params){
@@ -33,8 +35,9 @@ class IncludesFindSearchBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_find($params){
@@ -49,8 +52,9 @@ class IncludesFindSearchBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_findIndex($params){
@@ -65,8 +69,9 @@ class IncludesFindSearchBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(1024)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_search($params){

@@ -7,8 +7,9 @@ use kim\present\lib\arrayutils\ArrayUtils;
 class FirstLastKeyExistsBenchmark extends BaseBenchmark{
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_first($params){
@@ -20,8 +21,8 @@ class FirstLastKeyExistsBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
      * @ParamProviders("provideMethods")
      */
     public function bench_keyFirst($params){
@@ -34,8 +35,8 @@ class FirstLastKeyExistsBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
      * @ParamProviders("provideMethods")
      */
     public function bench_last($params){
@@ -48,8 +49,8 @@ class FirstLastKeyExistsBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
      * @ParamProviders("provideMethods")
      */
     public function bench_keyLast($params){
@@ -62,8 +63,8 @@ class FirstLastKeyExistsBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(2048)
+     * @Iterations(5)
      * @ParamProviders("provideMethods")
      */
     public function bench_keyExists($params){

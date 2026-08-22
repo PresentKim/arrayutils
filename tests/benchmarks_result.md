@@ -2,391 +2,391 @@
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 16.862 | 100.00% |
-| arrayutils | 24.735 | 146.69% |
+| native | 16.924 | 100.00% |
+| arrayutils | 24.596 | 145.33% |
 
 ### column
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.121 | 100.00% |
-| arrayutils | 1.375 | 1,134.46% |
+| native | 0.118 | 100.00% |
+| arrayutils | 1.195 | 1,015.96% |
 
 ### combine
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.117 | 100.00% |
-| arrayutils | 1.379 | 1,175.67% |
+| native | 0.113 | 100.00% |
+| arrayutils | 1.180 | 1,043.05% |
 
 ### concat
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 3.279 | 100.00% |
-| arrayutils | 13.550 | 413.20% |
+| native | 3.590 | 100.00% |
+| arrayutils | 13.212 | 368.07% |
 
 ### concatSoft
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 3.251 | 100.00% |
-| arrayutils | 16.624 | 511.30% |
+| native | 3.468 | 100.00% |
+| arrayutils | 16.417 | 473.36% |
 
 ### countValues
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.119 | 100.00% |
-| arrayutils | 1.407 | 1,184.93% |
+| native | 0.115 | 100.00% |
+| arrayutils | 1.214 | 1,055.31% |
 
 ### diff
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 52.644 | 100.00% |
-| arrayutils | 60.442 | 114.81% |
+| native | 54.619 | 100.00% |
+| arrayutils | 61.455 | 112.52% |
 
 ### diffAssoc
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 37.061 | 100.00% |
-| arrayutils | 44.173 | 119.19% |
+| native | 36.756 | 100.00% |
+| arrayutils | 44.343 | 120.64% |
 
 ### diffKey
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 2.689 | 100.00% |
-| arrayutils | 9.876 | 367.22% |
+| native | 2.691 | 100.00% |
+| arrayutils | 9.904 | 368.03% |
 
 ### every
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 47.107 | 100.00% |
-| arrayutils | 69.577 | 147.70% |
+| native | 47.352 | 100.00% |
+| arrayutils | 68.818 | 145.33% |
 
 ### fill
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.121 | 100.00% |
-| arrayutils | 1.451 | 1,203.87% |
+| native | 0.117 | 100.00% |
+| arrayutils | 1.251 | 1,064.83% |
 
 ### fillKeys
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.118 | 100.00% |
-| arrayutils | 1.426 | 1,208.08% |
+| native | 0.116 | 100.00% |
+| arrayutils | 1.229 | 1,063.02% |
 
 ### filter
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 48.746 | 100.00% |
-| arrayutils | 91.044 | 186.77% |
+| native | 48.415 | 100.00% |
+| arrayutils | 92.193 | 190.42% |
 
 ### find
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 24.996 | 100.00% |
-| arrayutils | 39.994 | 160.00% |
+| native | 24.799 | 100.00% |
+| arrayutils | 39.841 | 160.66% |
 
 ### findIndex
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 26.232 | 100.00% |
-| arrayutils | 40.566 | 154.65% |
+| native | 26.538 | 100.00% |
+| arrayutils | 39.967 | 150.61% |
 
 ### first
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.086 | 100.00% |
-| arrayutils | 9.338 | 10,858.92% |
+| native | 0.082 | 100.00% |
+| arrayutils | 9.077 | 11,040.91% |
 
 ### flat
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.136 | 100.00% |
-| arrayutils | 2.837 | 2,086.12% |
+| native | 0.130 | 100.00% |
+| arrayutils | 2.724 | 2,102.16% |
 
 ### flatMap
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.554 | 100.00% |
-| arrayutils | 2.681 | 483.51% |
+| native | 0.544 | 100.00% |
+| arrayutils | 2.445 | 449.32% |
 
 ### flip
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 5.273 | 100.00% |
-| arrayutils | 13.538 | 256.72% |
+| native | 4.994 | 100.00% |
+| arrayutils | 12.926 | 258.84% |
 
 ### forEach
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 54.835 | 100.00% |
-| arrayutils | 73.239 | 133.56% |
+| native | 54.751 | 100.00% |
+| arrayutils | 72.653 | 132.70% |
 
 ### includes
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.597 | 100.00% |
-| arrayutils | 20.485 | 3,431.29% |
+| native | 0.596 | 100.00% |
+| arrayutils | 20.329 | 3,412.84% |
 
 ### indexOf
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.600 | 100.00% |
-| arrayutils | 21.719 | 3,619.38% |
+| native | 0.597 | 100.00% |
+| arrayutils | 21.488 | 3,599.99% |
 
 ### intersect
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 964.729 | 100.00% |
-| arrayutils | 970.208 | 100.57% |
+| native | 964.800 | 100.05% |
+| arrayutils | 964.280 | 100.00% |
 
 ### intersectAssoc
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 41.899 | 100.00% |
-| arrayutils | 50.826 | 121.30% |
+| native | 41.424 | 100.00% |
+| arrayutils | 50.742 | 122.49% |
 
 ### intersectKey
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 7.171 | 100.00% |
-| arrayutils | 15.889 | 221.58% |
+| native | 7.068 | 100.00% |
+| arrayutils | 15.840 | 224.11% |
 
 ### join
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 8.212 | 100.00% |
-| arrayutils | 16.613 | 202.30% |
+| native | 8.256 | 100.00% |
+| arrayutils | 16.218 | 196.43% |
 
 ### keyExists
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
 | native | 0.085 | 100.00% |
-| arrayutils | 8.165 | 9,621.90% |
+| arrayutils | 8.140 | 9,565.17% |
 
 ### keyFirst
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.115 | 100.00% |
-| arrayutils | 9.232 | 8,041.21% |
+| native | 0.111 | 100.00% |
+| arrayutils | 9.282 | 8,352.14% |
 
 ### keyLast
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.115 | 100.00% |
-| arrayutils | 9.330 | 8,108.28% |
+| native | 0.112 | 100.00% |
+| arrayutils | 9.389 | 8,349.96% |
 
 ### keyRandom
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.119 | 100.00% |
-| arrayutils | 9.575 | 8,050.94% |
+| native | 0.103 | 100.00% |
+| arrayutils | 9.436 | 9,132.54% |
 
 ### keys
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 1.144 | 100.00% |
-| arrayutils | 9.218 | 806.06% |
+| native | 1.143 | 100.00% |
+| arrayutils | 8.964 | 784.20% |
 
 ### last
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.118 | 100.00% |
-| arrayutils | 9.465 | 8,051.32% |
+| native | 0.115 | 100.00% |
+| arrayutils | 9.217 | 8,031.55% |
 
 ### map
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 36.379 | 100.00% |
-| arrayutils | 79.636 | 218.90% |
+| native | 35.993 | 100.00% |
+| arrayutils | 79.000 | 219.49% |
 
 ### mapAssoc
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 111.417 | 100.00% |
-| arrayutils | 128.358 | 115.20% |
+| native | 110.613 | 100.00% |
+| arrayutils | 129.430 | 117.01% |
 
 ### mapKey
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 61.738 | 100.00% |
-| arrayutils | 80.789 | 130.86% |
+| native | 61.956 | 100.00% |
+| arrayutils | 78.809 | 127.20% |
 
 ### merge
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 3.312 | 100.00% |
-| arrayutils | 13.605 | 410.73% |
+| native | 3.250 | 100.00% |
+| arrayutils | 13.460 | 414.11% |
 
 ### mergeSoft
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 3.259 | 100.00% |
-| arrayutils | 16.662 | 511.30% |
+| native | 3.239 | 100.00% |
+| arrayutils | 16.786 | 518.32% |
 
 ### pad
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 1.445 | 100.00% |
-| arrayutils | 9.444 | 653.72% |
+| native | 1.430 | 100.00% |
+| arrayutils | 9.343 | 653.57% |
 
 ### pop
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 1.474 | 100.00% |
-| arrayutils | 8.182 | 554.95% |
+| native | 1.422 | 100.00% |
+| arrayutils | 7.995 | 562.45% |
 
 ### push
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 1.446 | 100.00% |
-| arrayutils | 8.255 | 571.04% |
+| native | 1.426 | 100.00% |
+| arrayutils | 8.142 | 570.90% |
 
 ### random
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.125 | 100.00% |
-| arrayutils | 9.542 | 7,609.05% |
+| native | 0.113 | 100.00% |
+| arrayutils | 9.301 | 8,265.15% |
 
 ### reduce
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 36.079 | 100.00% |
-| arrayutils | 75.880 | 210.32% |
+| native | 36.113 | 100.00% |
+| arrayutils | 76.843 | 212.78% |
 
 ### reduceRight
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 37.470 | 100.00% |
-| arrayutils | 77.695 | 207.35% |
+| native | 37.421 | 100.00% |
+| arrayutils | 77.382 | 206.79% |
 
 ### replace
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 1.445 | 100.00% |
-| arrayutils | 9.981 | 690.58% |
+| native | 1.462 | 100.00% |
+| arrayutils | 10.806 | 739.31% |
 
 ### reverse
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 1.669 | 100.00% |
-| arrayutils | 9.747 | 583.94% |
+| native | 1.665 | 100.00% |
+| arrayutils | 9.556 | 573.84% |
 
 ### search
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.598 | 100.00% |
-| arrayutils | 21.856 | 3,657.58% |
+| native | 0.593 | 100.00% |
+| arrayutils | 21.671 | 3,655.01% |
 
 ### shift
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 2.843 | 100.00% |
-| arrayutils | 9.597 | 337.59% |
+| native | 2.840 | 100.00% |
+| arrayutils | 9.427 | 332.00% |
 
 ### slice
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.209 | 100.00% |
-| arrayutils | 9.905 | 4,747.97% |
+| native | 0.205 | 100.00% |
+| arrayutils | 9.788 | 4,778.33% |
 
 ### some
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 24.867 | 100.00% |
-| arrayutils | 40.413 | 162.52% |
+| native | 24.841 | 100.00% |
+| arrayutils | 40.622 | 163.53% |
 
 ### sort
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 45.715 | 100.00% |
-| arrayutils | 52.257 | 114.31% |
+| native | 45.469 | 100.00% |
+| arrayutils | 52.147 | 114.69% |
 
 ### sortKey
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 23.603 | 100.00% |
-| arrayutils | 32.617 | 138.19% |
+| native | 23.238 | 100.00% |
+| arrayutils | 32.432 | 139.56% |
 
 ### splice
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 4.718 | 100.00% |
-| arrayutils | 11.728 | 248.59% |
+| native | 4.633 | 100.00% |
+| arrayutils | 11.639 | 251.21% |
 
 ### sum
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 3.121 | 100.00% |
-| arrayutils | 11.327 | 362.99% |
+| native | 3.116 | 100.00% |
+| arrayutils | 11.076 | 355.47% |
 
 ### unique
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 29.395 | 100.00% |
-| arrayutils | 39.719 | 135.12% |
+| native | 30.100 | 100.00% |
+| arrayutils | 38.283 | 127.18% |
 
 ### unshift
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 4.655 | 100.00% |
-| arrayutils | 11.461 | 246.18% |
+| native | 4.756 | 100.00% |
+| arrayutils | 11.277 | 237.11% |
 
 ### values
 
 | Set | Time (μs) | Percentage |
 | --- | --- | --- |
-| native | 0.084 | 100.00% |
-| arrayutils | 8.202 | 9,773.71% |
+| native | 0.081 | 100.00% |
+| arrayutils | 7.992 | 9,911.14% |
 

@@ -7,8 +7,9 @@ use kim\present\lib\arrayutils\ArrayUtils;
 class MapBenchmark extends BaseBenchmark{
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_map($params){
@@ -21,7 +22,8 @@ class MapBenchmark extends BaseBenchmark{
 
     /**
      * @Revs(256)
-     * @Iterations(3)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_mapAssoc($params){
@@ -38,8 +40,9 @@ class MapBenchmark extends BaseBenchmark{
     }
 
     /**
-     * @Revs(256)
-     * @Iterations(3)
+     * @Revs(512)
+     * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_mapKey($params){
