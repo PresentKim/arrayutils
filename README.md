@@ -40,10 +40,6 @@ For a detailed description, [Click here (GitBook)](https://arrayutils.docs.prese
 You can use this library with composer.  
 - Go to [**Packagist**](https://packagist.org/packages/presentkim/arrayutils)
 
-> **Note** for [Pocketmine][pmmp-url] plugin developer  
-> You can use this library with poggit  
-> - Go to [**Poggit**](https://poggit.pmmp.io/ci/presentkim-pm/arrayutils/~)
-
 -----
 
 ## :memo: License  
