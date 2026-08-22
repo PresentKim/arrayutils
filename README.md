@@ -42,6 +42,16 @@ You can use this library with composer.
 
 -----
 
+## :chart_with_upwards_trend: Performance Benchmark
+You can run the performance benchmarks using the following commands:
+
+```bash
+.\vendor\bin\phpbench run --report=expression --output=json > .\tests\benchmarks_result.json
+php .\tests\benchmarks_result_to_markdown.php
+```
+
+-----
+
 ## :memo: License  
 > You can check out the full license [here](LICENSE)  
   
