@@ -1,0 +1,93 @@
+name: Performance Benchmarks
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    benchmark:
+        name: Run Benchmark & Update Result Branch
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout main branch
+                uses: actions/checkout@v4
+
+            # 1. PHP 7.3 Environment Execution
+            -   name: Setup PHP 7.3
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '7.3'
+                    tools: composer:v2
+                    coverage: none
+                env:
+                    composer-cache-provider: composer
+
+            -   name: Get Composer Cache Directory
+                id: composer-cache-73
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            -   name: Cache Composer dependencies (PHP 7.3)
+                uses: actions/cache@v4
+                with:
+                    path: ${{ steps.composer-cache-73.outputs.dir }}
+                    key: ${{ runner.os }}-php-7.3-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-php-7.3-composer-
+
+            -   name: Install dependencies (PHP 7.3)
+                run: composer install --prefer-dist --no-progress
+
+            -   name: Run Benchmark (PHP 7.3)
+                run: |
+                    mkdir -p results
+                    ./vendor/bin/phpbench run --report=expression --output=json > results/bench_73.json
+                    php ./tests/benchmarks_result_to_markdown.php -i results/bench_73.json -o results/bench_73.md
+
+            # 2. PHP 8.4 Environment Execution
+            -   name: Setup PHP 8.4
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.4'
+                    tools: composer:v2
+                    coverage: none
+                env:
+                    composer-cache-provider: composer
+
+            -   name: Get Composer Cache Directory
+                id: composer-cache-84
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            -   name: Cache Composer dependencies (PHP 8.4)
+                uses: actions/cache@v4
+                with:
+                    path: ${{ steps.composer-cache-84.outputs.dir }}
+                    key: ${{ runner.os }}-php-8.4-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-php-8.4-composer-
+
+            -   name: Install dependencies (PHP 8.4)
+                run: composer install --prefer-dist --no-progress
+
+            -   name: Run Benchmark (PHP 8.4)
+                run: |
+                    ./vendor/bin/phpbench run --report=expression --output=json > results/bench_84.json
+                    php ./tests/benchmarks_result_to_markdown.php -i results/bench_84.json -o results/bench_84.md
+
+            # 3. Create orphan branch and force push single result commit
+            -   name: Commit and Push to perf/result branch
+                run: |
+                    git config user.name "github-actions[bot]"
+                    git config user.email "github-actions[bot]@users.noreply.github.com"
+                    
+                    # Switch to an orphan branch without prior history
+                    git checkout --orphan perf/result
+                    git rm -rf .
+                    
+                    # Stage generated benchmark results
+                    git add results/
+                    
+                    # Commit and force push to keep only a single commit on perf/result
+                    git commit -m "chore: update benchmark results [skip ci]"
+                    git push origin perf/result --force
