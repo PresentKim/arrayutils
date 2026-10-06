@@ -5,3 +5,5 @@
 vendor
 .phpbench
 composer.lock
+
+.phpunit.result.cache
