@@ -30,11 +30,12 @@ namespace kim\present\lib\arrayutils\traits;
 use kim\present\lib\arrayutils\ArrayUtils;
 use function array_reverse;
 use function array_sum;
+use function is_array;
 
 /**
  * Methods that walk every element with a callback (map, filter, forEach, reduce, every, some)
  *
- * Requires ArrayUtils::mapToArray() and ArrayUtils::exchange() of the class using this trait
+ * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
  */
 trait IterationTrait{
     /**
@@ -43,7 +44,8 @@ trait IterationTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/map
      */
     public function map(callable $callback) : ArrayUtils{
-        return $this->exchange(self::mapFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::mapFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -64,7 +66,7 @@ trait IterationTrait{
      * Same as mapFrom(), but returns a plain array
      */
     public static function mapFromAs(iterable $from, callable $callback) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $result = [];
         foreach($array as $key => $value){
             $result[$key] = $callback($value, $key, $array);
@@ -78,7 +80,8 @@ trait IterationTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/map/assoc
      */
     public function mapAssoc(callable $callback) : ArrayUtils{
-        return $this->exchange(self::mapAssocFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::mapAssocFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -99,7 +102,7 @@ trait IterationTrait{
      * Same as mapAssocFrom(), but returns a plain array
      */
     public static function mapAssocFromAs(iterable $from, callable $callback) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $result = [];
         foreach($array as $key => $value){
             [$newKey, $newValue] = $callback($value, $key, $array);
@@ -114,7 +117,8 @@ trait IterationTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/map/key
      */
     public function mapKey(callable $callback) : ArrayUtils{
-        return $this->exchange(self::mapKeyFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::mapKeyFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -135,7 +139,7 @@ trait IterationTrait{
      * Same as mapKeyFrom(), but returns a plain array
      */
     public static function mapKeyFromAs(iterable $from, callable $callback) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $result = [];
         foreach($array as $key => $value){
             $result[$callback($value, $key, $array)] = $value;
@@ -149,7 +153,8 @@ trait IterationTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/filter
      */
     public function filter(callable $callback) : ArrayUtils{
-        return $this->exchange(self::filterFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::filterFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -170,7 +175,7 @@ trait IterationTrait{
      * Same as filterFrom(), but returns a plain array
      */
     public static function filterFromAs(iterable $from, callable $callback) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $result = [];
         foreach($array as $key => $value){
             if($callback($value, $key, $array)){
@@ -186,7 +191,8 @@ trait IterationTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/for-each
      */
     public function forEach(callable $callback) : ArrayUtils{
-        return $this->exchange(self::forEachFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::forEachFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -207,7 +213,7 @@ trait IterationTrait{
      * Same as forEachFrom(), but returns a plain array
      */
     public static function forEachFromAs(iterable $from, callable $callback) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($array as $key => $value){
             $callback($value, $key, $array);
         }
@@ -227,7 +233,7 @@ trait IterationTrait{
      * Same as every(), but operates on the given iterable
      */
     public static function everyFrom(iterable $from, callable $callback) : bool{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($array as $key => $value){
             if(!$callback($value, $key, $array)){
                 return false;
@@ -249,7 +255,7 @@ trait IterationTrait{
      * Same as some(), but operates on the given iterable
      */
     public static function someFrom(iterable $from, callable $callback) : bool{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($array as $key => $value){
             if($callback($value, $key, $array)){
                 return true;
@@ -271,7 +277,7 @@ trait IterationTrait{
      * Same as reduce(), but operates on the given iterable
      */
     public static function reduceFrom(iterable $from, callable $callback, $initialValue = null){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $currentValue = $initialValue;
         foreach($array as $key => $value){
             $currentValue = $callback($currentValue, $value, $key, $array);
@@ -292,9 +298,9 @@ trait IterationTrait{
      * Same as reduceRight(), but operates on the given iterable
      */
     public static function reduceRightFrom(iterable $from, callable $callback, $initialValue = null){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $currentValue = $initialValue;
-        foreach(array_reverse($array) as $key => $value){
+        foreach(array_reverse($array, true) as $key => $value){
             $currentValue = $callback($currentValue, $value, $key, $array);
         }
         return $currentValue;
@@ -317,6 +323,6 @@ trait IterationTrait{
      * @return int|float
      */
     public static function sumFrom(iterable $from){
-        return array_sum((array) $from);
+        return array_sum((is_array($from) ? $from : self::toArray($from)));
     }
 }

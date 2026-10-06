@@ -29,6 +29,7 @@ namespace kim\present\lib\arrayutils\traits;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 use Exception;
+use function array_key_exists;
 use function array_keys;
 use function array_search;
 use function array_slice;
@@ -36,6 +37,7 @@ use function array_values;
 use function count;
 use function end;
 use function in_array;
+use function is_array;
 use function key;
 use function max;
 use function min;
@@ -44,7 +46,7 @@ use function random_int;
 /**
  * Methods that look up a single element or key (includes, indexOf, find, first, last, random)
  *
- * Requires ArrayUtils::mapToArray() and ArrayUtils::exchange() of the class using this trait
+ * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
  */
 trait SearchTrait{
     /**
@@ -60,7 +62,7 @@ trait SearchTrait{
      * Same as includes(), but operates on the given iterable
      */
     public static function includesFrom(iterable $from, $needle, int $start = 0) : bool{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if($start !== 0){
             $count = count($array);
             $array = array_slice($array, $start < 0 ? max($count + $start, 0) : min($start, $count), null, true);
@@ -85,7 +87,7 @@ trait SearchTrait{
      * @return int|string|null
      */
     public static function indexOfFrom(iterable $from, $needle, int $start = 0){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if($start !== 0){
             $count = count($array);
             $array = array_slice($array, $start < 0 ? max($count + $start, 0) : min($start, $count), null, true);
@@ -111,12 +113,12 @@ trait SearchTrait{
      * @return int|string|null
      */
     public static function searchFrom(iterable $from, $needle, int $start = 0){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         return self::indexOfFrom($array, $needle, $start);
     }
 
     /**
-     * Tests whether the $key exists in the array and its value is not null
+     * Tests whether the $key exists in the array
      *
      * @link https://arrayutils.docs.present.kim/methods/g/key-exists
      */
@@ -128,8 +130,8 @@ trait SearchTrait{
      * Same as keyExists(), but operates on the given iterable
      */
     public static function keyExistsFrom(iterable $from, $key) : bool{
-        $array = (array) $from;
-        return isset($array[$key]);
+        $array = is_array($from) ? $from : self::toArray($from);
+        return array_key_exists($key, $array);
     }
 
     /**
@@ -145,7 +147,7 @@ trait SearchTrait{
      * Same as find(), but operates on the given iterable
      */
     public static function findFrom(iterable $from, callable $callback){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($array as $key => $value){
             if($callback($value, $key, $array)){
                 return $value;
@@ -171,7 +173,7 @@ trait SearchTrait{
      * @return int|string|null
      */
     public static function findIndexFrom(iterable $from, callable $callback){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($array as $key => $value){
             if($callback($value, $key, $array)){
                 return $key;
@@ -193,7 +195,7 @@ trait SearchTrait{
      * Same as first(), but operates on the given iterable
      */
     public static function firstFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($array as $value){
             return $value;
         }
@@ -217,7 +219,7 @@ trait SearchTrait{
      * @return int|string|null
      */
     public static function keyFirstFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($array as $key => $_){
             return $key;
         }
@@ -237,7 +239,7 @@ trait SearchTrait{
      * Same as last(), but operates on the given iterable
      */
     public static function lastFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         return $array ? end($array) : null;
     }
 
@@ -258,7 +260,7 @@ trait SearchTrait{
      * @return int|string|null
      */
     public static function keyLastFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if(!$array){
             return null;
         }
@@ -279,7 +281,7 @@ trait SearchTrait{
      * Same as random(), but operates on the given iterable
      */
     public static function randomFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $count = count($array);
         if($count === 0){
             return null;
@@ -309,7 +311,7 @@ trait SearchTrait{
      * @return int|string|null
      */
     public static function keyRandomFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $count = count($array);
         if($count === 0){
             return null;

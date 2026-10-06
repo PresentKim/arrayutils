@@ -36,11 +36,12 @@ use function array_intersect;
 use function array_intersect_assoc;
 use function array_intersect_key;
 use function array_unique;
+use function is_array;
 
 /**
  * Methods that compare arrays or collapse duplicates (diff, intersect, unique, countValues)
  *
- * Requires ArrayUtils::mapToArray() and ArrayUtils::exchange() of the class using this trait
+ * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
  */
 trait SetTrait{
     /**
@@ -50,7 +51,8 @@ trait SetTrait{
      */
     public function diff(iterable ...$iterables) : ArrayUtils{
         $a = $this->getArrayCopy();
-        return $this->exchange($iterables ? array_diff($a, ...self::mapToArray($iterables)) : $a);
+        $this->exchangeArray($iterables ? array_diff($a, ...self::mapToArray($iterables)) : $a);
+        return $this;
     }
 
     /**
@@ -65,7 +67,7 @@ trait SetTrait{
      * Same as diff(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function diffFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return new self($iterables ? array_diff($a, ...self::mapToArray($iterables)) : $a);
     }
 
@@ -73,7 +75,7 @@ trait SetTrait{
      * Same as diffFrom(), but returns a plain array
      */
     public static function diffFromAs(iterable $from, iterable ...$iterables) : array{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return $iterables ? array_diff($a, ...self::mapToArray($iterables)) : $a;
     }
 
@@ -84,7 +86,8 @@ trait SetTrait{
      */
     public function diffAssoc(iterable ...$iterables) : ArrayUtils{
         $a = $this->getArrayCopy();
-        return $this->exchange($iterables ? array_diff_assoc($a, ...self::mapToArray($iterables)) : $a);
+        $this->exchangeArray($iterables ? array_diff_assoc($a, ...self::mapToArray($iterables)) : $a);
+        return $this;
     }
 
     /**
@@ -99,7 +102,7 @@ trait SetTrait{
      * Same as diffAssoc(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function diffAssocFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return new self($iterables ? array_diff_assoc($a, ...self::mapToArray($iterables)) : $a);
     }
 
@@ -107,7 +110,7 @@ trait SetTrait{
      * Same as diffAssocFrom(), but returns a plain array
      */
     public static function diffAssocFromAs(iterable $from, iterable ...$iterables) : array{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return $iterables ? array_diff_assoc($a, ...self::mapToArray($iterables)) : $a;
     }
 
@@ -118,7 +121,8 @@ trait SetTrait{
      */
     public function diffKey(iterable ...$iterables) : ArrayUtils{
         $a = $this->getArrayCopy();
-        return $this->exchange($iterables ? array_diff_key($a, ...self::mapToArray($iterables)) : $a);
+        $this->exchangeArray($iterables ? array_diff_key($a, ...self::mapToArray($iterables)) : $a);
+        return $this;
     }
 
     /**
@@ -133,7 +137,7 @@ trait SetTrait{
      * Same as diffKey(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function diffKeyFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return new self($iterables ? array_diff_key($a, ...self::mapToArray($iterables)) : $a);
     }
 
@@ -141,7 +145,7 @@ trait SetTrait{
      * Same as diffKeyFrom(), but returns a plain array
      */
     public static function diffKeyFromAs(iterable $from, iterable ...$iterables) : array{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return $iterables ? array_diff_key($a, ...self::mapToArray($iterables)) : $a;
     }
 
@@ -152,7 +156,8 @@ trait SetTrait{
      */
     public function intersect(iterable ...$iterables) : ArrayUtils{
         $a = $this->getArrayCopy();
-        return $this->exchange($iterables ? array_intersect($a, ...self::mapToArray($iterables)) : $a);
+        $this->exchangeArray($iterables ? array_intersect($a, ...self::mapToArray($iterables)) : $a);
+        return $this;
     }
 
     /**
@@ -167,7 +172,7 @@ trait SetTrait{
      * Same as intersect(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function intersectFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return new self($iterables ? array_intersect($a, ...self::mapToArray($iterables)) : $a);
     }
 
@@ -175,7 +180,7 @@ trait SetTrait{
      * Same as intersectFrom(), but returns a plain array
      */
     public static function intersectFromAs(iterable $from, iterable ...$iterables) : array{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return $iterables ? array_intersect($a, ...self::mapToArray($iterables)) : $a;
     }
 
@@ -186,7 +191,8 @@ trait SetTrait{
      */
     public function intersectAssoc(iterable ...$iterables) : ArrayUtils{
         $a = $this->getArrayCopy();
-        return $this->exchange($iterables ? array_intersect_assoc($a, ...self::mapToArray($iterables)) : $a);
+        $this->exchangeArray($iterables ? array_intersect_assoc($a, ...self::mapToArray($iterables)) : $a);
+        return $this;
     }
 
     /**
@@ -201,7 +207,7 @@ trait SetTrait{
      * Same as intersectAssoc(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function intersectAssocFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return new self($iterables ? array_intersect_assoc($a, ...self::mapToArray($iterables)) : $a);
     }
 
@@ -209,7 +215,7 @@ trait SetTrait{
      * Same as intersectAssocFrom(), but returns a plain array
      */
     public static function intersectAssocFromAs(iterable $from, iterable ...$iterables) : array{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return $iterables ? array_intersect_assoc($a, ...self::mapToArray($iterables)) : $a;
     }
 
@@ -220,7 +226,8 @@ trait SetTrait{
      */
     public function intersectKey(iterable ...$iterables) : ArrayUtils{
         $a = $this->getArrayCopy();
-        return $this->exchange($iterables ? array_intersect_key($a, ...self::mapToArray($iterables)) : $a);
+        $this->exchangeArray($iterables ? array_intersect_key($a, ...self::mapToArray($iterables)) : $a);
+        return $this;
     }
 
     /**
@@ -235,7 +242,7 @@ trait SetTrait{
      * Same as intersectKey(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function intersectKeyFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return new self($iterables ? array_intersect_key($a, ...self::mapToArray($iterables)) : $a);
     }
 
@@ -243,7 +250,7 @@ trait SetTrait{
      * Same as intersectKeyFrom(), but returns a plain array
      */
     public static function intersectKeyFromAs(iterable $from, iterable ...$iterables) : array{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return $iterables ? array_intersect_key($a, ...self::mapToArray($iterables)) : $a;
     }
 
@@ -253,7 +260,8 @@ trait SetTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/unique
      */
     public function unique(int $sortFlags = SORT_STRING) : ArrayUtils{
-        return $this->exchange(array_unique($this->getArrayCopy(), $sortFlags));
+        $this->exchangeArray(array_unique($this->getArrayCopy(), $sortFlags));
+        return $this;
     }
 
     /**
@@ -267,14 +275,14 @@ trait SetTrait{
      * Same as unique(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function uniqueFrom(iterable $from, int $sortFlags = SORT_STRING) : ArrayUtils{
-        return new self(array_unique((array) $from, $sortFlags));
+        return new self(array_unique((is_array($from) ? $from : self::toArray($from)), $sortFlags));
     }
 
     /**
      * Same as uniqueFrom(), but returns a plain array
      */
     public static function uniqueFromAs(iterable $from, int $sortFlags = SORT_STRING) : array{
-        return array_unique((array) $from, $sortFlags);
+        return array_unique((is_array($from) ? $from : self::toArray($from)), $sortFlags);
     }
 
     /**
@@ -283,7 +291,8 @@ trait SetTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/count-values
      */
     public function countValues() : ArrayUtils{
-        return $this->exchange(array_count_values($this->getArrayCopy()));
+        $this->exchangeArray(array_count_values($this->getArrayCopy()));
+        return $this;
     }
 
     /**
@@ -297,13 +306,13 @@ trait SetTrait{
      * Same as countValues(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function countValuesFrom(iterable $from) : ArrayUtils{
-        return new self(array_count_values((array) $from));
+        return new self(array_count_values((is_array($from) ? $from : self::toArray($from))));
     }
 
     /**
      * Same as countValuesFrom(), but returns a plain array
      */
     public static function countValuesFromAs(iterable $from) : array{
-        return array_count_values((array) $from);
+        return array_count_values((is_array($from) ? $from : self::toArray($from)));
     }
 }

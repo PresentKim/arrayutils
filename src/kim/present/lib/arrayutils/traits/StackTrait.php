@@ -34,11 +34,12 @@ use function array_shift;
 use function array_splice;
 use function array_unshift;
 use function count;
+use function is_array;
 
 /**
  * Methods that add or remove elements at a position (push, pop, shift, unshift, splice)
  *
- * Requires ArrayUtils::mapToArray() and ArrayUtils::exchange() of the class using this trait
+ * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
  */
 trait StackTrait{
     /**
@@ -47,7 +48,8 @@ trait StackTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/push
      */
     public function push(...$values) : ArrayUtils{
-        return $this->exchange(self::pushFromAs($this->getArrayCopy(), ...$values));
+        $this->exchangeArray(self::pushFromAs($this->getArrayCopy(), ...$values));
+        return $this;
     }
 
     /**
@@ -68,7 +70,7 @@ trait StackTrait{
      * Same as pushFrom(), but returns a plain array
      */
     public static function pushFromAs(iterable $from, ...$values) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if($values){
             array_push($array, ...$values);
         }
@@ -81,7 +83,8 @@ trait StackTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/unshift
      */
     public function unshift(...$values) : ArrayUtils{
-        return $this->exchange(self::unshiftFromAs($this->getArrayCopy(), ...$values));
+        $this->exchangeArray(self::unshiftFromAs($this->getArrayCopy(), ...$values));
+        return $this;
     }
 
     /**
@@ -102,7 +105,7 @@ trait StackTrait{
      * Same as unshiftFrom(), but returns a plain array
      */
     public static function unshiftFromAs(iterable $from, ...$values) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if($values){
             array_unshift($array, ...$values);
             return $array;
@@ -138,7 +141,7 @@ trait StackTrait{
      * @link https://arrayutils.docs.present.kim/methods/g/pop
      */
     public static function popFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         return array_pop($array);
     }
 
@@ -160,7 +163,7 @@ trait StackTrait{
      * @link https://arrayutils.docs.present.kim/methods/g/shift
      */
     public static function shiftFrom(iterable $from){
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         return array_shift($array);
     }
 
@@ -185,7 +188,7 @@ trait StackTrait{
      * @link https://arrayutils.docs.present.kim/methods/g/splice
      */
     public static function spliceFrom(iterable $from, int $offset, ?int $length = null, ...$replacement) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         return array_splice($array, $offset, $length ?? count($array), $replacement);
     }
 }

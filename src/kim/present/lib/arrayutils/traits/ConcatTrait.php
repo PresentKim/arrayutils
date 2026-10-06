@@ -35,7 +35,7 @@ use function is_array;
 /**
  * Methods that join arrays together (concat, merge, replace, flat)
  *
- * Requires ArrayUtils::mapToArray() and ArrayUtils::exchange() of the class using this trait
+ * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
  */
 trait ConcatTrait{
     /**
@@ -44,7 +44,8 @@ trait ConcatTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/concat
      */
     public function concat(...$values) : ArrayUtils{
-        return $this->exchange(array_merge($this->getArrayCopy(), ...self::mapToArray($values)));
+        $this->exchangeArray(array_merge($this->getArrayCopy(), ...self::mapToArray($values)));
+        return $this;
     }
 
     /**
@@ -58,14 +59,14 @@ trait ConcatTrait{
      * Same as concat(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function concatFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(array_merge((array) $from, ...self::mapToArray($values)));
+        return new self(array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values)));
     }
 
     /**
      * Same as concatFrom(), but returns a plain array
      */
     public static function concatFromAs(iterable $from, ...$values) : array{
-        return array_merge((array) $from, ...self::mapToArray($values));
+        return array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values));
     }
 
     /**
@@ -74,7 +75,8 @@ trait ConcatTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/concat/soft
      */
     public function concatSoft(...$values) : ArrayUtils{
-        return $this->exchange(self::concatSoftFromAs($this->getArrayCopy(), ...$values));
+        $this->exchangeArray(self::concatSoftFromAs($this->getArrayCopy(), ...$values));
+        return $this;
     }
 
     /**
@@ -95,7 +97,7 @@ trait ConcatTrait{
      * Same as concatSoftFrom(), but returns a plain array
      */
     public static function concatSoftFromAs(iterable $from, ...$values) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         foreach($values as $value){
             $array += (array) $value;
         }
@@ -108,7 +110,8 @@ trait ConcatTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/concat
      */
     public function merge(...$values) : ArrayUtils{
-        return $this->exchange(array_merge($this->getArrayCopy(), ...self::mapToArray($values)));
+        $this->exchangeArray(array_merge($this->getArrayCopy(), ...self::mapToArray($values)));
+        return $this;
     }
 
     /**
@@ -122,14 +125,14 @@ trait ConcatTrait{
      * Same as merge(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function mergeFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(array_merge((array) $from, ...self::mapToArray($values)));
+        return new self(array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values)));
     }
 
     /**
      * Same as mergeFrom(), but returns a plain array
      */
     public static function mergeFromAs(iterable $from, ...$values) : array{
-        return array_merge((array) $from, ...self::mapToArray($values));
+        return array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values));
     }
 
     /**
@@ -138,7 +141,8 @@ trait ConcatTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/concat/soft
      */
     public function mergeSoft(...$values) : ArrayUtils{
-        return $this->exchange(self::mergeSoftFromAs($this->getArrayCopy(), ...$values));
+        $this->exchangeArray(self::mergeSoftFromAs($this->getArrayCopy(), ...$values));
+        return $this;
     }
 
     /**
@@ -159,7 +163,7 @@ trait ConcatTrait{
      * Same as mergeSoftFrom(), but returns a plain array
      */
     public static function mergeSoftFromAs(iterable $from, ...$values) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         return self::concatSoftFromAs($array, ...$values);
     }
 
@@ -169,7 +173,8 @@ trait ConcatTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/replace
      */
     public function replace(iterable ...$iterables) : ArrayUtils{
-        return $this->exchange(array_replace_recursive($this->getArrayCopy(), ...self::mapToArray($iterables)));
+        $this->exchangeArray(array_replace_recursive($this->getArrayCopy(), ...self::mapToArray($iterables)));
+        return $this;
     }
 
     /**
@@ -183,14 +188,14 @@ trait ConcatTrait{
      * Same as replace(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function replaceFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        return new self(array_replace_recursive((array) $from, ...self::mapToArray($iterables)));
+        return new self(array_replace_recursive((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($iterables)));
     }
 
     /**
      * Same as replaceFrom(), but returns a plain array
      */
     public static function replaceFromAs(iterable $from, iterable ...$iterables) : array{
-        return array_replace_recursive((array) $from, ...self::mapToArray($iterables));
+        return array_replace_recursive((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($iterables));
     }
 
     /**
@@ -199,7 +204,8 @@ trait ConcatTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/flat
      */
     public function flat(int $dept = 1) : ArrayUtils{
-        return $this->exchange(self::flatFromAs($this->getArrayCopy(), $dept));
+        $this->exchangeArray(self::flatFromAs($this->getArrayCopy(), $dept));
+        return $this;
     }
 
     /**
@@ -220,7 +226,7 @@ trait ConcatTrait{
      * Same as flatFrom(), but returns a plain array
      */
     public static function flatFromAs(iterable $from, int $dept = 1) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if($dept <= 0){
             return $array;
         }
@@ -237,7 +243,8 @@ trait ConcatTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/flat/map
      */
     public function flatMap(callable $callback) : ArrayUtils{
-        return $this->exchange(self::flatMapFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::flatMapFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -258,7 +265,7 @@ trait ConcatTrait{
      * Same as flatMapFrom(), but returns a plain array
      */
     public static function flatMapFromAs(iterable $from, callable $callback) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $parts = [];
         foreach($array as $key => $value){
             $parts[] = (array) $callback($value, $key, $array);

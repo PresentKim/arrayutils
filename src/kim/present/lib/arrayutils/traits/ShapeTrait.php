@@ -39,13 +39,14 @@ use function array_slice;
 use function array_values;
 use function count;
 use function implode;
+use function is_array;
 use function max;
 use function min;
 
 /**
  * Methods that change the shape of the array (chunk, column, combine, fill, flip, keys, values, pad, slice, join)
  *
- * Requires ArrayUtils::mapToArray() and ArrayUtils::exchange() of the class using this trait
+ * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
  */
 trait ShapeTrait{
     /**
@@ -54,7 +55,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/chunk
      */
     public function chunk(int $size, bool $preserveKeys = false) : ArrayUtils{
-        return $this->exchange(array_chunk($this->getArrayCopy(), $size, $preserveKeys));
+        $this->exchangeArray(array_chunk($this->getArrayCopy(), $size, $preserveKeys));
+        return $this;
     }
 
     /**
@@ -68,14 +70,14 @@ trait ShapeTrait{
      * Same as chunk(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function chunkFrom(iterable $from, int $size, bool $preserveKeys = false) : ArrayUtils{
-        return new self(array_chunk((array) $from, $size, $preserveKeys));
+        return new self(array_chunk((is_array($from) ? $from : self::toArray($from)), $size, $preserveKeys));
     }
 
     /**
      * Same as chunkFrom(), but returns a plain array
      */
     public static function chunkFromAs(iterable $from, int $size, bool $preserveKeys = false) : array{
-        return array_chunk((array) $from, $size, $preserveKeys);
+        return array_chunk((is_array($from) ? $from : self::toArray($from)), $size, $preserveKeys);
     }
 
     /**
@@ -84,7 +86,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/column
      */
     public function column($valueKey, $indexKey = null) : ArrayUtils{
-        return $this->exchange(array_column($this->getArrayCopy(), $valueKey, $indexKey));
+        $this->exchangeArray(array_column($this->getArrayCopy(), $valueKey, $indexKey));
+        return $this;
     }
 
     /**
@@ -98,14 +101,14 @@ trait ShapeTrait{
      * Same as column(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function columnFrom(iterable $from, $valueKey, $indexKey = null) : ArrayUtils{
-        return new self(array_column((array) $from, $valueKey, $indexKey));
+        return new self(array_column((is_array($from) ? $from : self::toArray($from)), $valueKey, $indexKey));
     }
 
     /**
      * Same as columnFrom(), but returns a plain array
      */
     public static function columnFromAs(iterable $from, $valueKey, $indexKey = null) : array{
-        return array_column((array) $from, $valueKey, $indexKey);
+        return array_column((is_array($from) ? $from : self::toArray($from)), $valueKey, $indexKey);
     }
 
     /**
@@ -116,7 +119,8 @@ trait ShapeTrait{
      */
     public function combine(?iterable $valueArray = null) : ArrayUtils{
         $a = $this->getArrayCopy();
-        return $this->exchange(array_combine($a, (array) ($valueArray ?? $a)));
+        $this->exchangeArray(array_combine($a, (array) ($valueArray ?? $a)));
+        return $this;
     }
 
     /**
@@ -131,7 +135,7 @@ trait ShapeTrait{
      * Same as combine(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function combineFrom(iterable $from, ?iterable $valueArray = null) : ArrayUtils{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return new self(array_combine($a, (array) ($valueArray ?? $a)));
     }
 
@@ -139,7 +143,7 @@ trait ShapeTrait{
      * Same as combineFrom(), but returns a plain array
      */
     public static function combineFromAs(iterable $from, ?iterable $valueArray = null) : array{
-        $a = (array) $from;
+        $a = (is_array($from) ? $from : self::toArray($from));
         return array_combine($a, (array) ($valueArray ?? $a));
     }
 
@@ -149,7 +153,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/fill
      */
     public function fill($value, int $start = 0, ?int $end = null) : ArrayUtils{
-        return $this->exchange(self::fillFromAs($this->getArrayCopy(), $value, $start, $end));
+        $this->exchangeArray(self::fillFromAs($this->getArrayCopy(), $value, $start, $end));
+        return $this;
     }
 
     /**
@@ -170,7 +175,7 @@ trait ShapeTrait{
      * Same as fillFrom(), but returns a plain array
      */
     public static function fillFromAs(iterable $from, $value, int $start = 0, ?int $end = null) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         $keys = array_keys($array);
         [$i, $max] = self::resolveRange(count($keys), $start, $end ?? PHP_INT_MAX);
         for(; $i < $max; ++$i){
@@ -185,7 +190,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/fill/keys
      */
     public function fillKeys($value) : ArrayUtils{
-        return $this->exchange(array_fill_keys($this->getArrayCopy(), $value));
+        $this->exchangeArray(array_fill_keys($this->getArrayCopy(), $value));
+        return $this;
     }
 
     /**
@@ -199,14 +205,14 @@ trait ShapeTrait{
      * Same as fillKeys(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function fillKeysFrom(iterable $from, $value) : ArrayUtils{
-        return new self(array_fill_keys((array) $from, $value));
+        return new self(array_fill_keys((is_array($from) ? $from : self::toArray($from)), $value));
     }
 
     /**
      * Same as fillKeysFrom(), but returns a plain array
      */
     public static function fillKeysFromAs(iterable $from, $value) : array{
-        return array_fill_keys((array) $from, $value);
+        return array_fill_keys((is_array($from) ? $from : self::toArray($from)), $value);
     }
 
     /**
@@ -215,7 +221,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/flip
      */
     public function flip() : ArrayUtils{
-        return $this->exchange(array_flip($this->getArrayCopy()));
+        $this->exchangeArray(array_flip($this->getArrayCopy()));
+        return $this;
     }
 
     /**
@@ -229,14 +236,14 @@ trait ShapeTrait{
      * Same as flip(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function flipFrom(iterable $from) : ArrayUtils{
-        return new self(array_flip((array) $from));
+        return new self(array_flip((is_array($from) ? $from : self::toArray($from))));
     }
 
     /**
      * Same as flipFrom(), but returns a plain array
      */
     public static function flipFromAs(iterable $from) : array{
-        return array_flip((array) $from);
+        return array_flip((is_array($from) ? $from : self::toArray($from)));
     }
 
     /**
@@ -245,7 +252,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/keys
      */
     public function keys() : ArrayUtils{
-        return $this->exchange(array_keys($this->getArrayCopy()));
+        $this->exchangeArray(array_keys($this->getArrayCopy()));
+        return $this;
     }
 
     /**
@@ -259,14 +267,14 @@ trait ShapeTrait{
      * Same as keys(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function keysFrom(iterable $from) : ArrayUtils{
-        return new self(array_keys((array) $from));
+        return new self(array_keys((is_array($from) ? $from : self::toArray($from))));
     }
 
     /**
      * Same as keysFrom(), but returns a plain array
      */
     public static function keysFromAs(iterable $from) : array{
-        return array_keys((array) $from);
+        return array_keys((is_array($from) ? $from : self::toArray($from)));
     }
 
     /**
@@ -275,7 +283,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/values
      */
     public function values() : ArrayUtils{
-        return $this->exchange(array_values($this->getArrayCopy()));
+        $this->exchangeArray(array_values($this->getArrayCopy()));
+        return $this;
     }
 
     /**
@@ -289,14 +298,14 @@ trait ShapeTrait{
      * Same as values(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function valuesFrom(iterable $from) : ArrayUtils{
-        return new self(array_values((array) $from));
+        return new self(array_values((is_array($from) ? $from : self::toArray($from))));
     }
 
     /**
      * Same as valuesFrom(), but returns a plain array
      */
     public static function valuesFromAs(iterable $from) : array{
-        return array_values((array) $from);
+        return array_values((is_array($from) ? $from : self::toArray($from)));
     }
 
     /**
@@ -305,7 +314,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/pad
      */
     public function pad(int $size, $value) : ArrayUtils{
-        return $this->exchange(array_pad($this->getArrayCopy(), $size, $value));
+        $this->exchangeArray(array_pad($this->getArrayCopy(), $size, $value));
+        return $this;
     }
 
     /**
@@ -319,14 +329,14 @@ trait ShapeTrait{
      * Same as pad(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function padFrom(iterable $from, int $size, $value) : ArrayUtils{
-        return new self(array_pad((array) $from, $size, $value));
+        return new self(array_pad((is_array($from) ? $from : self::toArray($from)), $size, $value));
     }
 
     /**
      * Same as padFrom(), but returns a plain array
      */
     public static function padFromAs(iterable $from, int $size, $value) : array{
-        return array_pad((array) $from, $size, $value);
+        return array_pad((is_array($from) ? $from : self::toArray($from)), $size, $value);
     }
 
     /**
@@ -336,7 +346,8 @@ trait ShapeTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/slice
      */
     public function slice(int $start = 0, ?int $end = null, bool $preserveKeys = false) : ArrayUtils{
-        return $this->exchange(self::sliceFromAs($this->getArrayCopy(), $start, $end, $preserveKeys));
+        $this->exchangeArray(self::sliceFromAs($this->getArrayCopy(), $start, $end, $preserveKeys));
+        return $this;
     }
 
     /**
@@ -357,7 +368,7 @@ trait ShapeTrait{
      * Same as sliceFrom(), but returns a plain array
      */
     public static function sliceFromAs(iterable $from, int $start = 0, ?int $end = null, bool $preserveKeys = false) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         [$i, $max] = self::resolveRange(count($array), $start, $end ?? PHP_INT_MAX);
         if($max <= $i){
             return [];
@@ -379,7 +390,7 @@ trait ShapeTrait{
      * Same as join(), but operates on the given iterable
      */
     public static function joinFrom(iterable $from, string $glue = ",", string $prefix = "", string $suffix = "") : string{
-        return $prefix . implode($glue, (array) $from) . $suffix;
+        return $prefix . implode($glue, (is_array($from) ? $from : self::toArray($from))) . $suffix;
     }
 
     /**

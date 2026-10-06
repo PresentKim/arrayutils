@@ -29,6 +29,7 @@ namespace kim\present\lib\arrayutils\traits;
 
 use kim\present\lib\arrayutils\ArrayUtils;
 use function array_reverse;
+use function is_array;
 use function ksort;
 use function sort;
 use function uksort;
@@ -37,7 +38,7 @@ use function usort;
 /**
  * Methods that reorder the elements (sort, sortKey, reverse)
  *
- * Requires ArrayUtils::mapToArray() and ArrayUtils::exchange() of the class using this trait
+ * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
  */
 trait SortTrait{
     /**
@@ -47,7 +48,8 @@ trait SortTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/sort
      */
     public function sort(?callable $callback = null) : ArrayUtils{
-        return $this->exchange(self::sortFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::sortFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -68,7 +70,7 @@ trait SortTrait{
      * Same as sortFrom(), but returns a plain array
      */
     public static function sortFromAs(iterable $from, ?callable $callback = null) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if($callback === null){
             sort($array);
         }else{
@@ -84,7 +86,8 @@ trait SortTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/sort/key
      */
     public function sortKey(?callable $callback = null) : ArrayUtils{
-        return $this->exchange(self::sortKeyFromAs($this->getArrayCopy(), $callback));
+        $this->exchangeArray(self::sortKeyFromAs($this->getArrayCopy(), $callback));
+        return $this;
     }
 
     /**
@@ -105,7 +108,7 @@ trait SortTrait{
      * Same as sortKeyFrom(), but returns a plain array
      */
     public static function sortKeyFromAs(iterable $from, ?callable $callback = null) : array{
-        $array = (array) $from;
+        $array = is_array($from) ? $from : self::toArray($from);
         if($callback === null){
             ksort($array);
         }else{
@@ -120,7 +123,8 @@ trait SortTrait{
      * @link https://arrayutils.docs.present.kim/methods/c/reverse
      */
     public function reverse(bool $preserveKeys = false) : ArrayUtils{
-        return $this->exchange(array_reverse($this->getArrayCopy(), $preserveKeys));
+        $this->exchangeArray(array_reverse($this->getArrayCopy(), $preserveKeys));
+        return $this;
     }
 
     /**
@@ -134,13 +138,13 @@ trait SortTrait{
      * Same as reverse(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function reverseFrom(iterable $from, bool $preserveKeys = false) : ArrayUtils{
-        return new self(array_reverse((array) $from, $preserveKeys));
+        return new self(array_reverse((is_array($from) ? $from : self::toArray($from)), $preserveKeys));
     }
 
     /**
      * Same as reverseFrom(), but returns a plain array
      */
     public static function reverseFromAs(iterable $from, bool $preserveKeys = false) : array{
-        return array_reverse((array) $from, $preserveKeys);
+        return array_reverse((is_array($from) ? $from : self::toArray($from)), $preserveKeys);
     }
 }

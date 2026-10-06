@@ -28,6 +28,7 @@ declare(strict_types=1);
 namespace kim\present\lib\arrayutils;
 
 use ArrayObject;
+use Traversable;
 use kim\present\lib\arrayutils\traits\ConcatTrait;
 use kim\present\lib\arrayutils\traits\IterationTrait;
 use kim\present\lib\arrayutils\traits\SearchTrait;
@@ -35,6 +36,9 @@ use kim\present\lib\arrayutils\traits\SetTrait;
 use kim\present\lib\arrayutils\traits\ShapeTrait;
 use kim\present\lib\arrayutils\traits\SortTrait;
 use kim\present\lib\arrayutils\traits\StackTrait;
+
+use function is_array;
+use function iterator_to_array;
 
 /**
  * Class ArrayUtils is provides a method to fancy manipulate an array
@@ -62,7 +66,7 @@ class ArrayUtils extends ArrayObject{
 
     /** Creates a new, shallow-copied ArrayUtils instance from an iterable */
     public function __construct(iterable $iterable, int $flags = 0, string $iteratorClass = "ArrayIterator"){
-        parent::__construct((array) $iterable, $flags, $iteratorClass);
+        parent::__construct(is_array($iterable) ? $iterable : self::toArray($iterable), $flags, $iteratorClass);
     }
 
     /**
@@ -99,10 +103,24 @@ class ArrayUtils extends ArrayObject{
      */
     public static function mapToArray(iterable $iterables) : array{
         $result = [];
-        foreach((array) $iterables as $key => $iterable){
-            $result[$key] = (array) $iterable;
+        foreach(is_array($iterables) ? $iterables : self::toArray($iterables) as $key => $iterable){
+            $result[$key] = $iterable instanceof Traversable ? self::toArray($iterable) : (array) $iterable;
         }
         return $result;
+    }
+
+    /**
+     * Converts an iterable to an array, keeping the keys
+     * Unlike an (array) cast, this also unpacks generators and other iterators
+     */
+    public static function toArray(iterable $iterable) : array{
+        if(is_array($iterable)){
+            return $iterable;
+        }
+        if($iterable instanceof ArrayObject){
+            return $iterable->getArrayCopy();
+        }
+        return iterator_to_array($iterable, true);
     }
 
     /** Exchange the array for another one */
