@@ -24,7 +24,7 @@
         "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5"
     },
     "license": "MIT",
-    "version": "4.2.0",
+    "version": "5.0.0",
     "scripts": {
         "test": "phpunit"
     }
