@@ -39,7 +39,7 @@ use function is_array;
 /**
  * Methods that add or remove elements at a position (push, pop, shift, unshift, splice)
  *
- * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
+ * Requires ArrayUtils::toArray(), ArrayUtils::mapToArray(), ArrayUtils::blank() and ArrayUtils::callbackArity() of the class using this trait
  */
 trait StackTrait{
     /**
@@ -63,7 +63,9 @@ trait StackTrait{
      * Same as push(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function pushFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(self::pushFromAs($from, ...$values));
+        $utils = self::blank();
+        $utils->exchangeArray(self::pushFromAs($from, ...$values));
+        return $utils;
     }
 
     /**
@@ -98,7 +100,9 @@ trait StackTrait{
      * Same as unshift(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function unshiftFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(self::unshiftFromAs($from, ...$values));
+        $utils = self::blank();
+        $utils->exchangeArray(self::unshiftFromAs($from, ...$values));
+        return $utils;
     }
 
     /**

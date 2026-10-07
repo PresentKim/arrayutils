@@ -30,6 +30,7 @@ namespace kim\present\lib\arrayutils\traits;
 use kim\present\lib\arrayutils\ArrayUtils;
 use Exception;
 use function array_key_exists;
+use function array_key_last;
 use function array_keys;
 use function array_search;
 use function array_slice;
@@ -46,7 +47,7 @@ use function random_int;
 /**
  * Methods that look up a single element or key (includes, indexOf, find, first, last, random)
  *
- * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
+ * Requires ArrayUtils::toArray(), ArrayUtils::mapToArray(), ArrayUtils::blank() and ArrayUtils::callbackArity() of the class using this trait
  */
 trait SearchTrait{
     /**
@@ -148,6 +149,23 @@ trait SearchTrait{
      */
     public static function findFrom(iterable $from, callable $callback){
         $array = is_array($from) ? $from : self::toArray($from);
+        $arity = self::callbackArity($callback);
+        if($arity <= 1){
+            foreach($array as $key => $value){
+                if($callback($value)){
+                    return $value;
+                }
+            }
+            return null;
+        }
+        if($arity <= 2){
+            foreach($array as $key => $value){
+                if($callback($value, $key)){
+                    return $value;
+                }
+            }
+            return null;
+        }
         foreach($array as $key => $value){
             if($callback($value, $key, $array)){
                 return $value;
@@ -174,6 +192,23 @@ trait SearchTrait{
      */
     public static function findIndexFrom(iterable $from, callable $callback){
         $array = is_array($from) ? $from : self::toArray($from);
+        $arity = self::callbackArity($callback);
+        if($arity <= 1){
+            foreach($array as $key => $value){
+                if($callback($value)){
+                    return $key;
+                }
+            }
+            return null;
+        }
+        if($arity <= 2){
+            foreach($array as $key => $value){
+                if($callback($value, $key)){
+                    return $key;
+                }
+            }
+            return null;
+        }
         foreach($array as $key => $value){
             if($callback($value, $key, $array)){
                 return $key;
@@ -240,6 +275,10 @@ trait SearchTrait{
      */
     public static function lastFrom(iterable $from){
         $array = is_array($from) ? $from : self::toArray($from);
+        if(\PHP_VERSION_ID >= 70300){
+            $key = array_key_last($array);
+            return $key === null ? null : $array[$key];
+        }
         return $array ? end($array) : null;
     }
 
@@ -261,6 +300,9 @@ trait SearchTrait{
      */
     public static function keyLastFrom(iterable $from){
         $array = is_array($from) ? $from : self::toArray($from);
+        if(\PHP_VERSION_ID >= 70300){
+            return array_key_last($array);
+        }
         if(!$array){
             return null;
         }

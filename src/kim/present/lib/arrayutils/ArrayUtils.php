@@ -28,6 +28,10 @@ declare(strict_types=1);
 namespace kim\present\lib\arrayutils;
 
 use ArrayObject;
+use Closure;
+use ReflectionException;
+use ReflectionFunction;
+use ReflectionMethod;
 use Traversable;
 use kim\present\lib\arrayutils\traits\ConcatTrait;
 use kim\present\lib\arrayutils\traits\IterationTrait;
@@ -38,7 +42,9 @@ use kim\present\lib\arrayutils\traits\SortTrait;
 use kim\present\lib\arrayutils\traits\StackTrait;
 
 use function is_array;
+use function is_string;
 use function iterator_to_array;
+use function strpos;
 
 /**
  * Class ArrayUtils is provides a method to fancy manipulate an array
@@ -63,6 +69,9 @@ class ArrayUtils extends ArrayObject{
     use ShapeTrait;
     use SortTrait;
     use StackTrait;
+
+    /** @var ArrayUtils|null Empty instance that is cloned to create results without calling the constructor */
+    private static $blank = null;
 
     /** Creates a new, shallow-copied ArrayUtils instance from an iterable */
     public function __construct(iterable $iterable, int $flags = 0, string $iteratorClass = "ArrayIterator"){
@@ -121,6 +130,41 @@ class ArrayUtils extends ArrayObject{
             return $iterable->getArrayCopy();
         }
         return iterator_to_array($iterable, true);
+    }
+
+    /**
+     * Creates an empty instance without running the constructor
+     *
+     * The userland constructor forwards its argument to ArrayObject, which makes ArrayObject copy the whole array.
+     * Filling a clone with exchangeArray() takes the array over without copying it.
+     */
+    private static function blank() : ArrayUtils{
+        if(self::$blank === null){
+            self::$blank = new self([]);
+        }
+        return clone self::$blank;
+    }
+
+    /**
+     * Returns how many arguments the callback accepts (3 if it cannot be determined or is variadic)
+     * Iteration methods use this to pass only the arguments the callback declares,
+     * which lets them delegate to native functions such as array_map() and array_filter()
+     */
+    private static function callbackArity(callable $callback) : int{
+        try{
+            if($callback instanceof Closure || (is_string($callback) && strpos($callback, "::") === false)){
+                $reflection = new ReflectionFunction($callback);
+            }elseif(is_array($callback)){
+                $reflection = new ReflectionMethod($callback[0], $callback[1]);
+            }elseif(is_string($callback)){
+                $reflection = new ReflectionMethod($callback);
+            }else{
+                $reflection = new ReflectionMethod($callback, "__invoke");
+            }
+            return $reflection->isVariadic() ? 3 : $reflection->getNumberOfParameters();
+        }catch(ReflectionException $_){
+            return 3;
+        }
     }
 
     /** Exchange the array for another one */

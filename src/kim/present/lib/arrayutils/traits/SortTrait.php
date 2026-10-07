@@ -38,7 +38,7 @@ use function usort;
 /**
  * Methods that reorder the elements (sort, sortKey, reverse)
  *
- * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
+ * Requires ArrayUtils::toArray(), ArrayUtils::mapToArray(), ArrayUtils::blank() and ArrayUtils::callbackArity() of the class using this trait
  */
 trait SortTrait{
     /**
@@ -63,7 +63,9 @@ trait SortTrait{
      * Same as sort(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function sortFrom(iterable $from, ?callable $callback = null) : ArrayUtils{
-        return new self(self::sortFromAs($from, $callback));
+        $utils = self::blank();
+        $utils->exchangeArray(self::sortFromAs($from, $callback));
+        return $utils;
     }
 
     /**
@@ -101,7 +103,9 @@ trait SortTrait{
      * Same as sortKey(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function sortKeyFrom(iterable $from, ?callable $callback = null) : ArrayUtils{
-        return new self(self::sortKeyFromAs($from, $callback));
+        $utils = self::blank();
+        $utils->exchangeArray(self::sortKeyFromAs($from, $callback));
+        return $utils;
     }
 
     /**
@@ -138,7 +142,9 @@ trait SortTrait{
      * Same as reverse(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function reverseFrom(iterable $from, bool $preserveKeys = false) : ArrayUtils{
-        return new self(array_reverse((is_array($from) ? $from : self::toArray($from)), $preserveKeys));
+        $utils = self::blank();
+        $utils->exchangeArray(array_reverse((is_array($from) ? $from : self::toArray($from)), $preserveKeys));
+        return $utils;
     }
 
     /**

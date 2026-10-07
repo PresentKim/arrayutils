@@ -35,7 +35,7 @@ use function is_array;
 /**
  * Methods that join arrays together (concat, merge, replace, flat)
  *
- * Requires ArrayUtils::toArray() and ArrayUtils::mapToArray() of the class using this trait
+ * Requires ArrayUtils::toArray(), ArrayUtils::mapToArray(), ArrayUtils::blank() and ArrayUtils::callbackArity() of the class using this trait
  */
 trait ConcatTrait{
     /**
@@ -59,7 +59,9 @@ trait ConcatTrait{
      * Same as concat(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function concatFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values)));
+        $utils = self::blank();
+        $utils->exchangeArray(array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values)));
+        return $utils;
     }
 
     /**
@@ -90,7 +92,9 @@ trait ConcatTrait{
      * Same as concatSoft(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function concatSoftFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(self::concatSoftFromAs($from, ...$values));
+        $utils = self::blank();
+        $utils->exchangeArray(self::concatSoftFromAs($from, ...$values));
+        return $utils;
     }
 
     /**
@@ -125,7 +129,9 @@ trait ConcatTrait{
      * Same as merge(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function mergeFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values)));
+        $utils = self::blank();
+        $utils->exchangeArray(array_merge((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($values)));
+        return $utils;
     }
 
     /**
@@ -156,7 +162,9 @@ trait ConcatTrait{
      * Same as mergeSoft(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function mergeSoftFrom(iterable $from, ...$values) : ArrayUtils{
-        return new self(self::mergeSoftFromAs($from, ...$values));
+        $utils = self::blank();
+        $utils->exchangeArray(self::mergeSoftFromAs($from, ...$values));
+        return $utils;
     }
 
     /**
@@ -188,7 +196,9 @@ trait ConcatTrait{
      * Same as replace(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function replaceFrom(iterable $from, iterable ...$iterables) : ArrayUtils{
-        return new self(array_replace_recursive((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($iterables)));
+        $utils = self::blank();
+        $utils->exchangeArray(array_replace_recursive((is_array($from) ? $from : self::toArray($from)), ...self::mapToArray($iterables)));
+        return $utils;
     }
 
     /**
@@ -219,7 +229,9 @@ trait ConcatTrait{
      * Same as flat(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function flatFrom(iterable $from, int $dept = 1) : ArrayUtils{
-        return new self(self::flatFromAs($from, $dept));
+        $utils = self::blank();
+        $utils->exchangeArray(self::flatFromAs($from, $dept));
+        return $utils;
     }
 
     /**
@@ -258,7 +270,9 @@ trait ConcatTrait{
      * Same as flatMap(), but operates on the given iterable and returns a new ArrayUtils
      */
     public static function flatMapFrom(iterable $from, callable $callback) : ArrayUtils{
-        return new self(self::flatMapFromAs($from, $callback));
+        $utils = self::blank();
+        $utils->exchangeArray(self::flatMapFromAs($from, $callback));
+        return $utils;
     }
 
     /**
@@ -266,6 +280,21 @@ trait ConcatTrait{
      */
     public static function flatMapFromAs(iterable $from, callable $callback) : array{
         $array = is_array($from) ? $from : self::toArray($from);
+        $arity = self::callbackArity($callback);
+        if($arity <= 1){
+            $parts = [];
+            foreach($array as $key => $value){
+                $parts[] = (array) $callback($value);
+            }
+            return $parts ? array_merge(...$parts) : [];
+        }
+        if($arity <= 2){
+            $parts = [];
+            foreach($array as $key => $value){
+                $parts[] = (array) $callback($value, $key);
+            }
+            return $parts ? array_merge(...$parts) : [];
+        }
         $parts = [];
         foreach($array as $key => $value){
             $parts[] = (array) $callback($value, $key, $array);
