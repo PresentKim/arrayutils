@@ -47,6 +47,29 @@ class ArrayUtilsTest extends TestCase{
         $this->assertSame([1, 2], $array);
     }
 
+    public function testPopAndShiftRemoveFromTheInstance() : void{
+        $utils = new ArrayUtils(["a" => 1, "b" => 2, 5 => 3, 9 => 4]);
+        $this->assertSame(4, $utils->pop());
+        $this->assertSame(3, count($utils));
+        $this->assertSame(["a" => 1, "b" => 2, 5 => 3], $utils->getArrayCopy());
+        $this->assertSame(1, $utils->shift());
+        $this->assertSame(2, count($utils));
+        $this->assertSame(["b" => 2, 0 => 3], $utils->getArrayCopy());
+        $this->assertSame(3, $utils->pop());
+        $this->assertSame(2, $utils->shift());
+        $this->assertSame(0, count($utils));
+        $this->assertNull($utils->pop());
+        $this->assertNull($utils->shift());
+        $this->assertSame([], $utils->getArrayCopy());
+
+        $utils = new ArrayUtils([1, 2, 3]);
+        $this->assertSame(1, $utils->shift());
+        $this->assertSame([2, 3], $utils->getArrayCopy());
+        $this->assertTrue(isset($utils[0]));
+        $this->assertFalse(isset($utils[2]));
+        $this->assertSame([2, 3], iterator_to_array($utils));
+    }
+
     public function testSearchMethods() : void{
         $array = ["a" => 1, "b" => null, "c" => 3];
         $this->assertTrue(ArrayUtils::keyExistsFrom($array, "b"));
