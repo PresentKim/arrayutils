@@ -1,0 +1,898 @@
+[
+    {
+        "subject": "chunk",
+        "min_time_us": 4.135,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 4.135,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 4.247,
+                "percentage": 102.71
+            }
+        ]
+    },
+    {
+        "subject": "column",
+        "min_time_us": 0.046,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.046,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.173,
+                "percentage": 378.42
+            }
+        ]
+    },
+    {
+        "subject": "combine",
+        "min_time_us": 0.043,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.043,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.168,
+                "percentage": 395.41
+            }
+        ]
+    },
+    {
+        "subject": "concat",
+        "min_time_us": 1.686,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 1.686,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 2.02,
+                "percentage": 119.77
+            }
+        ]
+    },
+    {
+        "subject": "concatSoft",
+        "min_time_us": 0.868,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 1.7,
+                "percentage": 195.97
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.868,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "countValues",
+        "min_time_us": 0.044,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.044,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.174,
+                "percentage": 392.09
+            }
+        ]
+    },
+    {
+        "subject": "diff",
+        "min_time_us": 34.34,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 34.34,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 36.025,
+                "percentage": 104.91
+            }
+        ]
+    },
+    {
+        "subject": "diffAssoc",
+        "min_time_us": 22.368,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 22.368,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 23.573,
+                "percentage": 105.39
+            }
+        ]
+    },
+    {
+        "subject": "diffKey",
+        "min_time_us": 1.702,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 1.702,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 2.009,
+                "percentage": 118.09
+            }
+        ]
+    },
+    {
+        "subject": "every",
+        "min_time_us": 14.27,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 14.27,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 14.9,
+                "percentage": 104.42
+            }
+        ]
+    },
+    {
+        "subject": "fill",
+        "min_time_us": 0.043,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.043,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.233,
+                "percentage": 545.21
+            }
+        ]
+    },
+    {
+        "subject": "fillKeys",
+        "min_time_us": 0.047,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.047,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.162,
+                "percentage": 340.95
+            }
+        ]
+    },
+    {
+        "subject": "filter",
+        "min_time_us": 19.971,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 19.971,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 20.318,
+                "percentage": 101.74
+            }
+        ]
+    },
+    {
+        "subject": "find",
+        "min_time_us": 7.673,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 7.673,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 8.266,
+                "percentage": 107.72
+            }
+        ]
+    },
+    {
+        "subject": "findIndex",
+        "min_time_us": 8.163,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 8.202,
+                "percentage": 100.48
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 8.163,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "first",
+        "min_time_us": 0.026,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.026,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.037,
+                "percentage": 140.37
+            }
+        ]
+    },
+    {
+        "subject": "flat",
+        "min_time_us": 0.046,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.046,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.282,
+                "percentage": 610.15
+            }
+        ]
+    },
+    {
+        "subject": "flatMap",
+        "min_time_us": 0.205,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.205,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.538,
+                "percentage": 262.44
+            }
+        ]
+    },
+    {
+        "subject": "flip",
+        "min_time_us": 2.421,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 2.421,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 2.462,
+                "percentage": 101.68
+            }
+        ]
+    },
+    {
+        "subject": "forEach",
+        "min_time_us": 15.103,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 15.103,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 15.747,
+                "percentage": 104.27
+            }
+        ]
+    },
+    {
+        "subject": "includes",
+        "min_time_us": 0.398,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.398,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.415,
+                "percentage": 104.27
+            }
+        ]
+    },
+    {
+        "subject": "indexOf",
+        "min_time_us": 0.39,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.39,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.424,
+                "percentage": 108.87
+            }
+        ]
+    },
+    {
+        "subject": "intersect",
+        "min_time_us": 632.711,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 632.711,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 638.848,
+                "percentage": 100.97
+            }
+        ]
+    },
+    {
+        "subject": "intersectAssoc",
+        "min_time_us": 25.206,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 25.206,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 25.783,
+                "percentage": 102.29
+            }
+        ]
+    },
+    {
+        "subject": "intersectKey",
+        "min_time_us": 4.364,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 4.364,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 4.631,
+                "percentage": 106.11
+            }
+        ]
+    },
+    {
+        "subject": "join",
+        "min_time_us": 4.63,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 4.662,
+                "percentage": 100.69
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 4.63,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "keyExists",
+        "min_time_us": 0.027,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.027,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.038,
+                "percentage": 139.93
+            }
+        ]
+    },
+    {
+        "subject": "keyFirst",
+        "min_time_us": 0.038,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.039,
+                "percentage": 103.59
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.038,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "keyLast",
+        "min_time_us": 0.04,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.04,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.04,
+                "percentage": 100.74
+            }
+        ]
+    },
+    {
+        "subject": "keyRandom",
+        "min_time_us": 0.032,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.032,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.999,
+                "percentage": 3100.91
+            }
+        ]
+    },
+    {
+        "subject": "keys",
+        "min_time_us": 0.598,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.598,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.739,
+                "percentage": 123.64
+            }
+        ]
+    },
+    {
+        "subject": "last",
+        "min_time_us": 0.039,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.039,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.045,
+                "percentage": 117.47
+            }
+        ]
+    },
+    {
+        "subject": "map",
+        "min_time_us": 14.437,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 14.437,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 14.91,
+                "percentage": 103.28
+            }
+        ]
+    },
+    {
+        "subject": "mapAssoc",
+        "min_time_us": 46.289,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 46.691,
+                "percentage": 100.87
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 46.289,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "mapKey",
+        "min_time_us": 21.3,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 21.3,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 21.496,
+                "percentage": 100.92
+            }
+        ]
+    },
+    {
+        "subject": "merge",
+        "min_time_us": 1.758,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 1.758,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 2.048,
+                "percentage": 116.48
+            }
+        ]
+    },
+    {
+        "subject": "mergeSoft",
+        "min_time_us": 0.936,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 1.761,
+                "percentage": 188.15
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.936,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "pad",
+        "min_time_us": 0.831,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.831,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.969,
+                "percentage": 116.54
+            }
+        ]
+    },
+    {
+        "subject": "pop",
+        "min_time_us": 0.668,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.668,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.674,
+                "percentage": 100.94
+            }
+        ]
+    },
+    {
+        "subject": "push",
+        "min_time_us": 0.672,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.672,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.929,
+                "percentage": 138.31
+            }
+        ]
+    },
+    {
+        "subject": "random",
+        "min_time_us": 0.039,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.039,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.406,
+                "percentage": 1028.22
+            }
+        ]
+    },
+    {
+        "subject": "reduce",
+        "min_time_us": 13.38,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 13.708,
+                "percentage": 102.45
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 13.38,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "reduceRight",
+        "min_time_us": 14.324,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 14.324,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 14.35,
+                "percentage": 100.18
+            }
+        ]
+    },
+    {
+        "subject": "replace",
+        "min_time_us": 0.647,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.647,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.93,
+                "percentage": 143.66
+            }
+        ]
+    },
+    {
+        "subject": "reverse",
+        "min_time_us": 0.842,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.842,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 1.016,
+                "percentage": 120.61
+            }
+        ]
+    },
+    {
+        "subject": "search",
+        "min_time_us": 0.391,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.391,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.44,
+                "percentage": 112.55
+            }
+        ]
+    },
+    {
+        "subject": "shift",
+        "min_time_us": 1.649,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 1.672,
+                "percentage": 101.4
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 1.649,
+                "percentage": 100
+            }
+        ]
+    },
+    {
+        "subject": "slice",
+        "min_time_us": 0.077,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.077,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.544,
+                "percentage": 703.91
+            }
+        ]
+    },
+    {
+        "subject": "some",
+        "min_time_us": 7.562,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 7.562,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 8.046,
+                "percentage": 106.4
+            }
+        ]
+    },
+    {
+        "subject": "sort",
+        "min_time_us": 42.933,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 42.933,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 43.361,
+                "percentage": 101
+            }
+        ]
+    },
+    {
+        "subject": "sortKey",
+        "min_time_us": 15.961,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 15.961,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 16.304,
+                "percentage": 102.15
+            }
+        ]
+    },
+    {
+        "subject": "splice",
+        "min_time_us": 2.679,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 2.679,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 2.772,
+                "percentage": 103.46
+            }
+        ]
+    },
+    {
+        "subject": "sum",
+        "min_time_us": 1.23,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 1.23,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 1.244,
+                "percentage": 101.1
+            }
+        ]
+    },
+    {
+        "subject": "unique",
+        "min_time_us": 15.928,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 15.928,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 16.001,
+                "percentage": 100.46
+            }
+        ]
+    },
+    {
+        "subject": "unshift",
+        "min_time_us": 2.647,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 2.647,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 2.809,
+                "percentage": 106.1
+            }
+        ]
+    },
+    {
+        "subject": "values",
+        "min_time_us": 0.025,
+        "results": [
+            {
+                "set": "native",
+                "time_us": 0.025,
+                "percentage": 100
+            },
+            {
+                "set": "arrayutils",
+                "time_us": 0.776,
+                "percentage": 3043.68
+            }
+        ]
+    }
+]
