@@ -23,6 +23,7 @@ class FirstLastKeyExistsBench extends BaseBench{
     /**
      * @Revs(2048)
      * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_keyFirst($params){
@@ -37,6 +38,7 @@ class FirstLastKeyExistsBench extends BaseBench{
     /**
      * @Revs(2048)
      * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_last($params){
@@ -51,6 +53,7 @@ class FirstLastKeyExistsBench extends BaseBench{
     /**
      * @Revs(2048)
      * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_keyLast($params){
@@ -65,6 +68,7 @@ class FirstLastKeyExistsBench extends BaseBench{
     /**
      * @Revs(2048)
      * @Iterations(5)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_keyExists($params){

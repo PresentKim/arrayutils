@@ -16,6 +16,7 @@ class UniqueReplaceBench extends BaseBench{
     /**
      * @Revs(256)
      * @Iterations(3)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_unique($params){
@@ -29,6 +30,7 @@ class UniqueReplaceBench extends BaseBench{
     /**
      * @Revs(256)
      * @Iterations(3)
+     * @Warmup(2)
      * @ParamProviders("provideMethods")
      */
     public function bench_replace($params){
