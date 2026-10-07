@@ -9,18 +9,23 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "kim\\present\\lib\\arrayutils\\tests\\benchmarks\\": "tests/benchmarks/"
+            "kim\\present\\lib\\arrayutils\\tests\\benchmarks\\": "tests/benchmarks/",
+            "kim\\present\\lib\\arrayutils\\tests\\": "tests/"
         }
     },
     "require": {
-        "ext-libxml": "*",
-        "ext-simplexml": "*",
         "ext-json": "*",
         "php": ">=7.1"
     },
     "require-dev": {
-        "phpbench/phpbench": "^1.0"
+        "phpbench/phpbench": "^1.0",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "phpunit/phpunit": "^7.5 || ^9.5"
     },
     "license": "MIT",
-    "version": "4.2.0"
+    "version": "4.2.0",
+    "scripts": {
+        "test": "phpunit"
+    }
 }
