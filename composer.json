@@ -21,7 +21,7 @@
         "phpbench/phpbench": "^1.0",
         "ext-libxml": "*",
         "ext-simplexml": "*",
-        "phpunit/phpunit": "^7.5 || ^9.5"
+        "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5"
     },
     "license": "MIT",
     "version": "4.2.0",
